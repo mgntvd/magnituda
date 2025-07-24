@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Magnituda - Home</title>
+<style>
+  @font-face {
+    font-family: 'Geomanist';
+    src: url('./Geomanist 400.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    font-family: 'Geomanist', sans-serif;
+    overflow-x: hidden;
+  }
+
+  body {
+    position: relative;
+    color: white;
+  }
+
+  #background {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url('./Home - SPLASH FULL.png');
+    background-size: cover;
+    background-position: center;
+    transition: filter 0.6s ease;
+    z-index: -1;
+  }
+
+  #background.blur {
+    filter: blur(10px) brightness(0.6);
+  }
+
+  #lang-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(0,0,0,0.5);
+    border: none;
+    padding: 8px 16px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    z-index: 10;
+  }
+
+  #center-text {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.8rem;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+    max-width: 90%;
+    padding: 0 20px;
+  }
+
+  #center-text.visible {
+    opacity: 1;
+  }
+
+  #scroll-indicator {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 50px;
+    border: 2px solid white;
+    border-radius: 25px;
+    box-sizing: border-box;
+    opacity: 1;
+    animation: bounce 2s infinite;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  #scroll-indicator::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: scroll-dot 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(10px); }
+  }
+
+  @keyframes scroll-dot {
+    0% { top: 10px; opacity: 1; }
+    50% { top: 30px; opacity: 0; }
+    100% { top: 10px; opacity: 1; }
+  }
+
+  #scroll-spacer {
+    height: 200vh;
+  }
+</style>
+</head>
+<body>
+
+<div id="background"></div>
+
+<button id="lang-toggle" aria-label="Promeni jezik">EN</button>
+
+<div id="center-text">Centar za promociju savremene muzike</div>
+
+<div id="scroll-indicator" title="Skroluj dole"></div>
+
+<div id="scroll-spacer"></div>
+
+<script>
+  const background = document.getElementById('background');
+  const centerText = document.getElementById('center-text');
+  const langToggle = document.getElementById('lang-toggle');
+  const scrollIndicator = document.getElementById('scroll-indicator');
+
+  let isSerbian = true;
+
+  langToggle.addEventListener('click', () => {
+    isSerbian = !isSerbian;
+    if (isSerbian) {
+      centerText.textContent = 'Centar za promociju savremene muzike';
+      langToggle.textContent = 'EN';
+      document.documentElement.lang = 'sr';
+    } else {
+      centerText.textContent = 'Contemporary Music Promotion Centre';
+      langToggle.textContent = 'SRB';
+      document.documentElement.lang = 'en';
+    }
+  });
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if(scrollY > 50) {
+      background.classList.add('blur');
+      centerText.classList.add('visible');
+      scrollIndicator.style.opacity = '0';
+    } else {
+      background.classList.remove('blur');
+      centerText.classList.remove('visible');
+      scrollIndicator.style.opacity = '1';
+    }
+  });
+
+  scrollIndicator.addEventListener('click', () => {
+    window.scrollBy({top: window.innerHeight, behavior: 'smooth'});
+  });
+</script>
+
+</body>
+</html>
