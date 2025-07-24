@@ -2,148 +2,157 @@
 <html lang="sr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Magnituda</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Geomanist&display=swap" rel="stylesheet" />
+
   <style>
+    @font-face {
+      font-family: 'Geomanist';
+      src: url('Geomanist-Regular.otf') format('opentype');
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Geomanist', sans-serif;
     }
 
     body, html {
       height: 100%;
+      font-family: 'Geomanist', sans-serif;
+      scroll-behavior: smooth;
       overflow-x: hidden;
     }
 
-    .background {
+    /* Pozadinska slika kao fiksirani sloj */
+    .hero {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url('main/Home - SPLASH FULL.png');
-      background-size: cover;
-      background-position: center;
-      z-index: -2;
-      transition: filter 0.5s ease;
-    }
-
-    .overlay-blur {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      backdrop-filter: blur(0px);
-      transition: backdrop-filter 0.5s ease;
+      background: url("Home - SPLASH FULL.png") no-repeat center center/cover;
       z-index: -1;
+      transition: filter 0.6s ease-in-out;
     }
 
-    .language-switch {
-      position: fixed;
+    .hero.blur {
+      filter: blur(6px) brightness(0.6);
+    }
+
+    .language-switcher {
+      position: absolute;
       top: 20px;
       left: 20px;
       z-index: 10;
-      background: white;
-      color: black;
+    }
+
+    .language-switcher button {
+      background: rgba(255, 255, 255, 0.7);
       border: none;
       padding: 8px 16px;
       cursor: pointer;
       font-size: 16px;
-      border-radius: 4px;
+      font-family: inherit;
     }
 
-    .arrow {
+    .scroll-indicator {
       position: absolute;
-      bottom: 40px;
+      bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 30px;
-      animation: bounce 1.5s infinite;
+      font-size: 2rem;
+      animation: bounce 2s infinite;
       color: white;
+      z-index: 5;
     }
 
     @keyframes bounce {
-      0%, 100% {
-        transform: translate(-50%, 0);
-      }
-      50% {
-        transform: translate(-50%, 10px);
-      }
+      0%, 100% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, 10px); }
+    }
+
+    .spacer {
+      height: 100vh;
     }
 
     .content {
-      min-height: 200vh;
+      position: relative;
+      min-height: 100vh;
+      background-color: white;
       display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
       align-items: center;
-      padding-bottom: 100px;
+      justify-content: center;
       text-align: center;
+      padding: 40px;
+      z-index: 1;
     }
 
-    .title {
-      font-size: 36px;
-      color: white;
+    .content h1 {
+      font-size: 2.5rem;
+      color: black;
       opacity: 0;
-      transition: opacity 1s ease;
-      max-width: 90%;
+      transition: opacity 1s ease-in-out;
     }
 
-    .title.visible {
+    .content h1.visible {
       opacity: 1;
     }
   </style>
 </head>
 <body>
-  <div class="background"></div>
-  <div class="overlay-blur" id="overlayBlur"></div>
 
-  <button class="language-switch" id="langBtn">EN</button>
+  <!-- Pozadinski sloj -->
+  <div class="hero" id="hero"></div>
 
-  <div class="arrow">↓</div>
-
-  <div class="content">
-    <h1 class="title" id="titleText">Centar za promociju savremene muzike</h1>
+  <!-- UI elementi na vrhu slike -->
+  <div class="language-switcher">
+    <button id="langBtn">EN</button>
   </div>
+  <div class="scroll-indicator">↓</div>
+
+  <!-- Prostor za skrol -->
+  <div class="spacer"></div>
+
+  <!-- Tekstualni sadržaj -->
+  <section class="content" id="content">
+    <h1 id="headline">Centar za promociju savremene muzike</h1>
+  </section>
 
   <script>
     const langBtn = document.getElementById('langBtn');
-    const titleText = document.getElementById('titleText');
-    const overlay = document.getElementById('overlayBlur');
+    const headline = document.getElementById('headline');
+    const hero = document.getElementById('hero');
 
     let currentLang = 'sr';
 
     langBtn.addEventListener('click', () => {
       if (currentLang === 'sr') {
-        titleText.textContent = 'Contemporary Music Promotion Centre';
-        langBtn.textContent = 'SR';
         currentLang = 'en';
+        langBtn.textContent = 'SR';
+        headline.textContent = 'Contemporary Music Promotion Centre';
       } else {
-        titleText.textContent = 'Centar za promociju savremene muzike';
-        langBtn.textContent = 'EN';
         currentLang = 'sr';
+        langBtn.textContent = 'EN';
+        headline.textContent = 'Centar za promociju savremene muzike';
       }
     });
 
+    // Skrol efekat
     window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
+      const scrollPos = window.scrollY;
+      const contentTop = document.getElementById('content').offsetTop;
 
-      // Prikaz teksta kada skrol počne
-      if (scrollY > 50) {
-        titleText.classList.add('visible');
-        overlay.style.backdropFilter = 'blur(8px)';
+      if (scrollPos > contentTop - window.innerHeight / 2) {
+        hero.classList.add('blur');
+        headline.classList.add('visible');
       } else {
-        titleText.classList.remove('visible');
-        overlay.style.backdropFilter = 'blur(0px)';
+        hero.classList.remove('blur');
+        headline.classList.remove('visible');
       }
     });
   </script>
+
 </body>
 </html>
 
