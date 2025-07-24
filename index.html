@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Magnituda</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Geomanist&display=swap" rel="stylesheet" />
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Geomanist', sans-serif;
+      height: 200vh;
+      overflow-x: hidden;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: url('main/Home - SPLASH FULL.png') no-repeat center center;
+      background-size: cover;
+      z-index: -2;
+      transition: filter 0.3s ease;
+    }
+
+    .overlay {
+      position: relative;
+      width: 100%;
+      height: 200vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      color: white;
+      z-index: 2;
+    }
+
+    .language-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.3);
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 16px;
+      backdrop-filter: blur(5px);
+    }
+
+    .scroll-arrow {
+      position: absolute;
+      bottom: 40px;
+      font-size: 40px;
+      animation: bounce 2s infinite;
+      color: white;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+
+    .title-text {
+      position: sticky;
+      top: 20%;
+      text-align: center;
+      font-size: 2rem;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .title-text.visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="background" id="background"></div>
+
+  <button class="language-toggle" id="languageToggle">SR</button>
+
+  <div class="overlay">
+    <div class="scroll-arrow">↓</div>
+    <div class="title-text" id="titleText">Centar za promociju savremene muzike</div>
+  </div>
+
+  <script>
+    const langBtn = document.getElementById('languageToggle');
+    const titleText = document.getElementById('titleText');
+    const bg = document.getElementById('background');
+    let isSerbian = true;
+
+    langBtn.addEventListener('click', () => {
+      isSerbian = !isSerbian;
+      langBtn.textContent = isSerbian ? 'SR' : 'EN';
+      titleText.textContent = isSerbian
+        ? 'Centar za promociju savremene muzike'
+        : 'Contemporary Music Promotion Centre';
+    });
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+
+      // Blur po skrolu
+      const blurAmount = Math.min(scrollY / 40, 8); // max 8px
+      bg.style.filter = `blur(${blurAmount}px)`;
+
+      // Tekst se pojavljuje
+      if (scrollY > 100) {
+        titleText.classList.add('visible');
+      } else {
+        titleText.classList.remove('visible');
+      }
+    });
+  </script>
+</body>
+</html>
+
