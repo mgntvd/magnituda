@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Magnituda – Centar za promociju savremene muzike</title>
+  <style>
+    @font-face {
+      font-family: 'Geomanist';
+      src: url('Geomanist 400.otf') format('opentype');
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Geomanist', sans-serif;
+      background-color: #fefefe;
+      color: #222;
+    }
+
+    header {
+      background-color: #000;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+
+    nav {
+      background-color: #111;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    section {
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .hero img {
+      width: 100%;
+      height: auto;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      margin-top: 2rem;
+    }
+
+    footer {
+      background-color: #000;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Magnituda – Centar za promociju savremene muzike
+  </header>
+
+  <nav>
+    <a href="#pocetna">Početna</a>
+    <a href="#eksponat">Ekspozicija</a>
+    <a href="#studio">Studio</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+
+  <section id="pocetna">
+    <div class="hero">
+      <img src="Home - SPLASH FULL.png" alt="Naslovna slika" />
+    </div>
+    <div class="gallery">
+      <img src="Mag 7.jpg" alt="Magnituda slika 1" />
+      <img src="CMPC.jpg" alt="CMPC slika" />
+      <img src="Mag 14.jpg" alt="Magnituda slika 2" />
+    </div>
+  </section>
+
+  <section id="eksponat">
+    <h2>Ekspozicija</h2>
+    <img src="Ekspozicija - Bez kompasa.png" alt="Bez kompasa strip" style="width:100%; height:auto;" />
+    <iframe src="Magnituda - Centar za promociju savremene muzike.pdf"></iframe>
+  </section>
+
+  <section id="studio">
+    <h2>Studio</h2>
+    <img src="Studio.jpg" alt="Studio slika" style="width:100%; height:auto;" />
+  </section>
+
+  <section id="kontakt">
+    <h2>Kontakt</h2>
+    <img src="Kontakt - Bekon.png" alt="Kontakt slika" style="width:100%; height:auto;" />
+  </section>
+
+  <footer>
+    &copy; 2025 Magnituda. Sva prava zadržana.
+  </footer>
+</body>
+</html>
+import { useState } from "react";
+import Head from "next/head";
+import Image from "next/image";
+
+const pages = {
+  home: {
+    title: {
+      sr: "Magnituda - Centar za promociju savremene muzike",
+      en: "Magnitude - Contemporary Music Promotion Centre",
+    },
+    background: "Home - SPLASH FULL.png",
+    content: null,
+  },
+  centar: {
+    title: {
+      sr: "Centar za promociju savremene muzike",
+      en: "Contemporary Music Promotion Centre",
+    },
+    background: "Home - SPLASH FULL.png",
+    content: (
+      <iframe
+        src="/Magnituda - Centar za promociju savremene muzike.pdf"
+        width="100%"
+        height="1000px"
+        style={{ border: "none" }}
+      ></iframe>
+    ),
+  },
+  bend: {
+    title: { sr: "Bend", en: "Band" },
+    background: "Home - SPLASH FULL.png",
+    content: (
+      <div>
+        {[
+          "Mag 7.jpg",
+          "CMPC.jpg",
+          "Mag 14.jpg",
+        ].map((img, i) => (
+          <div key={i} style={{ marginBottom: 40 }}>
+            <Image
+              src={`/${img}`}
+              alt={`Bend slika ${i}`}
+              width={1200}
+              height={800}
+              layout="responsive"
+            />
+          </div>
+        ))}
+        <div style={{ margin: "40px 0" }}>
+          <a
+            href="https://www.youtube.com/watch?v=V4AV4OCU6pk"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              src="/Ekspozicija - Bez kompasa.png"
+              alt="Bez kompasa video preview"
+              width={1200}
+              height={675}
+              layout="responsive"
+            />
+          </a>
+        </div>
+      </div>
+    ),
+  },
+  studio: {
+    title: { sr: "Studio", en: "Studio" },
+    background: "Home - SPLASH FULL.png",
+    content: (
+      <Image
+        src="/Studio.jpg"
+        alt="Studio"
+        width={1200}
+        height={800}
+        layout="responsive"
+      />
+    ),
+  },
+  kontakt: {
+    title: { sr: "Kontakt", en: "Contact" },
+    background: "Home - SPLASH FULL.png",
+    content: (
+      <Image
+        src="/Kontakt - Bekon.png"
+        alt="Kontakt"
+        width={1200}
+        height={800}
+        layout="responsive"
+      />
+    ),
+  },
+};
+
+export default function HomePage() {
+  const [lang, setLang] = useState("sr");
+  const [activePage, setActivePage] = useState("home");
+
+  const page = pages[activePage];
+
+  return (
+    <div
+      style={{
+        fontFamily: "Geomanist, sans-serif",
+        color: "white",
+        backgroundImage: `url(/${page.background})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+        overflowY: "auto",
+      }}
+    >
+      <Head>
+        <title>{page.title[lang]}</title>
+        <link rel="preload" href="/Geomanist 400.otf" as="font" type="font/otf" crossOrigin="anonymous" />
+        <style>
+          {`
+            @font-face {
+              font-family: 'Geomanist';
+              src: url('/Geomanist 400.otf') format('opentype');
+              font-weight: 400;
+              font-style: normal;
+              font-display: swap;
+            }
+          `}
+        </style>
+      </Head>
+      <div style={{
+        display: "flex",
+        justifyContent: "space-between",
+        padding: 20,
+        background: "rgba(0,0,0,0.5)",
+        position: "sticky",
+        top: 0,
+        zIndex: 100,
+      }}>
+        <div>
+          {Object.keys(pages).map((key) => (
+            <button
+              key={key}
+              onClick={() => setActivePage(key)}
+              style={{
+                marginRight: 10,
+                background: key === activePage ? "#333" : "transparent",
+                color: "white",
+                border: "none",
+                padding: "10px 20px",
+                cursor: "pointer",
+              }}
+            >
+              {pages[key].title[lang]}
+            </button>
+          ))}
+        </div>
+        <button
+          onClick={() => setLang(lang === "sr" ? "en" : "sr")}
+          style={{
+            background: "#666",
+            color: "white",
+            border: "none",
+            padding: "10px 20px",
+            cursor: "pointer",
+          }}
+        >
+          {lang === "sr" ? "EN" : "SR"}
+        </button>
+      </div>
+      <div
+        style={{
+          padding: 40,
+          backdropFilter: activePage === "home" ? "blur(5px)" : "none",
+          textAlign: "center",
+        }}
+      >
+        {activePage === "home" ? (
+          <h1 style={{ fontSize: 32 }}>{page.title[lang]}</h1>
+        ) : (
+          page.content
+        )}
+      </div>
+    </div>
+  );
+}
