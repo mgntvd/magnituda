@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Magnituda</title>
 
+  <!-- Geomanist font -->
   <style>
     @font-face {
       font-family: 'Geomanist';
@@ -22,79 +23,73 @@
       font-family: 'Geomanist', sans-serif;
       scroll-behavior: smooth;
       overflow-x: hidden;
-      background-color: white;
-      color: black;
     }
 
-    /* Pozadina - fiksirana, stalno tu */
+    /* Fiksirana pozadina sa slikom */
     .hero {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: url("Home - SPLASH FULL.png") no-repeat center center/cover;
       transition: filter 0.6s ease-in-out;
       z-index: -1;
-      will-change: filter;
       filter: none;
+      will-change: filter;
     }
 
     .hero.blur {
       filter: blur(6px) brightness(0.6);
     }
 
-    /* Dugme sa glassmorphism efektom */
     .language-switcher {
-      position: fixed;
+      position: absolute;
       top: 20px;
       left: 20px;
       z-index: 10;
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.25);
-      border-radius: 12px;
-      padding: 6px 14px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     .language-switcher button {
-      background: transparent;
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(10px);
       border: none;
-      color: black;
+      padding: 8px 16px;
+      cursor: pointer;
       font-size: 16px;
       font-family: inherit;
-      cursor: pointer;
-      outline: none;
+      border-radius: 8px;
+      transition: background 0.3s ease;
     }
 
-    /* Skrol animacija */
+    .language-switcher button:hover {
+      background: rgba(255, 255, 255, 0.7);
+    }
+
     .scroll-indicator {
-      position: fixed;
+      position: absolute;
       bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
       font-size: 2rem;
       animation: bounce 2s infinite;
       color: white;
-      z-index: 10;
       user-select: none;
-      text-shadow: 0 0 8px rgba(0,0,0,0.7);
+      z-index: 10;
     }
 
     @keyframes bounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(10px); }
+      0%, 100% { transform: translateY(0) translateX(-50%); }
+      50% { transform: translateY(10px) translateX(-50%); }
     }
 
-    /* Sadržaj ispod */
     .content {
       position: relative;
-      margin-top: 100vh;
       min-height: 100vh;
+      background-color: white;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       padding: 40px 20px;
+      z-index: 5;
     }
 
     .content h1 {
@@ -103,41 +98,26 @@
       opacity: 0;
       transition: opacity 1s ease-in-out;
       max-width: 90vw;
-      margin: 0 auto;
     }
 
     .content h1.visible {
       opacity: 1;
     }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      .content h1 {
-        font-size: 1.8rem;
-      }
-      .language-switcher {
-        padding: 4px 10px;
-      }
-      .language-switcher button {
-        font-size: 14px;
-      }
-    }
   </style>
 </head>
 <body>
 
-  <!-- Pozadinska slika -->
-  <section class="hero" id="hero"></section>
+  <!-- Fiksirana pozadina -->
+  <section class="hero" id="hero">
+    <div class="language-switcher">
+      <button id="langBtn">EN</button>
+    </div>
+    <div class="scroll-indicator">
+      ↓
+    </div>
+  </section>
 
-  <!-- Dugme za izbor jezika -->
-  <div class="language-switcher">
-    <button id="langBtn">EN</button>
-  </div>
-
-  <!-- Skrol animacija -->
-  <div class="scroll-indicator">↓</div>
-
-  <!-- Glavni tekst -->
+  <!-- Tekst koji se pojavljuje -->
   <section class="content" id="content">
     <h1 id="headline">Centar za promociju savremene muzike</h1>
   </section>
@@ -174,6 +154,7 @@
       }
     });
   </script>
+
 </body>
 </html>
 
