@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Magnituda</title>
+
+  <!-- Geomanist font (pretpostavljam da ga imaš lokalno, ako ne — koristi privremeno sans-serif) -->
+  <style>
+    @font-face {
+      font-family: 'Geomanist';
+      src: url('Geomanist-Regular.otf') format('opentype');
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Geomanist', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      background: url("Home - SPLASH FULL.png") no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: filter 0.6s ease-in-out;
+    }
+
+    .hero.blur {
+      filter: blur(6px) brightness(0.6);
+    }
+
+    .language-switcher {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 2;
+    }
+
+    .language-switcher button {
+      background: rgba(255, 255, 255, 0.7);
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 16px;
+      font-family: inherit;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      font-size: 2rem;
+      animation: bounce 2s infinite;
+      color: white;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+
+    .content {
+      position: relative;
+      height: 100vh;
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .content h1 {
+      font-size: 2.5rem;
+      color: black;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .content h1.visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Splash Sekcija -->
+  <section class="hero" id="hero">
+    <div class="language-switcher">
+      <button id="langBtn">EN</button>
+    </div>
+    <div class="scroll-indicator">
+      ↓
+    </div>
+  </section>
+
+  <!-- Sadržaj ispod -->
+  <section class="content" id="content">
+    <h1 id="headline">Centar za promociju savremene muzike</h1>
+  </section>
+
+  <!-- JavaScript -->
+  <script>
+    const langBtn = document.getElementById('langBtn');
+    const headline = document.getElementById('headline');
+    const hero = document.getElementById('hero');
+
+    let currentLang = 'sr';
+
+    langBtn.addEventListener('click', () => {
+      if (currentLang === 'sr') {
+        currentLang = 'en';
+        langBtn.textContent = 'SR';
+        headline.textContent = 'Contemporary Music Promotion Centre';
+      } else {
+        currentLang = 'sr';
+        langBtn.textContent = 'EN';
+        headline.textContent = 'Centar za promociju savremene muzike';
+      }
+    });
+
+    // Skrol efekat
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY;
+      const windowHeight = window.innerHeight;
+
+      if (scrollPos > windowHeight / 2) {
+        hero.classList.add('blur');
+        headline.classList.add('visible');
+      } else {
+        hero.classList.remove('blur');
+        headline.classList.remove('visible');
+      }
+    });
+  </script>
+
+</body>
+</html>
+
