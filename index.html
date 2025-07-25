@@ -177,6 +177,50 @@
     #backBtn:hover {
       background: rgba(255, 255, 255, 0.5);
     }
+
+    /* Nova sekcija za video i sliku */
+
+    #videoSection {
+      margin: 40px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    #videoSection iframe {
+      width: 90vw;
+      max-width: 560px;
+      height: 315px;
+      border: none;
+      border-radius: 8px;
+    }
+
+    #loadImageBtn {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+      color: black;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    #loadImageBtn:hover {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
+
+    #additionalImage {
+      display: none;
+      max-width: 90vw;
+      margin-top: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    }
   </style>
 </head>
 <body>
@@ -191,6 +235,18 @@
   <section class="content" id="content">
     <h1 id="headline">Centar za promociju savremene muzike</h1>
     <button id="infoBtn">INFORMATOR</button>
+
+    <!-- Nova sekcija sa videom i dugmetom -->
+    <section id="videoSection" aria-label="Video i dodatna slika">
+      <iframe 
+        src="https://www.youtube.com/embed/V4AV4OCU6pk" 
+        title="YouTube video - Bez kompasa" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+      </iframe>
+      <button id="loadImageBtn">Prikaži sliku Ekspozicija - Bez kompasa</button>
+      <img id="additionalImage" src="Ekspozicija - Bez kompasa.png" alt="Ekspozicija - Bez kompasa" />
+    </section>
   </section>
 
   <section id="infoSection" aria-label="Informator sa slikama">
@@ -213,6 +269,9 @@
     const content = document.getElementById('content');
     const languageSwitcher = document.querySelector('.language-switcher');
     const scrollIndicator = document.querySelector('.scroll-indicator');
+
+    const loadImageBtn = document.getElementById('loadImageBtn');
+    const additionalImage = document.getElementById('additionalImage');
 
     let currentLang = 'sr';
 
@@ -262,6 +321,16 @@
 
     backBtn.addEventListener('click', () => {
       hideInfo();
+    });
+
+    loadImageBtn.addEventListener('click', () => {
+      if (additionalImage.style.display === 'none' || additionalImage.style.display === '') {
+        additionalImage.style.display = 'block';
+        loadImageBtn.textContent = 'Sakrij sliku Ekspozicija - Bez kompasa';
+      } else {
+        additionalImage.style.display = 'none';
+        loadImageBtn.textContent = 'Prikaži sliku Ekspozicija - Bez kompasa';
+      }
     });
 
     window.addEventListener('scroll', () => {
