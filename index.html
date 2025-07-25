@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Magnituda</title>
 
-  <!-- Geomanist font (pretpostavljam da ga imaš lokalno, ako ne — koristi privremeno sans-serif) -->
   <style>
     @font-face {
       font-family: 'Geomanist';
@@ -25,7 +24,7 @@
     }
 
     .hero {
-      position: fixed; /* Fiksiramo pozadinu da uvek stoji */
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
@@ -43,7 +42,7 @@
     }
 
     .language-switcher {
-      position: fixed; /* Da ostane fiksirano i iznad slike */
+      position: fixed;
       top: 20px;
       left: 20px;
       z-index: 10;
@@ -80,51 +79,109 @@
     .content {
       position: relative;
       min-height: 100vh;
-      background-color: transparent; /* IZMENJENO: nema bele pozadine */
+      background-color: transparent;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
       padding: 40px 20px;
-      margin-top: 100vh; /* počinje nakon hero sekcije */
+      margin-top: 100vh;
       z-index: 5;
     }
 
     .content h1 {
-      font-size: 2.5rem;
-      color: white; /* belim slovima da budu */
+      font-size: 2.2rem;
+      color: white;
       opacity: 0;
       transition: opacity 1s ease-in-out;
-      text-shadow: 0 0 10px rgba(0, 0, 0, 0.7); /* blaga senka da se bolje vide */
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
     .content h1.visible {
       opacity: 1;
     }
+
+    .info-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 8px;
+      color: black;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .pdf-viewer {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: white;
+      z-index: 100;
+    }
+
+    .pdf-viewer iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .back-arrow {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      animation: arrowBounce 2s infinite;
+      z-index: 101;
+    }
+
+    @keyframes arrowBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(5px); }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Splash Sekcija -->
+  <!-- Splash -->
   <section class="hero" id="hero">
     <div class="language-switcher">
       <button id="langBtn">EN</button>
     </div>
-    <div class="scroll-indicator">
-      ↓
-    </div>
+    <div class="scroll-indicator">↓</div>
   </section>
 
-  <!-- Sadržaj ispod -->
+  <!-- Content -->
   <section class="content" id="content">
-    <h1 id="headline">Centar za promociju savremene muzike</h1>
+    <h1 id="headline">CENTAR ZA PROMOCIJU SAVREMENE MUZIKE</h1>
+    <button class="info-button" id="infoBtn">INFORMATOR</button>
   </section>
+
+  <!-- PDF Viewer -->
+  <div class="pdf-viewer" id="pdfViewer">
+    <div class="back-arrow" id="backArrow">←</div>
+    <iframe id="pdfFrame" src=""></iframe>
+  </div>
 
   <!-- JavaScript -->
   <script>
     const langBtn = document.getElementById('langBtn');
     const headline = document.getElementById('headline');
     const hero = document.getElementById('hero');
+    const infoBtn = document.getElementById('infoBtn');
+    const pdfViewer = document.getElementById('pdfViewer');
+    const backArrow = document.getElementById('backArrow');
+    const pdfFrame = document.getElementById('pdfFrame');
 
     let currentLang = 'sr';
 
@@ -132,15 +189,16 @@
       if (currentLang === 'sr') {
         currentLang = 'en';
         langBtn.textContent = 'SR';
-        headline.textContent = 'Contemporary Music Promotion Centre';
+        headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
+        infoBtn.textContent = 'OUR STORY';
       } else {
         currentLang = 'sr';
         langBtn.textContent = 'EN';
-        headline.textContent = 'Centar za promociju savremene muzike';
+        headline.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
+        infoBtn.textContent = 'INFORMATOR';
       }
     });
 
-    // Skrol efekat
     window.addEventListener('scroll', () => {
       const scrollPos = window.scrollY;
       const windowHeight = window.innerHeight;
@@ -152,6 +210,20 @@
         hero.classList.remove('blur');
         headline.classList.remove('visible');
       }
+    });
+
+    infoBtn.addEventListener('click', () => {
+      if (currentLang === 'sr') {
+        pdfFrame.src = 'Magnituda - Centar za promociju savremene muzike.pdf';
+        pdfViewer.style.display = 'block';
+      } else {
+        // Za sada engleska verzija ne radi ništa
+      }
+    });
+
+    backArrow.addEventListener('click', () => {
+      pdfViewer.style.display = 'none';
+      pdfFrame.src = '';
     });
   </script>
 
