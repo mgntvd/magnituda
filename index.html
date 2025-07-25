@@ -22,12 +22,9 @@
       height: 100%;
       font-family: 'Geomanist', sans-serif;
       scroll-behavior: smooth;
-      background: #000;
     }
 
-    /* POZADINSKE SLIKE - fixed i jedna preko druge */
-
-    /* Stara pozadina (Home - SPLASH FULL.png) */
+    /* STARA POZADINA - hero */
     .hero {
       position: fixed;
       top: 0;
@@ -40,32 +37,38 @@
       justify-content: center;
       transition: filter 0.6s ease-in-out, opacity 0.6s ease-in-out;
       z-index: 1;
-      pointer-events: none; /* Da ne hvata klikove */
       opacity: 1;
+      pointer-events: auto;
     }
-
-    /* Kad se blur uključi (kad se pomeri scroll) */
+    /* blur i posle pojave nove pozadine, lagano gasenje stare */
     .hero.blur {
       filter: blur(6px) brightness(0.6);
     }
+    /* Dodajemo klasu koja smanjuje opacity da bi se skidao video - kad nova pozadina krene da se pojavljuje */
+    .hero.fade-out {
+      opacity: 0;
+      pointer-events: none; /* onemogući interakciju kad je skrivena */
+      transition: opacity 0.8s ease-in-out;
+    }
 
-    /* Nova pozadina (CMPC.jpg) - ispod stare */
-    .new-background {
+    /* NOVA POZADINA - CMPC */
+    .cmpc-bg {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100vh;
       background: url("CMPC.jpg") no-repeat center center/cover;
+      opacity: 0; /* potpuno sakrivena na početku */
       z-index: 0;
-      opacity: 1;
-      transition: opacity 0.6s ease-in-out;
+      transition: opacity 0.8s ease-in-out;
       pointer-events: none;
     }
-
-    /* Kada je nova slika "sakrivena" (ispod starog, ali ne vidi se) */
-    .new-background.hidden {
-      opacity: 0;
+    /* Kad se pojavi */
+    .cmpc-bg.visible {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 1;
     }
 
     .language-switcher {
@@ -105,7 +108,6 @@
       animation: bounce 2s infinite;
       color: white;
       z-index: 5;
-      user-select: none;
     }
 
     @keyframes bounce {
@@ -207,18 +209,17 @@
       background: rgba(255, 255, 255, 0.5);
     }
 
-    /* Video sekcija */
+    /* Video sekcija je vertikalno centrirana */
     #videoSection {
       min-height: 100vh;
-      margin-top: 130px;
+      margin-top: 130px; /* razmak između dugmeta i video sekcije */
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       gap: 20px;
       position: relative;
-      z-index: 5;
-      background-color: transparent;
+      z-index: 10;
     }
 
     #videoSection iframe {
@@ -237,38 +238,30 @@
       box-shadow: 0 0 20px rgba(0,0,0,0.7);
     }
 
-    /* Nova sekcija sa CMPC pozadinom */
+    /* Nova sekcija sa svojom pozadinom i scroll indikatorom */
     #newSection {
       position: relative;
       min-height: 100vh;
-      margin-top: 100px;
-      padding: 40px 20px;
+      background: transparent; /* pozadina je kroz .cmpc-bg */
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      text-align: center;
+      gap: 24px;
+      padding: 40px 20px;
+      margin-top: 100vh; /* da bude ispod prethodne content sekcije */
+      z-index: 10;
       color: white;
-      z-index: 5;
-      background: transparent;
+      text-shadow: 0 0 8px rgba(0,0,0,0.8);
+      user-select: none;
     }
 
     #newSection h2 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      text-transform: uppercase;
+      font-size: 2rem;
       letter-spacing: 0.15em;
-      text-shadow: 0 0 12px rgba(0,0,0,0.8);
+      text-transform: uppercase;
     }
 
-    #newSection p {
-      max-width: 600px;
-      font-size: 1.1rem;
-      line-height: 1.6;
-      text-shadow: 0 0 8px rgba(0,0,0,0.7);
-    }
-
-    /* Strelica za skrol na novoj sekciji */
     #newSection .scroll-indicator {
       position: absolute;
       bottom: 30px;
@@ -276,9 +269,7 @@
       animation: bounce 2s infinite;
       color: white;
       user-select: none;
-      z-index: 6;
     }
-
   </style>
 </head>
 <body>
@@ -291,15 +282,15 @@
     <div class="scroll-indicator">↓</div>
   </section>
 
-  <!-- Nova pozadina (CMPC.jpg) iza stare -->
-  <div class="new-background" id="newBackground"></div>
+  <!-- Nova pozadina, ispod stare -->
+  <div class="cmpc-bg" id="cmpcBg"></div>
 
   <!-- Glavni sadržaj -->
   <section class="content" id="content">
     <h1 id="headline">Centar za promociju savremene muzike</h1>
     <button id="infoBtn">INFORMATOR</button>
 
-    <!-- Video sekcija -->
+    <!-- Sekcija sa videom i dugmetom -->
     <section id="videoSection" aria-label="Video i dodatna slika">
       <iframe
         src="https://www.youtube.com/embed/V4AV4OCU6pk"
@@ -312,17 +303,13 @@
     </section>
   </section>
 
-  <!-- Nova sekcija sa novom pozadinom -->
+  <!-- Nova sekcija sa posebnom pozadinom -->
   <section id="newSection" aria-label="Nova sekcija sa CMPC pozadinom">
-    <h2>Dobrodošli u CMPC svet</h2>
-    <p>
-      Ova sekcija ima posebnu pozadinsku sliku i njen početak se pojavljuje kako skrolujete sa efektom skidanja stare pozadine nagore.
-      Strelica vas poziva da nastavite sa skrolovanjem.
-    </p>
+    <h2>Naslov nove sekcije</h2>
     <div class="scroll-indicator">↓</div>
   </section>
 
-  <!-- Sekcija informatora -->
+  <!-- Informator sekcija -->
   <section id="infoSection" aria-label="Informator sa slikama">
     <button id="backBtn" aria-label="Nazad">&#8592;</button>
     <img src="Magnituda_informator-1.png" alt="Strana 1 informatora" />
@@ -343,14 +330,15 @@
     const content = document.getElementById('content');
     const languageSwitcher = document.querySelector('.language-switcher');
     const scrollIndicator = document.querySelector('.scroll-indicator');
+    const cmpcBg = document.getElementById('cmpcBg');
 
     const loadImageBtn = document.getElementById('loadImageBtn');
     const additionalImage = document.getElementById('additionalImage');
 
-    const newBackground = document.getElementById('newBackground');
-    const newSection = document.getElementById('newSection');
-
     let currentLang = 'sr';
+
+    // Za čuvanje pozicije skrola pre otvaranja informatora
+    let lastScrollPos = 0;
 
     function updateLanguage() {
       if (currentLang === 'sr') {
@@ -376,22 +364,34 @@
     });
 
     function showInfo() {
+      // Zapamti trenutnu poziciju scrolla
+      lastScrollPos = window.scrollY || window.pageYOffset;
+
       infoSection.style.display = 'flex';
       backBtn.style.display = 'flex';
+
+      // Sakrij glavne sekcije
       hero.style.display = 'none';
       content.style.display = 'none';
       languageSwitcher.style.display = 'none';
       scrollIndicator.style.display = 'none';
+
+      // Scroll na vrh info sekcije
       window.scrollTo(0, 0);
     }
 
     function hideInfo() {
       infoSection.style.display = 'none';
       backBtn.style.display = 'none';
+
+      // Vrati glavne sekcije
       hero.style.display = 'flex';
       content.style.display = 'flex';
       languageSwitcher.style.display = 'flex';
       scrollIndicator.style.display = 'block';
+
+      // Vrati skrol na prethodnu poziciju
+      window.scrollTo(0, lastScrollPos);
     }
 
     infoBtn.addEventListener('click', () => {
@@ -412,44 +412,32 @@
       }
     });
 
-    // Funkcija za efekat skidanja pozadine stare sa novom
     window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      const vh = window.innerHeight;
+      const scrollPos = window.scrollY || window.pageYOffset;
+      const windowHeight = window.innerHeight;
 
-      // Blur i prikaz teksta na staroj hero sekciji kao i do sada
-      if (scrollY > vh / 2) {
+      // Blur efekat na staru pozadinu i fade-out kad prelazimo u novu sekciju
+      if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 1.8) {
+        // blur staru pozadinu
         hero.classList.add('blur');
+        hero.classList.remove('fade-out');
         headline.classList.add('visible');
-      } else {
+
+        // nova pozadina još nije vidljiva
+        cmpcBg.classList.remove('visible');
+      } else if (scrollPos >= windowHeight * 1.8) {
+        // Kad smo na ili ispod nove sekcije, gasimo staru pozadinu
+        hero.classList.add('fade-out');
         hero.classList.remove('blur');
         headline.classList.remove('visible');
-      }
 
-      // Efekat prelaza pozadine:
-      // Kad scrollY prelazi početak nove sekcije, postepeno smanjujemo opacity hero pozadine
-      // i "otkrivamo" novu pozadinu ispod.
-
-      const newSectionTop = newSection.offsetTop;
-
-      if (scrollY >= newSectionTop - vh && scrollY <= newSectionTop + vh) {
-        // računamo koliko je scroll "ušao" u novu sekciju (0 do 1)
-        let progress = (scrollY - (newSectionTop - vh)) / vh;
-        progress = Math.min(Math.max(progress, 0), 1);
-
-        // Stara pozadina polako nestaje (opacity od 1 do 0)
-        hero.style.opacity = 1 - progress;
-
-        // Nova pozadina ostaje vidljiva (opacity 1)
-        newBackground.style.opacity = 1;
-      } else if (scrollY < newSectionTop - vh) {
-        // pre nove sekcije - sve po defaultu
-        hero.style.opacity = 1;
-        newBackground.style.opacity = 1;
-      } else if (scrollY > newSectionTop + vh) {
-        // potpuno skrolovana nova sekcija, stara pozadina sakrivena
-        hero.style.opacity = 0;
-        newBackground.style.opacity = 1;
+        // Pojavljuje se nova pozadina
+        cmpcBg.classList.add('visible');
+      } else {
+        // Vraćamo staru pozadinu u normalu, skrivamo novu
+        hero.classList.remove('blur', 'fade-out');
+        headline.classList.remove('visible');
+        cmpcBg.classList.remove('visible');
       }
     });
 
