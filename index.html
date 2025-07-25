@@ -4,272 +4,136 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Magnituda</title>
-
-  <!-- Geomanist font -->
   <style>
-    @font-face {
-      font-family: 'Geomanist';
-      src: url('Geomanist-Regular.otf') format('opentype');
-    }
-
-    * {
+    body {
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body, html {
-      height: 100%;
-      font-family: 'Geomanist', sans-serif;
-      scroll-behavior: smooth;
+      font-family: 'Arial', sans-serif;
+      background-color: #000;
+      color: #fff;
     }
 
     .hero {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
       height: 100vh;
-      background: url("Home - SPLASH FULL.png") no-repeat center center/cover;
+      background-image: url('main.jpg');
+      background-size: cover;
+      background-position: center;
       display: flex;
-      align-items: center;
       justify-content: center;
-      transition: filter 0.6s ease-in-out;
-      z-index: 1;
+      align-items: center;
+      transition: filter 0.5s ease;
     }
 
     .hero.blur {
-      filter: blur(6px) brightness(0.6);
+      filter: blur(8px);
     }
 
-    .language-switcher {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1100;
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-      padding: 8px 16px;
-      display: flex;
-      gap: 12px;
-    }
-
-    .language-switcher button {
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-      font-family: inherit;
-      color: black;
-      font-weight: 600;
-      padding: 8px 16px;
-      border-radius: 8px;
-      backdrop-filter: blur(10px);
-      transition: background-color 0.3s ease;
-    }
-    .language-switcher button:hover {
-      background-color: rgba(255, 255, 255, 0.4);
-    }
-
-    .scroll-indicator {
+    .headline {
       position: absolute;
-      bottom: 30px;
-      font-size: 2rem;
-      animation: bounce 2s infinite;
-      color: white;
-      z-index: 5;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(10px); }
-    }
-
-    .content {
-      position: relative;
-      min-height: 100vh;
-      background-color: transparent;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      top: 20vh;
+      width: 100%;
       text-align: center;
-      padding: 40px 20px;
-      margin-top: 100vh;
-      z-index: 5;
-      gap: 24px;
-    }
-
-    .content h1 {
-      font-size: 2rem;
-      color: white;
       opacity: 0;
-      transition: opacity 1s ease-in-out;
-      text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
+      transition: opacity 1s ease;
     }
 
-    .content h1.visible {
+    .headline.visible {
       opacity: 1;
     }
 
-    #infoBtn {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      border: none;
-      padding: 8px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-family: inherit;
-      font-weight: 600;
-      color: black;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
+    h1 {
+      font-size: 3em;
+      margin: 0;
     }
-    #infoBtn:hover {
-      background-color: rgba(255, 255, 255, 0.4);
+
+    .button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: transparent;
+      border: 1px solid #fff;
+      color: #fff;
+      cursor: pointer;
+      font-family: 'Arial', sans-serif;
+      text-transform: lowercase;
+    }
+
+    .content {
+      padding: 100px 20px 50px;
+      text-align: center;
+    }
+
+    .language-switch {
+      position: absolute;
+      top: 20px;
+      right: 20px;
     }
 
     #infoSection {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #000;
-      overflow-y: auto;
       display: none;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px 0;
-      z-index: 1000;
+      padding: 50px;
+      background-color: #111;
+      color: #fff;
     }
-
-    #infoSection img {
-      max-width: 90vw;
-      margin: 16px 0;
-      box-shadow: 0 0 20px rgba(0,0,0,0.7);
-      border-radius: 8px;
-    }
-
-    #backBtn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1100;
-      background: rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(10px);
-      border-radius: 4px;
-      padding: 12px;
-      cursor: pointer;
-      font-size: 24px;
-      color: black;
-      user-select: none;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      text-shadow: 0 0 2px rgba(255,255,255,0.8);
-      transition: background-color 0.3s ease;
-    }
-
-    #backBtn:hover {
-      background: rgba(255, 255, 255, 0.5);
-    }
-
-    /* Nova sekcija za video i sliku */
 
     #videoSection {
-      margin: 40px 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
+      padding-top: 100vh;
+      padding-bottom: 50px;
+      background-color: #000;
+      text-align: center;
     }
 
-    #videoSection iframe {
-      width: 90vw;
-      max-width: 560px;
-      height: 315px;
+    iframe {
+      width: 90%;
+      max-width: 800px;
+      height: 450px;
       border: none;
-      border-radius: 8px;
-    }
-
-    #loadImageBtn {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-family: inherit;
-      font-weight: 600;
-      color: black;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
-
-    #loadImageBtn:hover {
-      background-color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 20px;
     }
 
     #additionalImage {
       display: none;
-      max-width: 90vw;
+      width: 90%;
+      max-width: 800px;
       margin-top: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.7);
     }
   </style>
 </head>
 <body>
+  <div class="hero" id="hero">
+    <!-- Prazna pozadinska slika -->
+  </div>
 
-  <section class="hero" id="hero">
-    <div class="language-switcher">
-      <button id="langBtn">EN</button>
+  <div class="headline" id="headline">
+    <div class="language-switch">
+      <button id="langToggle" class="button">EN</button>
     </div>
-    <div class="scroll-indicator">↓</div>
-  </section>
+    <h1 id="mainTitle">CENTAR ZA PROMOCIJU SAVREMENE MUZIKE</h1>
+    <button id="infoBtn" class="button">informator.read</button>
+  </div>
 
-  <section class="content" id="content">
-    <h1 id="headline">Centar za promociju savremene muzike</h1>
-    <button id="infoBtn">INFORMATOR</button>
+  <div class="content">
+    <div id="infoSection">
+      <p>
+        Magnituda je centar za promociju savremene muzike, usmeren na razvoj muzičkih izraza, edukaciju i saradnju sa savremenim umetnicima.
+      </p>
+      <button id="backBtn" class="button">nazad</button>
+    </div>
 
-    <!-- Nova sekcija sa videom i dugmetom -->
-    <section id="videoSection" aria-label="Video i dodatna slika">
-      <iframe 
-        src="https://www.youtube.com/embed/V4AV4OCU6pk" 
-        title="YouTube video - Bez kompasa" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen>
-      </iframe>
-      <button id="loadImageBtn">Prikaži sliku Ekspozicija - Bez kompasa</button>
+    <div id="videoSection">
+      <iframe src="https://www.youtube.com/embed/V4AV4OCU6pk?si=KASjE0kRWSZFK8b1" allowfullscreen></iframe>
+      <br />
+      <button id="loadImageBtn" class="button">ekspozicija.read</button>
       <img id="additionalImage" src="Ekspozicija - Bez kompasa.png" alt="Ekspozicija - Bez kompasa" />
-    </section>
-  </section>
-
-  <section id="infoSection" aria-label="Informator sa slikama">
-    <button id="backBtn" aria-label="Nazad">&#8592;</button>
-    <img src="Magnituda_informator-1.png" alt="Strana 1 informatora" />
-    <img src="Magnituda_informator-2.png" alt="Strana 2 informatora" />
-    <img src="Magnituda_informator-3.png" alt="Strana 3 informatora" />
-    <img src="Magnituda_informator-4.png" alt="Strana 4 informatora" />
-    <img src="Magnituda_informator-5.png" alt="Strana 5 informatora" />
-    <img src="Magnituda_informator-6.png" alt="Strana 6 informatora" />
-  </section>
+    </div>
+  </div>
 
   <script>
-    const langBtn = document.getElementById('langBtn');
-    const headline = document.getElementById('headline');
-    const hero = document.getElementById('hero');
+    const langToggle = document.getElementById('langToggle');
+    const mainTitle = document.getElementById('mainTitle');
     const infoBtn = document.getElementById('infoBtn');
-    const infoSection = document.getElementById('infoSection');
     const backBtn = document.getElementById('backBtn');
-    const content = document.getElementById('content');
-    const languageSwitcher = document.querySelector('.language-switcher');
-    const scrollIndicator = document.querySelector('.scroll-indicator');
-
+    const infoSection = document.getElementById('infoSection');
+    const hero = document.getElementById('hero');
+    const headline = document.getElementById('headline');
     const loadImageBtn = document.getElementById('loadImageBtn');
     const additionalImage = document.getElementById('additionalImage');
 
@@ -277,40 +141,29 @@
 
     function updateLanguage() {
       if (currentLang === 'sr') {
-        langBtn.textContent = 'EN';
-        headline.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
-        infoBtn.textContent = 'INFORMATOR';
-        infoBtn.disabled = false;
+        langToggle.textContent = 'EN';
+        mainTitle.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
+        infoBtn.textContent = 'informator.read';
+        loadImageBtn.textContent = 'ekspozicija.read';
       } else {
-        langBtn.textContent = 'SR';
-        headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
-        infoBtn.textContent = 'OUR STORY';
-        infoBtn.disabled = true;
+        langToggle.textContent = 'SR';
+        mainTitle.textContent = 'CENTER FOR THE PROMOTION OF CONTEMPORARY MUSIC';
+        infoBtn.textContent = 'info.read';
+        loadImageBtn.textContent = 'exposition.read';
       }
     }
 
-    langBtn.addEventListener('click', () => {
+    langToggle.addEventListener('click', () => {
       currentLang = currentLang === 'sr' ? 'en' : 'sr';
       updateLanguage();
     });
 
     function showInfo() {
-      infoSection.style.display = 'flex';
-      backBtn.style.display = 'flex';
-      hero.style.display = 'none';
-      content.style.display = 'none';
-      languageSwitcher.style.display = 'none';
-      scrollIndicator.style.display = 'none';
-      window.scrollTo(0, 0);
+      infoSection.style.display = 'block';
     }
 
     function hideInfo() {
       infoSection.style.display = 'none';
-      backBtn.style.display = 'none';
-      hero.style.display = 'flex';
-      content.style.display = 'flex';
-      languageSwitcher.style.display = 'flex';
-      scrollIndicator.style.display = 'block';
     }
 
     infoBtn.addEventListener('click', () => {
@@ -326,10 +179,10 @@
     loadImageBtn.addEventListener('click', () => {
       if (additionalImage.style.display === 'none' || additionalImage.style.display === '') {
         additionalImage.style.display = 'block';
-        loadImageBtn.textContent = 'Sakrij sliku Ekspozicija - Bez kompasa';
+        loadImageBtn.textContent = currentLang === 'sr' ? 'sakrij ekspoziciju' : 'hide exposition';
       } else {
         additionalImage.style.display = 'none';
-        loadImageBtn.textContent = 'Prikaži sliku Ekspozicija - Bez kompasa';
+        loadImageBtn.textContent = currentLang === 'sr' ? 'ekspozicija.read' : 'exposition.read';
       }
     });
 
@@ -350,4 +203,3 @@
   </script>
 </body>
 </html>
-
