@@ -109,9 +109,8 @@
       transition: opacity 1s ease-in-out;
       text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
       letter-spacing: 0.15em;
-      text-transform: uppercase;
     }
-    /* Engleski stil */
+    /* Kada je engleski, ukloni all caps i letter-spacing */
     .content h1.english {
       text-transform: none;
       letter-spacing: normal;
@@ -122,7 +121,7 @@
       opacity: 1;
     }
 
-    /* Dugme INFORMATOR / OUR STORY */
+    /* Novo dugme INFORMATOR / OUR STORY */
     #infoBtn {
       background: rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(10px);
@@ -140,19 +139,30 @@
       background-color: rgba(255, 255, 255, 0.4);
     }
 
-    /* iframe PDF */
-    #pdfViewer {
+    /* Sekcija za slike informatora */
+    #infoSection {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      border: none;
-      z-index: 1000;
+      background: #000;
+      overflow-y: auto;
       display: none;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      z-index: 1000;
     }
 
-    /* Dugme za povratak BEZ crnog okvira, samo glassmorphism */
+    #infoSection img {
+      max-width: 90vw;
+      margin: 16px 0;
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
+      border-radius: 8px;
+    }
+
+    /* Back dugme - glassmorphism, bez crnog okvira */
     #backBtn {
       position: fixed;
       top: 20px;
@@ -161,7 +171,7 @@
       background: rgba(255, 255, 255, 0.3);
       backdrop-filter: blur(10px);
       border-radius: 8px;
-      padding: 6px 12px;
+      padding: 8px 12px;
       cursor: pointer;
       font-size: 24px;
       color: black;
@@ -170,7 +180,6 @@
       align-items: center;
       justify-content: center;
       text-shadow: 0 0 2px rgba(255,255,255,0.8);
-      border: none; /* uklonjen okvir */
       transition: background-color 0.3s ease;
     }
     #backBtn:hover {
@@ -194,19 +203,16 @@
     <button id="infoBtn">INFORMATOR</button>
   </section>
 
-  <!-- Dugme za povratak sa PDF -->
-  <button id="backBtn" aria-label="Nazad">&#8592;</button>
-
-  <!-- PDF Viewer -->
-  <iframe
-    id="pdfViewer"
-    src="Magnituda - Centar za promociju savremene muzike.pdf"
-    title="Informator"
-    frameborder="0"
-    type="application/pdf"
-    sandbox="allow-scripts allow-same-origin"
-    allowfullscreen
-  ></iframe>
+  <!-- Sekcija za slike informatora -->
+  <section id="infoSection" aria-label="Informator sa slikama">
+    <button id="backBtn" aria-label="Nazad">&#8592;</button>
+    <img src="Magnituda_informator-1.png" alt="Strana 1 informatora" />
+    <img src="Magnituda_informator-2.png" alt="Strana 2 informatora" />
+    <img src="Magnituda_informator-3.png" alt="Strana 3 informatora" />
+    <img src="Magnituda_informator-4.png" alt="Strana 4 informatora" />
+    <img src="Magnituda_informator-5.png" alt="Strana 5 informatora" />
+    <img src="Magnituda_informator-6.png" alt="Strana 6 informatora" />
+  </section>
 
   <!-- JavaScript -->
   <script>
@@ -214,8 +220,11 @@
     const headline = document.getElementById('headline');
     const hero = document.getElementById('hero');
     const infoBtn = document.getElementById('infoBtn');
-    const pdfViewer = document.getElementById('pdfViewer');
+    const infoSection = document.getElementById('infoSection');
     const backBtn = document.getElementById('backBtn');
+    const content = document.getElementById('content');
+    const languageSwitcher = document.querySelector('.language-switcher');
+    const scrollIndicator = document.querySelector('.scroll-indicator');
 
     let currentLang = 'sr';
 
@@ -231,7 +240,7 @@
         headline.textContent = 'Contemporary Music Promotion Centre';
         headline.classList.add('english');
         infoBtn.textContent = 'OUR STORY';
-        infoBtn.disabled = true; // ne reaguje na engleskom dok ne dodaš pdf
+        infoBtn.disabled = true; // ne reaguje dok nema eng PDF/slika
       }
     }
 
@@ -240,33 +249,35 @@
       updateLanguage();
     });
 
-    // Prikaz / skrivanje PDF-a
-    function showPDF() {
-      pdfViewer.style.display = 'block';
+    function showInfo() {
+      infoSection.style.display = 'flex';
       backBtn.style.display = 'flex';
       hero.style.display = 'none';
-      document.getElementById('content').style.display = 'none';
-      document.querySelector('.language-switcher').style.display = 'none';
-      document.querySelector('.scroll-indicator').style.display = 'none';
+      content.style.display = 'none';
+      languageSwitcher.style.display = 'none';
+      scrollIndicator.style.display = 'none';
       window.scrollTo(0, 0);
     }
 
-    function hidePDF() {
-      pdfViewer.style.display = 'none';
+    function hideInfo() {
+      infoSection.style.display = 'none';
       backBtn.style.display = 'none';
       hero.style.display = 'flex';
-      document.getElementById('content').style.display = 'flex';
-      document.querySelector('.language-switcher').style.display = 'flex';
-      document.querySelector('.scroll-indicator').style.display = 'block';
+      content.style.display = 'flex';
+      languageSwitcher.style.display = 'flex';
+      scrollIndicator.style.display = 'block';
     }
 
     infoBtn.addEventListener('click', () => {
       if (currentLang === 'sr') {
-        showPDF();
+        showInfo();
       }
     });
 
-    // Scroll efekat za hero i headline
+    backBtn.addEventListener('click', () => {
+      hideInfo();
+    });
+
     window.addEventListener('scroll', () => {
       const scrollPos = window.scrollY;
       const windowHeight = window.innerHeight;
@@ -280,11 +291,6 @@
       }
     });
 
-    backBtn.addEventListener('click', () => {
-      hidePDF();
-    });
-
-    // Inicijalno postavljanje jezika i stilova
     updateLanguage();
   </script>
 
