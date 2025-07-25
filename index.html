@@ -42,18 +42,6 @@
       filter: blur(6px) brightness(0.6);
     }
 
-    .hero2 {
-      position: relative; /* prati skrol */
-      width: 100%;
-      height: 100vh;
-      background: url('CMPC.jpg') no-repeat center center/cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1;
-      transition: filter 0.6s ease-in-out;
-    }
-
     .language-switcher {
       position: fixed;
       top: 20px;
@@ -218,6 +206,16 @@
       border-radius: 8px;
       box-shadow: 0 0 20px rgba(0,0,0,0.7);
     }
+
+    /* NOVA SEKCIJA SA POZADINSKOM SLIKOM CMPC.jpg */
+    #cmcpSection {
+      min-height: 100vh;
+      background: url('CMPC.jpg') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -246,8 +244,10 @@
     </section>
   </section>
 
-  <!-- Nova hero2 sekcija sa pozadinskom slikom CMPC.jpg -->
-  <section class="hero2" aria-label="Druga hero pozadina"></section>
+  <!-- NOVA SEKCIJA ZA POZADINSKU SLIKU CMPC.jpg -->
+  <section id="cmcpSection" aria-label="Slika Centar za promociju savremene muzike">
+    <!-- možeš po želji ovde da staviš neki tekst ili sadržaj, ili ostavi prazno -->
+  </section>
 
   <section id="infoSection" aria-label="Informator sa slikama">
     <button id="backBtn" aria-label="Nazad">&#8592;</button>
