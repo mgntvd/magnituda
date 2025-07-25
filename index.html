@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Magnituda</title>
 
-  <!-- Geomanist font (pretpostavljam da ga imaš lokalno, ako ne — koristi privremeno sans-serif) -->
+  <!-- Geomanist font -->
   <style>
     @font-face {
       font-family: 'Geomanist';
@@ -25,7 +25,7 @@
     }
 
     .hero {
-      position: fixed; /* Fiksiramo pozadinu da uvek stoji */
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
@@ -43,7 +43,7 @@
     }
 
     .language-switcher {
-      position: fixed; /* Da ostane fiksirano i iznad slike */
+      position: fixed;
       top: 20px;
       left: 20px;
       z-index: 1100;
@@ -89,39 +89,40 @@
     .content {
       position: relative;
       min-height: 100vh;
-      background-color: transparent; /* nema bele pozadine */
+      background-color: transparent;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
       padding: 40px 20px;
-      margin-top: 100vh; /* počinje nakon hero sekcije */
+      margin-top: 100vh;
       z-index: 5;
       gap: 24px;
     }
 
     /* Naslov ALL CAPS samo za srpski */
     .content h1 {
-      font-size: 2rem; /* malo manji font */
+      font-size: 2rem;
       color: white;
       opacity: 0;
       transition: opacity 1s ease-in-out;
       text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-      letter-spacing: 0.15em; /* blagi razmak */
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
     }
-    /* Kada je engleski, ukloni all caps i letter-spacing */
+    /* Engleski stil */
     .content h1.english {
       text-transform: none;
       letter-spacing: normal;
-      font-size: 2.5rem; /* originalni font veličina */
+      font-size: 2.5rem;
     }
 
     .content h1.visible {
       opacity: 1;
     }
 
-    /* Novo dugme INFORMATOR / OUR STORY */
+    /* Dugme INFORMATOR / OUR STORY */
     #infoBtn {
       background: rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(10px);
@@ -151,7 +152,7 @@
       display: none;
     }
 
-    /* Back dugme fiksirano u gornjem levom uglu */
+    /* Dugme za povratak BEZ crnog okvira, samo glassmorphism */
     #backBtn {
       position: fixed;
       top: 20px;
@@ -160,7 +161,7 @@
       background: rgba(255, 255, 255, 0.3);
       backdrop-filter: blur(10px);
       border-radius: 8px;
-      padding: 8px 12px;
+      padding: 6px 12px;
       cursor: pointer;
       font-size: 24px;
       color: black;
@@ -169,6 +170,7 @@
       align-items: center;
       justify-content: center;
       text-shadow: 0 0 2px rgba(255,255,255,0.8);
+      border: none; /* uklonjen okvir */
       transition: background-color 0.3s ease;
     }
     #backBtn:hover {
@@ -201,6 +203,9 @@
     src="Magnituda - Centar za promociju savremene muzike.pdf"
     title="Informator"
     frameborder="0"
+    type="application/pdf"
+    sandbox="allow-scripts allow-same-origin"
+    allowfullscreen
   ></iframe>
 
   <!-- JavaScript -->
@@ -239,12 +244,11 @@
     function showPDF() {
       pdfViewer.style.display = 'block';
       backBtn.style.display = 'flex';
-      // Sakrij ostale sekcije i dugmad ako želiš
       hero.style.display = 'none';
       document.getElementById('content').style.display = 'none';
       document.querySelector('.language-switcher').style.display = 'none';
       document.querySelector('.scroll-indicator').style.display = 'none';
-      window.scrollTo(0, 0); // resetuj scroll kad otvoriš pdf
+      window.scrollTo(0, 0);
     }
 
     function hidePDF() {
