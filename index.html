@@ -5,274 +5,170 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Magnituda</title>
 
-  <!-- Geomanist font -->
   <style>
     @font-face {
       font-family: 'Geomanist';
       src: url('Geomanist-Regular.otf') format('opentype');
     }
 
-    * {
+    body, html {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-
-    body, html {
-      height: 100%;
       font-family: 'Geomanist', sans-serif;
+      overflow-x: hidden;
       scroll-behavior: smooth;
     }
 
     .hero {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
+      position: relative;
       height: 100vh;
-      background: url("Home - SPLASH FULL.png") no-repeat center center/cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: filter 0.6s ease-in-out;
-      z-index: 1;
+      background-image: url('BG.jpg');
+      background-size: cover;
+      background-position: center;
+      transition: filter 0.5s ease, opacity 0.5s ease;
     }
 
     .hero.blur {
-      filter: blur(6px) brightness(0.6);
+      filter: blur(10px);
     }
 
     .hero.fade-out {
       opacity: 0;
-      transition: opacity 0.6s ease-in-out;
-      pointer-events: none;
     }
 
-    .cmpc-bg {
+    .headline {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 3em;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .headline.visible {
+      opacity: 1;
+    }
+
+    .language-switcher {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 10;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 1.2em;
+    }
+
+    .info-section {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px;
+      background-color: #111;
+      color: white;
+      min-height: 100vh;
+    }
+
+    .back-button {
+      display: none;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+    }
+
+    .content {
+      background-color: black;
+      color: white;
+      padding: 100px 20px;
+    }
+
+    #cmpcBg {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100vh;
-      background: url("CMPC.jpg") no-repeat center center/cover;
+      background-image: url('CMPC.jpg');
+      background-size: cover;
+      background-position: center;
+      z-index: -1;
       opacity: 0;
-      transition: opacity 0.6s ease-in-out;
-      z-index: 0;
+      transition: opacity 1s ease;
     }
 
-    .cmpc-bg.visible {
+    #cmpcBg.visible {
       opacity: 1;
-    }
-
-    .language-switcher {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1100;
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-      padding: 8px 16px;
-      display: flex;
-      gap: 12px;
-    }
-
-    .language-switcher button {
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-      font-family: inherit;
-      color: black;
-      font-weight: 600;
-      padding: 8px 16px;
-      border-radius: 8px;
-      backdrop-filter: blur(10px);
-      transition: background-color 0.3s ease;
-    }
-    .language-switcher button:hover {
-      background-color: rgba(255, 255, 255, 0.4);
-    }
-
-    .scroll-indicator {
-      position: absolute;
-      bottom: 30px;
-      font-size: 2rem;
-      animation: bounce 2s infinite;
-      color: white;
-      z-index: 5;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(10px); }
-    }
-
-    .content {
-      position: relative;
-      min-height: 100vh;
-      background-color: transparent;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 20px;
-      margin-top: 100vh;
-      z-index: 5;
-      gap: 24px;
-    }
-
-    .content h1 {
-      font-size: 2rem;
-      color: white;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-      text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-
-    .content h1.visible {
-      opacity: 1;
-    }
-
-    #infoBtn, #loadImageBtn {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      border: none;
-      padding: 8px 16px;
-      border-radius: 0px; /* četvrtasto dugme */
-      cursor: pointer;
-      font-family: inherit;
-      font-weight: 600;
-      color: black;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
-
-    #infoBtn:hover,
-    #loadImageBtn:hover {
-      background-color: rgba(255, 255, 255, 0.4);
-    }
-
-    #infoSection {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #000;
-      overflow-y: auto;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px 0;
-      z-index: 1000;
-    }
-
-    #infoSection img {
-      max-width: 90vw;
-      margin: 16px 0;
-      box-shadow: 0 0 20px rgba(0,0,0,0.7);
-      border-radius: 8px;
-    }
-
-    #backBtn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1100;
-      background: rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(10px);
-      border-radius: 4px;
-      padding: 12px;
-      cursor: pointer;
-      font-size: 24px;
-      color: black;
-      user-select: none;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      text-shadow: 0 0 2px rgba(255,255,255,0.8);
-      transition: background-color 0.3s ease;
-    }
-
-    #backBtn:hover {
-      background: rgba(255, 255, 255, 0.5);
-    }
-
-    /* OVO JE PROMENA - video sekcija je vertikalno centrirana */
-    #videoSection {
-      min-height: 100vh;
-      margin-top: 130px; /* dodato - razmak izmedju dugmeta i video sekcije */
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-    }
-
-    #videoSection iframe {
-      width: 90vw;
-      max-width: 560px;
-      height: 315px;
-      border: none;
-      border-radius: 8px;
     }
 
     #additionalImage {
-      display: none;
-      max-width: 90vw;
+      width: 80%;
+      max-width: 600px;
       margin-top: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.7);
+      display: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: white;
+      color: black;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    button:disabled {
+      background-color: #888;
+      cursor: not-allowed;
     }
   </style>
 </head>
 <body>
+  <div id="cmpcBg"></div>
+
+  <div class="language-switcher">
+    <button id="langBtn">EN</button>
+  </div>
+
+  <div class="back-button">
+    <button id="backBtn">←</button>
+  </div>
 
   <section class="hero" id="hero">
-    <div class="language-switcher">
-      <button id="langBtn">EN</button>
+    <div class="headline" id="headline">
+      CENTAR ZA PROMOCIJU SAVREMENE MUZIKE
     </div>
-    <div class="scroll-indicator">↓</div>
+    <div class="scroll-indicator">
+      ↓ scroll ↓
+    </div>
   </section>
 
-  <section class="content" id="content">
-    <h1 id="headline">Centar za promociju savremene muzike</h1>
-    <button id="infoBtn">INFORMATOR</button>
-
-    <!-- Nova sekcija sa videom i dugmetom -->
-    <section id="videoSection" aria-label="Video i dodatna slika">
-      <iframe
-        src="https://www.youtube.com/embed/V4AV4OCU6pk"
-        title="YouTube video - Bez kompasa"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
+  <div class="content" id="content">
+    <div style="text-align: center;">
+      <button id="infoBtn">INFORMATOR</button>
       <button id="loadImageBtn">ekspozicija.read</button>
-      <img id="additionalImage" src="Ekspozicija - Bez kompasa.png" alt="Ekspozicija - Bez kompasa" />
-    </section>
-  </section>
+      <img id="additionalImage" src="EXP.jpg" alt="Ekspozicija" />
+    </div>
+  </div>
 
-  <!-- Nova pozadina CMPC -->
-  <div class="cmpc-bg" id="cmpcBg"></div>
-
-  <section id="infoSection" aria-label="Informator sa slikama">
-    <button id="backBtn" aria-label="Nazad">&#8592;</button>
-    <img src="Magnituda_informator-1.png" alt="Strana 1 informatora" />
-    <img src="Magnituda_informator-2.png" alt="Strana 2 informatora" />
-    <img src="Magnituda_informator-3.png" alt="Strana 3 informatora" />
-    <img src="Magnituda_informator-4.png" alt="Strana 4 informatora" />
-    <img src="Magnituda_informator-5.png" alt="Strana 5 informatora" />
-    <img src="Magnituda_informator-6.png" alt="Strana 6 informatora" />
+  <section class="info-section" id="infoSection">
+    <h1>Informator</h1>
+    <p>
+      Magnituda je centar za promociju savremene muzike. Ovaj informator sadrži sve ključne podatke o radu centra.
+    </p>
   </section>
 
   <script>
-    // Tweak-uj ovu vrednost da pomeriš trenutak prelaza
-    const transitionScrollRatio = 1.8;
-
     const langBtn = document.getElementById('langBtn');
     const headline = document.getElementById('headline');
     const hero = document.getElementById('hero');
@@ -283,11 +179,14 @@
     const languageSwitcher = document.querySelector('.language-switcher');
     const scrollIndicator = document.querySelector('.scroll-indicator');
     const cmpcBg = document.getElementById('cmpcBg');
-
     const loadImageBtn = document.getElementById('loadImageBtn');
     const additionalImage = document.getElementById('additionalImage');
 
     let currentLang = 'sr';
+    let lastScrollPos = 0;
+
+    //   Podesiva vrednost kada se pozadina CMPC.jpg prikazuje
+    const revealRatio = 1.8; // <-- Menjaj po potrebi
 
     function updateLanguage() {
       if (currentLang === 'sr') {
@@ -313,13 +212,14 @@
     });
 
     function showInfo() {
+      lastScrollPos = window.scrollY || window.pageYOffset;
       infoSection.style.display = 'flex';
       backBtn.style.display = 'flex';
       hero.style.display = 'none';
       content.style.display = 'none';
       languageSwitcher.style.display = 'none';
       scrollIndicator.style.display = 'none';
-      window.scrollTo(savedScrollPos);
+      window.scrollTo(0, 0);
     }
 
     function hideInfo() {
@@ -329,15 +229,11 @@
       content.style.display = 'flex';
       languageSwitcher.style.display = 'flex';
       scrollIndicator.style.display = 'block';
-      window.scrollTo(savedScrollPos);
+      window.scrollTo(0, lastScrollPos);
     }
-
-    // Čuvamo scroll poziciju pre otvaranja info sekcije
-    let savedScrollPos = 0;
 
     infoBtn.addEventListener('click', () => {
       if (currentLang === 'sr') {
-        savedScrollPos = window.scrollY || window.pageYOffset;
         showInfo();
       }
     });
@@ -358,12 +254,12 @@
       const scrollPos = window.scrollY || window.pageYOffset;
       const windowHeight = window.innerHeight;
 
-      if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * transitionScrollRatio) {
+      if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * revealRatio) {
         hero.classList.add('blur');
         hero.classList.remove('fade-out');
         headline.classList.add('visible');
         cmpcBg.classList.remove('visible');
-      } else if (scrollPos >= windowHeight * transitionScrollRatio) {
+      } else if (scrollPos >= windowHeight * revealRatio) {
         hero.classList.add('fade-out');
         hero.classList.remove('blur');
         headline.classList.remove('visible');
