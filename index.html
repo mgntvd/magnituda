@@ -18,10 +18,16 @@
       box-sizing: border-box;
     }
 
-    body, html {
+    html, body {
       height: 100%;
       font-family: 'Geomanist', sans-serif;
       scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+    }
+
+    section {
+      scroll-snap-align: center;
     }
 
     .hero {
@@ -181,11 +187,13 @@
     }
 
     #videoSection {
-      margin-top: 50vh; /* Novi razmak kao da skroluješ na novu stranicu */
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
+      justify-content: center;
       align-items: center;
       gap: 20px;
+      scroll-snap-align: center;
     }
 
     #videoSection iframe {
@@ -217,18 +225,17 @@
   <section class="content" id="content">
     <h1 id="headline">Centar za promociju savremene muzike</h1>
     <button id="infoBtn">INFORMATOR</button>
+  </section>
 
-    <!-- Nova sekcija sa videom i dugmetom -->
-    <section id="videoSection" aria-label="Video i dodatna slika">
-      <iframe 
-        src="https://www.youtube.com/embed/V4AV4OCU6pk" 
-        title="YouTube video - Bez kompasa" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen>
-      </iframe>
-      <button id="loadImageBtn">ekspozicija.read</button>
-      <img id="additionalImage" src="Ekspozicija - Bez kompasa.png" alt="Ekspozicija - Bez kompasa" />
-    </section>
+  <section id="videoSection" aria-label="Video i dodatna slika">
+    <iframe 
+      src="https://www.youtube.com/embed/V4AV4OCU6pk" 
+      title="YouTube video - Bez kompasa" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+      allowfullscreen>
+    </iframe>
+    <button id="loadImageBtn">ekspozicija.read</button>
+    <img id="additionalImage" src="Ekspozicija - Bez kompasa.png" alt="Ekspozicija - Bez kompasa" />
   </section>
 
   <section id="infoSection" aria-label="Informator sa slikama">
