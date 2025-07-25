@@ -2,204 +2,101 @@
 <html lang="sr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Magnituda</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
-      background-color: #000;
-      color: #fff;
+      font-family: 'Courier New', monospace;
+      background-color: #f4f4f4;
+      color: #111;
     }
 
-    .hero {
-      height: 100vh;
-      background-image: url('main.jpg');
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: filter 0.5s ease;
-    }
-
-    .hero.blur {
-      filter: blur(8px);
-    }
-
-    .headline {
-      position: absolute;
-      top: 20vh;
-      width: 100%;
+    .section {
+      padding: 100px 20px;
       text-align: center;
-      opacity: 0;
-      transition: opacity 1s ease;
-    }
-
-    .headline.visible {
-      opacity: 1;
     }
 
     h1 {
-      font-size: 3em;
-      margin: 0;
+      font-size: 2em;
+      margin-bottom: 20px;
     }
 
-    .button {
-      margin-top: 20px;
+    button {
+      background-color: #111;
+      color: #f4f4f4;
+      border: none;
       padding: 10px 20px;
-      background-color: transparent;
-      border: 1px solid #fff;
-      color: #fff;
+      margin: 10px;
       cursor: pointer;
-      font-family: 'Arial', sans-serif;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
       text-transform: lowercase;
     }
 
-    .content {
-      padding: 100px 20px 50px;
-      text-align: center;
+    button:hover {
+      background-color: #333;
     }
 
-    .language-switch {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-    }
-
-    #infoSection {
-      display: none;
-      padding: 50px;
-      background-color: #111;
-      color: #fff;
-    }
-
-    #videoSection {
+    .video-section {
       padding-top: 100vh;
-      padding-bottom: 50px;
-      background-color: #000;
       text-align: center;
     }
 
     iframe {
       width: 90%;
-      max-width: 800px;
-      height: 450px;
+      max-width: 700px;
+      height: 400px;
       border: none;
       margin-bottom: 20px;
     }
 
-    #additionalImage {
+    .image-container {
       display: none;
-      width: 90%;
-      max-width: 800px;
-      margin-top: 20px;
+      margin: 20px auto;
+      max-width: 90%;
+    }
+
+    .image-container img {
+      max-width: 100%;
+      height: auto;
     }
   </style>
 </head>
 <body>
-  <div class="hero" id="hero">
-    <!-- Prazna pozadinska slika -->
+
+  <!-- Prva sekcija -->
+  <div class="section">
+    <h1>CENTAR ZA PROMOCIJU SAVREMENE MUZIKE</h1>
+    <button onclick="window.open('main/informator.pdf', '_blank')">informator.read</button>
+    <button disabled>infopack.read</button>
   </div>
 
-  <div class="headline" id="headline">
-    <div class="language-switch">
-      <button id="langToggle" class="button">EN</button>
-    </div>
-    <h1 id="mainTitle">CENTAR ZA PROMOCIJU SAVREMENE MUZIKE</h1>
-    <button id="infoBtn" class="button">informator.read</button>
-  </div>
+  <!-- Sekcija sa YouTube videom -->
+  <div class="video-section">
+    <iframe 
+      src="https://www.youtube.com/embed/V4AV4OCU6pk?si=KASjE0kRWSZFK8b1" 
+      title="YouTube video player" 
+      allowfullscreen>
+    </iframe>
 
-  <div class="content">
-    <div id="infoSection">
-      <p>
-        Magnituda je centar za promociju savremene muzike, usmeren na razvoj muzičkih izraza, edukaciju i saradnju sa savremenim umetnicima.
-      </p>
-      <button id="backBtn" class="button">nazad</button>
+    <div>
+      <button onclick="toggleImage()">ekspozicija.read</button>
+      <button disabled>exposition.read</button>
     </div>
 
-    <div id="videoSection">
-      <iframe src="https://www.youtube.com/embed/V4AV4OCU6pk?si=KASjE0kRWSZFK8b1" allowfullscreen></iframe>
-      <br />
-      <button id="loadImageBtn" class="button">ekspozicija.read</button>
-      <img id="additionalImage" src="Ekspozicija - Bez kompasa.png" alt="Ekspozicija - Bez kompasa" />
+    <div id="imageContainer" class="image-container">
+      <img src="main/Ekspozicija - Bez kompasa.png" alt="Ekspozicija - Bez kompasa" />
     </div>
   </div>
 
   <script>
-    const langToggle = document.getElementById('langToggle');
-    const mainTitle = document.getElementById('mainTitle');
-    const infoBtn = document.getElementById('infoBtn');
-    const backBtn = document.getElementById('backBtn');
-    const infoSection = document.getElementById('infoSection');
-    const hero = document.getElementById('hero');
-    const headline = document.getElementById('headline');
-    const loadImageBtn = document.getElementById('loadImageBtn');
-    const additionalImage = document.getElementById('additionalImage');
-
-    let currentLang = 'sr';
-
-    function updateLanguage() {
-      if (currentLang === 'sr') {
-        langToggle.textContent = 'EN';
-        mainTitle.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
-        infoBtn.textContent = 'informator.read';
-        loadImageBtn.textContent = 'ekspozicija.read';
-      } else {
-        langToggle.textContent = 'SR';
-        mainTitle.textContent = 'CENTER FOR THE PROMOTION OF CONTEMPORARY MUSIC';
-        infoBtn.textContent = 'info.read';
-        loadImageBtn.textContent = 'exposition.read';
-      }
+    function toggleImage() {
+      const container = document.getElementById('imageContainer');
+      container.style.display = container.style.display === 'none' ? 'block' : 'none';
     }
-
-    langToggle.addEventListener('click', () => {
-      currentLang = currentLang === 'sr' ? 'en' : 'sr';
-      updateLanguage();
-    });
-
-    function showInfo() {
-      infoSection.style.display = 'block';
-    }
-
-    function hideInfo() {
-      infoSection.style.display = 'none';
-    }
-
-    infoBtn.addEventListener('click', () => {
-      if (currentLang === 'sr') {
-        showInfo();
-      }
-    });
-
-    backBtn.addEventListener('click', () => {
-      hideInfo();
-    });
-
-    loadImageBtn.addEventListener('click', () => {
-      if (additionalImage.style.display === 'none' || additionalImage.style.display === '') {
-        additionalImage.style.display = 'block';
-        loadImageBtn.textContent = currentLang === 'sr' ? 'sakrij ekspoziciju' : 'hide exposition';
-      } else {
-        additionalImage.style.display = 'none';
-        loadImageBtn.textContent = currentLang === 'sr' ? 'ekspozicija.read' : 'exposition.read';
-      }
-    });
-
-    window.addEventListener('scroll', () => {
-      const scrollPos = window.scrollY;
-      const windowHeight = window.innerHeight;
-
-      if (scrollPos > windowHeight / 2) {
-        hero.classList.add('blur');
-        headline.classList.add('visible');
-      } else {
-        hero.classList.remove('blur');
-        headline.classList.remove('visible');
-      }
-    });
-
-    updateLanguage();
   </script>
+
 </body>
 </html>
+
