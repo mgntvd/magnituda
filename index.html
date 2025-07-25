@@ -4,148 +4,280 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Magnituda</title>
+
+  <!-- Geomanist font -->
   <style>
-    body {
+    @font-face {
+      font-family: 'Geomanist';
+      src: url('Geomanist-Regular.otf') format('opentype');
+    }
+
+    * {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(145deg, #1c1c1c, #2c2c2c);
-      color: white;
-      overflow-x: hidden;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Geomanist', sans-serif;
+      scroll-behavior: smooth;
     }
 
     .hero {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
       height: 100vh;
+      background: url("Home - SPLASH FULL.png") no-repeat center center/cover;
       display: flex;
-      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 1rem;
+      transition: filter 0.6s ease-in-out;
+      z-index: 1;
     }
 
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      background: linear-gradient(to right, #00c6ff, #0072ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .hero.blur {
+      filter: blur(6px) brightness(0.6);
     }
 
-    .hero p, .hero .english {
-      font-size: 1.25rem;
-      max-width: 600px;
-      margin-bottom: 2rem;
-      line-height: 1.6;
-      text-align: center;
-    }
-
-    .glass-button {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 0.75rem 1.5rem;
-      color: white;
-      font-weight: bold;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .glass-button:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    .content {
-      display: none;
-      padding: 1rem;
-      position: relative;
-    }
-
-    .image-scroll {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
-      padding-bottom: 4rem;
-    }
-
-    .image-scroll img {
-      max-width: 90%;
-      height: auto;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-      border-radius: 12px;
-    }
-
-    .back-button {
+    .language-switcher {
       position: fixed;
       top: 20px;
       left: 20px;
-      z-index: 1000;
-      padding: 10px 14px;
-      border-radius: 50%;
+      z-index: 1100;
       backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.1);
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      padding: 8px 16px;
       display: flex;
+      gap: 12px;
+    }
+
+    .language-switcher button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-family: inherit;
+      color: black;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+      transition: background-color 0.3s ease;
+    }
+    .language-switcher button:hover {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      font-size: 2rem;
+      animation: bounce 2s infinite;
+      color: white;
+      z-index: 5;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+
+    .content {
+      position: relative;
+      min-height: 100vh;
+      background-color: transparent;
+      display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      transition: background 0.3s ease;
+      text-align: center;
+      padding: 40px 20px;
+      margin-top: 100vh;
+      z-index: 5;
+      gap: 24px;
     }
 
-    .back-button:hover {
+    .content h1 {
+      font-size: 2rem;
+      color: white;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .content h1.visible {
+      opacity: 1;
+    }
+
+    #infoBtn {
       background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+      color: black;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    #infoBtn:hover {
+      background-color: rgba(255, 255, 255, 0.4);
     }
 
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2.2rem;
-      }
+    #infoSection {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      overflow-y: auto;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      z-index: 1000;
+    }
 
-      .hero p, .hero .english {
-        font-size: 1.1rem;
-      }
+    #infoSection img {
+      max-width: 90vw;
+      margin: 16px 0;
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
+      border-radius: 8px;
+    }
 
-      .back-button {
-        top: 16px;
-        left: 16px;
-      }
+    #backBtn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1100;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 50%;
+      padding: 12px;
+      cursor: pointer;
+      font-size: 24px;
+      color: black;
+      user-select: none;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-shadow: 0 0 2px rgba(255,255,255,0.8);
+      transition: background-color 0.3s ease;
+    }
+
+    #backBtn:hover {
+      background: rgba(255, 255, 255, 0.5);
     }
   </style>
 </head>
 <body>
-  <div class="hero" id="main-screen">
-    <h1>Magnituda</h1>
-    <p>Centar za promociju savremene muzike</p>
-    <p class="english">Center for Contemporary Music Promotion</p>
-    <button class="glass-button" onclick="showContent()">Pogledaj informator</button>
-  </div>
 
-  <div class="content" id="image-content">
-    <button class="back-button" onclick="goBack()">←</button>
-    <div class="image-scroll">
-      <img src="Magnituda_informator-1.png" alt="Stranica 1" />
-      <img src="Magnituda_informator-2.png" alt="Stranica 2" />
-      <img src="Magnituda_informator-3.png" alt="Stranica 3" />
-      <img src="Magnituda_informator-4.png" alt="Stranica 4" />
-      <img src="Magnituda_informator-5.png" alt="Stranica 5" />
-      <img src="Magnituda_informator-6.png" alt="Stranica 6" />
+  <section class="hero" id="hero">
+    <div class="language-switcher">
+      <button id="langBtn">EN</button>
     </div>
-  </div>
+    <div class="scroll-indicator">↓</div>
+  </section>
+
+  <section class="content" id="content">
+    <h1 id="headline">Centar za promociju savremene muzike</h1>
+    <button id="infoBtn">INFORMATOR</button>
+  </section>
+
+  <section id="infoSection" aria-label="Informator sa slikama">
+    <button id="backBtn" aria-label="Nazad">&#8592;</button>
+    <img src="Magnituda_informator-1.png" alt="Strana 1 informatora" />
+    <img src="Magnituda_informator-2.png" alt="Strana 2 informatora" />
+    <img src="Magnituda_informator-3.png" alt="Strana 3 informatora" />
+    <img src="Magnituda_informator-4.png" alt="Strana 4 informatora" />
+    <img src="Magnituda_informator-5.png" alt="Strana 5 informatora" />
+    <img src="Magnituda_informator-6.png" alt="Strana 6 informatora" />
+  </section>
 
   <script>
-    function showContent() {
-      document.getElementById('main-screen').style.display = 'none';
-      document.getElementById('image-content').style.display = 'block';
+    const langBtn = document.getElementById('langBtn');
+    const headline = document.getElementById('headline');
+    const hero = document.getElementById('hero');
+    const infoBtn = document.getElementById('infoBtn');
+    const infoSection = document.getElementById('infoSection');
+    const backBtn = document.getElementById('backBtn');
+    const content = document.getElementById('content');
+    const languageSwitcher = document.querySelector('.language-switcher');
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+
+    let currentLang = 'sr';
+
+    function updateLanguage() {
+      if (currentLang === 'sr') {
+        langBtn.textContent = 'EN';
+        headline.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
+        infoBtn.textContent = 'INFORMATOR';
+        infoBtn.disabled = false;
+      } else {
+        langBtn.textContent = 'SR';
+        headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
+        infoBtn.textContent = 'OUR STORY';
+        infoBtn.disabled = true;
+      }
+    }
+
+    langBtn.addEventListener('click', () => {
+      currentLang = currentLang === 'sr' ? 'en' : 'sr';
+      updateLanguage();
+    });
+
+    function showInfo() {
+      infoSection.style.display = 'flex';
+      backBtn.style.display = 'flex';
+      hero.style.display = 'none';
+      content.style.display = 'none';
+      languageSwitcher.style.display = 'none';
+      scrollIndicator.style.display = 'none';
       window.scrollTo(0, 0);
     }
 
-    function goBack() {
-      document.getElementById('image-content').style.display = 'none';
-      document.getElementById('main-screen').style.display = 'flex';
+    function hideInfo() {
+      infoSection.style.display = 'none';
+      backBtn.style.display = 'none';
+      hero.style.display = 'flex';
+      content.style.display = 'flex';
+      languageSwitcher.style.display = 'flex';
+      scrollIndicator.style.display = 'block';
     }
+
+    infoBtn.addEventListener('click', () => {
+      if (currentLang === 'sr') {
+        showInfo();
+      }
+    });
+
+    backBtn.addEventListener('click', () => {
+      hideInfo();
+    });
+
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY;
+      const windowHeight = window.innerHeight;
+
+      if (scrollPos > windowHeight / 2) {
+        hero.classList.add('blur');
+        headline.classList.add('visible');
+      } else {
+        hero.classList.remove('blur');
+        headline.classList.remove('visible');
+      }
+    });
+
+    updateLanguage();
   </script>
 </body>
 </html>
