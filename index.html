@@ -24,7 +24,6 @@
       scroll-behavior: smooth;
     }
 
-    /* STARA POZADINA - hero */
     .hero {
       position: fixed;
       top: 0;
@@ -35,23 +34,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: filter 0.6s ease-in-out, opacity 0.6s ease-in-out;
+      transition: filter 0.6s ease-in-out;
       z-index: 1;
-      opacity: 1;
-      pointer-events: auto;
     }
-    /* blur i posle pojave nove pozadine, lagano gasenje stare */
+
     .hero.blur {
       filter: blur(6px) brightness(0.6);
     }
-    /* Dodajemo klasu koja smanjuje opacity da bi se skidao video - kad nova pozadina krene da se pojavljuje */
+
     .hero.fade-out {
       opacity: 0;
-      pointer-events: none; /* onemogući interakciju kad je skrivena */
-      transition: opacity 0.8s ease-in-out;
+      transition: opacity 0.6s ease-in-out;
+      pointer-events: none;
     }
 
-    /* NOVA POZADINA - CMPC */
     .cmpc-bg {
       position: fixed;
       top: 0;
@@ -59,16 +55,13 @@
       width: 100%;
       height: 100vh;
       background: url("CMPC.jpg") no-repeat center center/cover;
-      opacity: 0; /* potpuno sakrivena na početku */
+      opacity: 0;
+      transition: opacity 0.6s ease-in-out;
       z-index: 0;
-      transition: opacity 0.8s ease-in-out;
-      pointer-events: none;
     }
-    /* Kad se pojavi */
+
     .cmpc-bg.visible {
       opacity: 1;
-      pointer-events: auto;
-      z-index: 1;
     }
 
     .language-switcher {
@@ -209,17 +202,15 @@
       background: rgba(255, 255, 255, 0.5);
     }
 
-    /* Video sekcija je vertikalno centrirana */
+    /* OVO JE PROMENA - video sekcija je vertikalno centrirana */
     #videoSection {
       min-height: 100vh;
-      margin-top: 130px; /* razmak između dugmeta i video sekcije */
+      margin-top: 130px; /* dodato - razmak izmedju dugmeta i video sekcije */
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       gap: 20px;
-      position: relative;
-      z-index: 10;
     }
 
     #videoSection iframe {
@@ -237,44 +228,10 @@
       border-radius: 8px;
       box-shadow: 0 0 20px rgba(0,0,0,0.7);
     }
-
-    /* Nova sekcija sa svojom pozadinom i scroll indikatorom */
-    #newSection {
-      position: relative;
-      min-height: 100vh;
-      background: transparent; /* pozadina je kroz .cmpc-bg */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 24px;
-      padding: 40px 20px;
-      margin-top: 100vh; /* da bude ispod prethodne content sekcije */
-      z-index: 10;
-      color: white;
-      text-shadow: 0 0 8px rgba(0,0,0,0.8);
-      user-select: none;
-    }
-
-    #newSection h2 {
-      font-size: 2rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-
-    #newSection .scroll-indicator {
-      position: absolute;
-      bottom: 30px;
-      font-size: 2rem;
-      animation: bounce 2s infinite;
-      color: white;
-      user-select: none;
-    }
   </style>
 </head>
 <body>
 
-  <!-- Stara pozadina -->
   <section class="hero" id="hero">
     <div class="language-switcher">
       <button id="langBtn">EN</button>
@@ -282,15 +239,11 @@
     <div class="scroll-indicator">↓</div>
   </section>
 
-  <!-- Nova pozadina, ispod stare -->
-  <div class="cmpc-bg" id="cmpcBg"></div>
-
-  <!-- Glavni sadržaj -->
   <section class="content" id="content">
     <h1 id="headline">Centar za promociju savremene muzike</h1>
     <button id="infoBtn">INFORMATOR</button>
 
-    <!-- Sekcija sa videom i dugmetom -->
+    <!-- Nova sekcija sa videom i dugmetom -->
     <section id="videoSection" aria-label="Video i dodatna slika">
       <iframe
         src="https://www.youtube.com/embed/V4AV4OCU6pk"
@@ -303,13 +256,9 @@
     </section>
   </section>
 
-  <!-- Nova sekcija sa posebnom pozadinom -->
-  <section id="newSection" aria-label="Nova sekcija sa CMPC pozadinom">
-    <h2>Naslov nove sekcije</h2>
-    <div class="scroll-indicator">↓</div>
-  </section>
+  <!-- Nova pozadina CMPC -->
+  <div class="cmpc-bg" id="cmpcBg"></div>
 
-  <!-- Informator sekcija -->
   <section id="infoSection" aria-label="Informator sa slikama">
     <button id="backBtn" aria-label="Nazad">&#8592;</button>
     <img src="Magnituda_informator-1.png" alt="Strana 1 informatora" />
@@ -321,6 +270,9 @@
   </section>
 
   <script>
+    // Tweak-uj ovu vrednost da pomeriš trenutak prelaza
+    const transitionScrollRatio = 1.8;
+
     const langBtn = document.getElementById('langBtn');
     const headline = document.getElementById('headline');
     const hero = document.getElementById('hero');
@@ -336,9 +288,6 @@
     const additionalImage = document.getElementById('additionalImage');
 
     let currentLang = 'sr';
-
-    // Za čuvanje pozicije skrola pre otvaranja informatora
-    let lastScrollPos = 0;
 
     function updateLanguage() {
       if (currentLang === 'sr') {
@@ -364,38 +313,31 @@
     });
 
     function showInfo() {
-      // Zapamti trenutnu poziciju scrolla
-      lastScrollPos = window.scrollY || window.pageYOffset;
-
       infoSection.style.display = 'flex';
       backBtn.style.display = 'flex';
-
-      // Sakrij glavne sekcije
       hero.style.display = 'none';
       content.style.display = 'none';
       languageSwitcher.style.display = 'none';
       scrollIndicator.style.display = 'none';
-
-      // Scroll na vrh info sekcije
-      window.scrollTo(0, 0);
+      window.scrollTo(savedScrollPos);
     }
 
     function hideInfo() {
       infoSection.style.display = 'none';
       backBtn.style.display = 'none';
-
-      // Vrati glavne sekcije
       hero.style.display = 'flex';
       content.style.display = 'flex';
       languageSwitcher.style.display = 'flex';
       scrollIndicator.style.display = 'block';
-
-      // Vrati skrol na prethodnu poziciju
-      window.scrollTo(0, lastScrollPos);
+      window.scrollTo(savedScrollPos);
     }
+
+    // Čuvamo scroll poziciju pre otvaranja info sekcije
+    let savedScrollPos = 0;
 
     infoBtn.addEventListener('click', () => {
       if (currentLang === 'sr') {
+        savedScrollPos = window.scrollY || window.pageYOffset;
         showInfo();
       }
     });
@@ -416,25 +358,17 @@
       const scrollPos = window.scrollY || window.pageYOffset;
       const windowHeight = window.innerHeight;
 
-      // Blur efekat na staru pozadinu i fade-out kad prelazimo u novu sekciju
-      if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 1.8) {
-        // blur staru pozadinu
+      if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * transitionScrollRatio) {
         hero.classList.add('blur');
         hero.classList.remove('fade-out');
         headline.classList.add('visible');
-
-        // nova pozadina još nije vidljiva
         cmpcBg.classList.remove('visible');
-      } else if (scrollPos >= windowHeight * 1.8) {
-        // Kad smo na ili ispod nove sekcije, gasimo staru pozadinu
+      } else if (scrollPos >= windowHeight * transitionScrollRatio) {
         hero.classList.add('fade-out');
         hero.classList.remove('blur');
         headline.classList.remove('visible');
-
-        // Pojavljuje se nova pozadina
         cmpcBg.classList.add('visible');
       } else {
-        // Vraćamo staru pozadinu u normalu, skrivamo novu
         hero.classList.remove('blur', 'fade-out');
         headline.classList.remove('visible');
         cmpcBg.classList.remove('visible');
