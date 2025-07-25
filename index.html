@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Magnituda</title>
 
+  <!-- Geomanist font (pretpostavljam da ga imaš lokalno, ako ne — koristi privremeno sans-serif) -->
   <style>
     @font-face {
       font-family: 'Geomanist';
@@ -24,7 +25,7 @@
     }
 
     .hero {
-      position: fixed;
+      position: fixed; /* Fiksiramo pozadinu da uvek stoji */
       top: 0;
       left: 0;
       width: 100%;
@@ -42,14 +43,16 @@
     }
 
     .language-switcher {
-      position: fixed;
+      position: fixed; /* Da ostane fiksirano i iznad slike */
       top: 20px;
       left: 20px;
-      z-index: 10;
+      z-index: 1100;
       backdrop-filter: blur(10px);
       background: rgba(255, 255, 255, 0.2);
       border-radius: 8px;
       padding: 8px 16px;
+      display: flex;
+      gap: 12px;
     }
 
     .language-switcher button {
@@ -60,6 +63,13 @@
       font-family: inherit;
       color: black;
       font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+      transition: background-color 0.3s ease;
+    }
+    .language-switcher button:hover {
+      background-color: rgba(255, 255, 255, 0.4);
     }
 
     .scroll-indicator {
@@ -79,81 +89,96 @@
     .content {
       position: relative;
       min-height: 100vh;
-      background-color: transparent;
+      background-color: transparent; /* nema bele pozadine */
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
       padding: 40px 20px;
-      margin-top: 100vh;
+      margin-top: 100vh; /* počinje nakon hero sekcije */
       z-index: 5;
+      gap: 24px;
     }
 
+    /* Naslov ALL CAPS samo za srpski */
     .content h1 {
-      font-size: 2.2rem;
+      font-size: 2rem; /* malo manji font */
       color: white;
       opacity: 0;
       transition: opacity 1s ease-in-out;
       text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-      text-transform: uppercase;
-      letter-spacing: 2px;
+      letter-spacing: 0.15em; /* blagi razmak */
+    }
+    /* Kada je engleski, ukloni all caps i letter-spacing */
+    .content h1.english {
+      text-transform: none;
+      letter-spacing: normal;
+      font-size: 2.5rem; /* originalni font veličina */
     }
 
     .content h1.visible {
       opacity: 1;
     }
 
-    .info-button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      backdrop-filter: blur(10px);
+    /* Novo dugme INFORMATOR / OUR STORY */
+    #infoBtn {
       background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
       border: none;
+      padding: 8px 16px;
       border-radius: 8px;
-      color: black;
-      font-weight: 600;
       cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+      color: black;
       font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    #infoBtn:hover {
+      background-color: rgba(255, 255, 255, 0.4);
     }
 
-    .pdf-viewer {
-      display: none;
+    /* iframe PDF */
+    #pdfViewer {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: white;
-      z-index: 100;
-    }
-
-    .pdf-viewer iframe {
-      width: 100%;
-      height: 100%;
       border: none;
+      z-index: 1000;
+      display: none;
     }
 
-    .back-arrow {
-      position: absolute;
+    /* Back dugme fiksirano u gornjem levom uglu */
+    #backBtn {
+      position: fixed;
       top: 20px;
       left: 20px;
-      font-size: 30px;
-      font-weight: bold;
+      z-index: 1100;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 8px;
+      padding: 8px 12px;
       cursor: pointer;
-      animation: arrowBounce 2s infinite;
-      z-index: 101;
+      font-size: 24px;
+      color: black;
+      user-select: none;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-shadow: 0 0 2px rgba(255,255,255,0.8);
+      transition: background-color 0.3s ease;
     }
-
-    @keyframes arrowBounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(5px); }
+    #backBtn:hover {
+      background: rgba(255, 255, 255, 0.5);
     }
   </style>
 </head>
 <body>
 
-  <!-- Splash -->
+  <!-- Splash Sekcija -->
   <section class="hero" id="hero">
     <div class="language-switcher">
       <button id="langBtn">EN</button>
@@ -161,17 +186,22 @@
     <div class="scroll-indicator">↓</div>
   </section>
 
-  <!-- Content -->
+  <!-- Sadržaj ispod -->
   <section class="content" id="content">
-    <h1 id="headline">CENTAR ZA PROMOCIJU SAVREMENE MUZIKE</h1>
-    <button class="info-button" id="infoBtn">INFORMATOR</button>
+    <h1 id="headline">Centar za promociju savremene muzike</h1>
+    <button id="infoBtn">INFORMATOR</button>
   </section>
 
+  <!-- Dugme za povratak sa PDF -->
+  <button id="backBtn" aria-label="Nazad">&#8592;</button>
+
   <!-- PDF Viewer -->
-  <div class="pdf-viewer" id="pdfViewer">
-    <div class="back-arrow" id="backArrow">←</div>
-    <iframe id="pdfFrame" src=""></iframe>
-  </div>
+  <iframe
+    id="pdfViewer"
+    src="Magnituda - Centar za promociju savremene muzike.pdf"
+    title="Informator"
+    frameborder="0"
+  ></iframe>
 
   <!-- JavaScript -->
   <script>
@@ -180,25 +210,59 @@
     const hero = document.getElementById('hero');
     const infoBtn = document.getElementById('infoBtn');
     const pdfViewer = document.getElementById('pdfViewer');
-    const backArrow = document.getElementById('backArrow');
-    const pdfFrame = document.getElementById('pdfFrame');
+    const backBtn = document.getElementById('backBtn');
 
     let currentLang = 'sr';
 
-    langBtn.addEventListener('click', () => {
+    function updateLanguage() {
       if (currentLang === 'sr') {
-        currentLang = 'en';
-        langBtn.textContent = 'SR';
-        headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
-        infoBtn.textContent = 'OUR STORY';
-      } else {
-        currentLang = 'sr';
         langBtn.textContent = 'EN';
         headline.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
+        headline.classList.remove('english');
         infoBtn.textContent = 'INFORMATOR';
+        infoBtn.disabled = false;
+      } else {
+        langBtn.textContent = 'SR';
+        headline.textContent = 'Contemporary Music Promotion Centre';
+        headline.classList.add('english');
+        infoBtn.textContent = 'OUR STORY';
+        infoBtn.disabled = true; // ne reaguje na engleskom dok ne dodaš pdf
+      }
+    }
+
+    langBtn.addEventListener('click', () => {
+      currentLang = currentLang === 'sr' ? 'en' : 'sr';
+      updateLanguage();
+    });
+
+    // Prikaz / skrivanje PDF-a
+    function showPDF() {
+      pdfViewer.style.display = 'block';
+      backBtn.style.display = 'flex';
+      // Sakrij ostale sekcije i dugmad ako želiš
+      hero.style.display = 'none';
+      document.getElementById('content').style.display = 'none';
+      document.querySelector('.language-switcher').style.display = 'none';
+      document.querySelector('.scroll-indicator').style.display = 'none';
+      window.scrollTo(0, 0); // resetuj scroll kad otvoriš pdf
+    }
+
+    function hidePDF() {
+      pdfViewer.style.display = 'none';
+      backBtn.style.display = 'none';
+      hero.style.display = 'flex';
+      document.getElementById('content').style.display = 'flex';
+      document.querySelector('.language-switcher').style.display = 'flex';
+      document.querySelector('.scroll-indicator').style.display = 'block';
+    }
+
+    infoBtn.addEventListener('click', () => {
+      if (currentLang === 'sr') {
+        showPDF();
       }
     });
 
+    // Scroll efekat za hero i headline
     window.addEventListener('scroll', () => {
       const scrollPos = window.scrollY;
       const windowHeight = window.innerHeight;
@@ -212,19 +276,12 @@
       }
     });
 
-    infoBtn.addEventListener('click', () => {
-      if (currentLang === 'sr') {
-        pdfFrame.src = 'Magnituda - Centar za promociju savremene muzike.pdf';
-        pdfViewer.style.display = 'block';
-      } else {
-        // Za sada engleska verzija ne radi ništa
-      }
+    backBtn.addEventListener('click', () => {
+      hidePDF();
     });
 
-    backArrow.addEventListener('click', () => {
-      pdfViewer.style.display = 'none';
-      pdfFrame.src = '';
-    });
+    // Inicijalno postavljanje jezika i stilova
+    updateLanguage();
   </script>
 
 </body>
