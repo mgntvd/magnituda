@@ -2,76 +2,83 @@
 <html lang="sr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Magnituda</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
+
+  <!-- Geomanist font -->
   <style>
+    @font-face {
+      font-family: 'Geomanist';
+      src: url('Geomanist-Regular.otf') format('opentype');
+    }
+
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
-    html, body {
-      scroll-behavior: smooth;
+    body, html {
       height: 100%;
-      font-family: 'Montserrat', sans-serif;
-      overflow-y: scroll;
-    }
-
-    body {
-      background-color: #111;
-      color: #fff;
-    }
-
-    .section {
-      height: 100vh;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      scroll-snap-align: start;
-      padding: 0 1rem;
-    }
-
-    .container {
-      scroll-snap-type: y mandatory;
-      overflow-y: scroll;
-      height: 100vh;
+      font-family: 'Geomanist', sans-serif;
+      scroll-behavior: smooth;
     }
 
     .hero {
-      background: url('pozadina.jpg') no-repeat center center/cover;
-      position: relative;
-      text-align: center;
-      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
+      height: 100vh;
+      background: url("Home - SPLASH FULL.png") no-repeat center center/cover;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      scroll-snap-align: start;
+      justify-content: center;
+      transition: filter 0.6s ease-in-out;
+      z-index: 1;
     }
 
     .hero.blur {
-      filter: blur(10px);
+      filter: blur(6px) brightness(0.6);
     }
 
-    .logo {
-      font-size: 3rem;
-      font-weight: 700;
-      text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+    .language-switcher {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1100;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      padding: 8px 16px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .language-switcher button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-family: inherit;
+      color: black;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+      transition: background-color 0.3s ease;
+    }
+    .language-switcher button:hover {
+      background-color: rgba(255, 255, 255, 0.4);
     }
 
     .scroll-indicator {
       position: absolute;
-      bottom: 20px;
-      font-size: 1rem;
-      opacity: 0.7;
+      bottom: 30px;
+      font-size: 2rem;
       animation: bounce 2s infinite;
+      color: white;
+      z-index: 5;
     }
 
     @keyframes bounce {
@@ -79,171 +86,251 @@
       50% { transform: translateY(10px); }
     }
 
-    .language-switcher {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      display: flex;
-      gap: 10px;
-    }
-
-    .language-switcher button {
-      background: none;
-      border: none;
-      color: #fff;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .info-btn, .back-btn, .video-btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #fff;
-      color: #000;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .info-section {
-      display: none;
-      background-color: #000;
-      padding: 2rem;
-      text-align: center;
-    }
-
     .content {
+      position: relative;
+      min-height: 100vh;
+      background-color: transparent;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      scroll-snap-align: start;
+      text-align: center;
+      padding: 40px 20px;
+      margin-top: 100vh;
+      z-index: 5;
+      gap: 24px;
     }
 
-    .headline {
+    .content h1 {
       font-size: 2rem;
-      margin-bottom: 1rem;
+      color: white;
       opacity: 0;
-      transition: opacity 1s ease-in;
+      transition: opacity 1s ease-in-out;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
     }
 
-    .headline.visible {
+    .content h1.visible {
       opacity: 1;
     }
 
-    .video-section {
+    #infoBtn, #loadImageBtn {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 0px; /* četvrtasto dugme */
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+      color: black;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    #infoBtn:hover,
+    #loadImageBtn:hover {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
+
+    #infoSection {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      overflow-y: auto;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      z-index: 1000;
+    }
+
+    #infoSection img {
+      max-width: 90vw;
+      margin: 16px 0;
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
+      border-radius: 8px;
+    }
+
+    #backBtn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1100;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 4px;
+      padding: 12px;
+      cursor: pointer;
+      font-size: 24px;
+      color: black;
+      user-select: none;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-shadow: 0 0 2px rgba(255,255,255,0.8);
+      transition: background-color 0.3s ease;
+    }
+
+    #backBtn:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    #videoSection {
+      margin-top: 100vh; /* Novi razmak kao da skroluješ na novu stranicu */
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
-      scroll-snap-align: start;
+      gap: 20px;
     }
 
-    .video-section video {
-      width: 90%;
-      max-width: 800px;
-      margin-bottom: 20px;
-      border-radius: 12px;
+    #videoSection iframe {
+      width: 90vw;
+      max-width: 560px;
+      height: 315px;
+      border: none;
+      border-radius: 8px;
     }
 
-    .additional-image {
+    #additionalImage {
       display: none;
+      max-width: 90vw;
       margin-top: 20px;
-      width: 90%;
-      max-width: 600px;
-      border-radius: 12px;
-    }
-
-    @media (max-width: 768px) {
-      .logo {
-        font-size: 2rem;
-      }
-      .headline {
-        font-size: 1.5rem;
-      }
-      .video-section video {
-        width: 100%;
-      }
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Hero Sekcija -->
-    <section class="hero" id="hero">
-      <div class="logo">CENTAR ZA PROMOCIJU SAVREMENE MUZIKE</div>
-      <button class="info-btn" id="infoBtn">INFORMATOR</button>
-      <div class="language-switcher" id="languageSwitcher">
-        <button onclick="setLanguage('sr')">SR</button>
-        <button onclick="setLanguage('en')">EN</button>
-      </div>
-      <div class="scroll-indicator" id="scrollIndicator">↓ skroluj ↓</div>
-    </section>
 
-    <!-- Informator Sekcija -->
-    <section class="info-section" id="infoSection">
-      <p>Ovo je informator sa više detalja o programu i aktivnostima centra.</p>
-      <button class="back-btn" id="backBtn">Nazad</button>
-    </section>
+  <section class="hero" id="hero">
+    <div class="language-switcher">
+      <button id="langBtn">EN</button>
+    </div>
+    <div class="scroll-indicator">↓</div>
+  </section>
 
-    <!-- Video Sekcija -->
-    <section class="video-section" id="videoSection">
-      <h2 class="headline" id="headline">EKspozicija.read</h2>
-      <video src="video.mp4" controls></video>
-      <button class="video-btn" id="loadImageBtn">Prikaži sliku</button>
-      <img src="dodatna-slika.jpg" alt="Dodatna slika" class="additional-image" id="additionalImage">
+  <section class="content" id="content">
+    <h1 id="headline">Centar za promociju savremene muzike</h1>
+    <button id="infoBtn">INFORMATOR</button>
+
+    <!-- Nova sekcija sa videom i dugmetom -->
+    <section id="videoSection" aria-label="Video i dodatna slika">
+      <iframe 
+        src="https://www.youtube.com/embed/V4AV4OCU6pk" 
+        title="YouTube video - Bez kompasa" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+      </iframe>
+      <button id="loadImageBtn">ekspozicija.read</button>
+      <img id="additionalImage" src="Ekspozicija - Bez kompasa.png" alt="Ekspozicija - Bez kompasa" />
     </section>
-  </div>
+  </section>
+
+  <section id="infoSection" aria-label="Informator sa slikama">
+    <button id="backBtn" aria-label="Nazad">&#8592;</button>
+    <img src="Magnituda_informator-1.png" alt="Strana 1 informatora" />
+    <img src="Magnituda_informator-2.png" alt="Strana 2 informatora" />
+    <img src="Magnituda_informator-3.png" alt="Strana 3 informatora" />
+    <img src="Magnituda_informator-4.png" alt="Strana 4 informatora" />
+    <img src="Magnituda_informator-5.png" alt="Strana 5 informatora" />
+    <img src="Magnituda_informator-6.png" alt="Strana 6 informatora" />
+  </section>
 
   <script>
-    const infoBtn = document.getElementById('infoBtn');
-    const backBtn = document.getElementById('backBtn');
-    const infoSection = document.getElementById('infoSection');
-    const hero = document.getElementById('hero');
-    const content = document.querySelector('.video-section');
-    const languageSwitcher = document.getElementById('languageSwitcher');
-    const scrollIndicator = document.getElementById('scrollIndicator');
+    const langBtn = document.getElementById('langBtn');
     const headline = document.getElementById('headline');
+    const hero = document.getElementById('hero');
+    const infoBtn = document.getElementById('infoBtn');
+    const infoSection = document.getElementById('infoSection');
+    const backBtn = document.getElementById('backBtn');
+    const content = document.getElementById('content');
+    const languageSwitcher = document.querySelector('.language-switcher');
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+
     const loadImageBtn = document.getElementById('loadImageBtn');
     const additionalImage = document.getElementById('additionalImage');
 
-    function setLanguage(lang) {
-      console.log("Jezik postavljen na:", lang);
+    let currentLang = 'sr';
+
+    function updateLanguage() {
+      if (currentLang === 'sr') {
+        langBtn.textContent = 'EN';
+        headline.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
+        infoBtn.textContent = 'INFORMATOR';
+        infoBtn.disabled = false;
+        loadImageBtn.textContent = 'ekspozicija.read';
+        loadImageBtn.disabled = false;
+      } else {
+        langBtn.textContent = 'SR';
+        headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
+        infoBtn.textContent = 'OUR STORY';
+        infoBtn.disabled = true;
+        loadImageBtn.textContent = 'exposition.read';
+        loadImageBtn.disabled = true;
+      }
     }
 
+    langBtn.addEventListener('click', () => {
+      currentLang = currentLang === 'sr' ? 'en' : 'sr';
+      updateLanguage();
+    });
+
     function showInfo() {
-      infoSection.style.display = 'block';
-      backBtn.style.display = 'inline-block';
-      hero.classList.add('blur');
+      infoSection.style.display = 'flex';
+      backBtn.style.display = 'flex';
+      hero.style.display = 'none';
       content.style.display = 'none';
       languageSwitcher.style.display = 'none';
       scrollIndicator.style.display = 'none';
+      window.scrollTo(0, 0);
     }
 
     function hideInfo() {
       infoSection.style.display = 'none';
       backBtn.style.display = 'none';
-      hero.classList.remove('blur');
+      hero.style.display = 'flex';
       content.style.display = 'flex';
       languageSwitcher.style.display = 'flex';
       scrollIndicator.style.display = 'block';
     }
 
-    infoBtn.addEventListener('click', showInfo);
-    backBtn.addEventListener('click', hideInfo);
-
-    window.addEventListener('scroll', () => {
-      const contentTop = content.getBoundingClientRect().top;
-      if (contentTop < window.innerHeight / 1.5) {
-        headline.classList.add('visible');
+    infoBtn.addEventListener('click', () => {
+      if (currentLang === 'sr') {
+        showInfo();
       }
     });
 
-    loadImageBtn.addEventListener('click', () => {
-      additionalImage.style.display = 
-        additionalImage.style.display === 'none' ? 'block' : 'none';
+    backBtn.addEventListener('click', () => {
+      hideInfo();
     });
+
+    loadImageBtn.addEventListener('click', () => {
+      if (additionalImage.style.display === 'none' || additionalImage.style.display === '') {
+        additionalImage.style.display = 'block';
+      } else {
+        additionalImage.style.display = 'none';
+      }
+    });
+
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY;
+      const windowHeight = window.innerHeight;
+
+      if (scrollPos > windowHeight / 2) {
+        hero.classList.add('blur');
+        headline.classList.add('visible');
+      } else {
+        hero.classList.remove('blur');
+        headline.classList.remove('visible');
+      }
+    });
+
+    updateLanguage();
   </script>
 </body>
 </html>
