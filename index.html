@@ -342,8 +342,7 @@
   </section>
 
   <section id="newSection">
-    <h2>Naslov nove sekcije</h2>
-    <div class="scroll-indicator">↓</div>
+      <div class="scroll-indicator">↓</div>
 
     <div id="newsBar">
       <div class="marquee">
@@ -459,12 +458,12 @@
       const scrollPos = window.scrollY || window.pageYOffset;
       const windowHeight = window.innerHeight;
 
-      if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 1.9) {
+      if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 1.8) {
         hero.classList.add('blur');
         hero.classList.remove('fade-out');
         headline.classList.add('visible');
         cmpcBg.classList.remove('visible');
-      } else if (scrollPos >= windowHeight * 2.3) {
+      } else if (scrollPos >= windowHeight * 2) {
         hero.classList.add('fade-out');
         hero.classList.remove('blur');
         headline.classList.remove('visible');
