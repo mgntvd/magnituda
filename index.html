@@ -270,6 +270,87 @@
       color: white;
       user-select: none;
     }
+
+    /* NOVO: Stilovi za marquee vest bar */
+#newsBar {
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 5;
+}
+
+.marquee {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee span {
+  display: inline-block;
+  animation: marqueeScroll 20s linear infinite;
+  font-weight: 500;
+  color: #fff;
+}
+
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+#newsBtn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  padding: 0.3rem 1rem;
+  border-radius: 4px;
+  margin-left: 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+#newsSection {
+  position: relative;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 2rem;
+  text-align: center;
+  color: #fff;
+  z-index: 5;
+  backdrop-filter: blur(8px);
+}
+
+.news-content {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#newsImage {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+#closeNewsBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  color: #fff;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
   </style>
 </head>
 <body>
@@ -285,6 +366,23 @@
   <!-- Nova pozadina, ispod stare -->
   <div class="cmpc-bg" id="cmpcBg"></div>
 
+<!-- NOVO: Marquee bar sa vestima -->
+<div id="newsBar">
+  <div class="marquee">
+    <span id="marqueeText">Prijava novih članova je u toku // Kontaktirajte nas putem telefona, socijalnih mreža ili e-maila</span>
+  </div>
+  <button id="newsBtn">vesti.saznaj</button>
+</div>
+
+<!-- NOVO: Sekcija za prikaz vesti -->
+<div id="newsSection" style="display:none;">
+  <div class="news-content">
+    <img id="newsImage" src="Vesti.jpg" alt="Vesti" onerror="showFallback()" />
+    <p id="newsFallback" style="display:none;">Trenutno nema dodatnih vesti.</p>
+    <button id="closeNewsBtn">×</button>
+  </div>
+</div>
+  
   <!-- Glavni sadržaj -->
   <section class="content" id="content">
     <h1 id="headline">Centar za promociju savremene muzike</h1>
@@ -442,6 +540,38 @@
     });
 
     updateLanguage();
+
+    // NOVO: Prikazivanje i zatvaranje sekcije sa vestima
+const newsBtn = document.getElementById("newsBtn");
+const newsSection = document.getElementById("newsSection");
+const closeNewsBtn = document.getElementById("closeNewsBtn");
+const newsImage = document.getElementById("newsImage");
+const fallback = document.getElementById("newsFallback");
+
+if (newsBtn) {
+  newsBtn.addEventListener("click", () => {
+    newsSection.style.display = "block";
+    window.scrollTo({
+      top: newsSection.offsetTop,
+      behavior: "smooth"
+    });
+  });
+}
+
+if (closeNewsBtn) {
+  closeNewsBtn.addEventListener("click", () => {
+    newsSection.style.display = "none";
+  });
+}
+
+function showFallback() {
+  if (fallback) {
+    fallback.style.display = "block";
+  }
+  if (newsImage) {
+    newsImage.style.display = "none";
+  }
+}
   </script>
 </body>
 </html>
