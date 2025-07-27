@@ -24,7 +24,6 @@
       scroll-behavior: smooth;
     }
 
-    /* STARA POZADINA - hero */
     .hero {
       position: fixed;
       top: 0;
@@ -40,18 +39,17 @@
       opacity: 1;
       pointer-events: auto;
     }
-    /* blur i posle pojave nove pozadine, lagano gasenje stare */
+
     .hero.blur {
       filter: blur(6px) brightness(0.6);
     }
-    /* Dodajemo klasu koja smanjuje opacity da bi se skidao video - kad nova pozadina krene da se pojavljuje */
+
     .hero.fade-out {
       opacity: 0;
-      pointer-events: none; /* onemogući interakciju kad je skrivena */
+      pointer-events: none;
       transition: opacity 0.8s ease-in-out;
     }
 
-    /* NOVA POZADINA - CMPC */
     .cmpc-bg {
       position: fixed;
       top: 0;
@@ -59,12 +57,12 @@
       width: 100%;
       height: 100vh;
       background: url("CMPC.jpg") no-repeat center center/cover;
-      opacity: 0; /* potpuno sakrivena na početku */
+      opacity: 0;
       z-index: 0;
       transition: opacity 0.8s ease-in-out;
       pointer-events: none;
     }
-    /* Kad se pojavi */
+
     .cmpc-bg.visible {
       opacity: 1;
       pointer-events: auto;
@@ -97,6 +95,7 @@
       backdrop-filter: blur(10px);
       transition: background-color 0.3s ease;
     }
+
     .language-switcher button:hover {
       background-color: rgba(255, 255, 255, 0.4);
     }
@@ -144,22 +143,24 @@
       opacity: 1;
     }
 
-    #infoBtn, #loadImageBtn {
+    #infoBtn, #loadImageBtn, #newsBtn, #closeNewsBtn {
       background: rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(10px);
       border: none;
       padding: 8px 16px;
-      border-radius: 0px; /* četvrtasto dugme */
+      border-radius: 0;
       cursor: pointer;
       font-family: inherit;
       font-weight: 600;
-      color: black;
+      color: white;
       font-size: 16px;
       transition: background-color 0.3s ease;
     }
 
     #infoBtn:hover,
-    #loadImageBtn:hover {
+    #loadImageBtn:hover,
+    #newsBtn:hover,
+    #closeNewsBtn:hover {
       background-color: rgba(255, 255, 255, 0.4);
     }
 
@@ -209,10 +210,9 @@
       background: rgba(255, 255, 255, 0.5);
     }
 
-    /* Video sekcija je vertikalno centrirana */
     #videoSection {
       min-height: 100vh;
-      margin-top: 130px; /* razmak između dugmeta i video sekcije */
+      margin-top: 130px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -238,18 +238,17 @@
       box-shadow: 0 0 20px rgba(0,0,0,0.7);
     }
 
-    /* Nova sekcija sa svojom pozadinom i scroll indikatorom */
     #newSection {
       position: relative;
       min-height: 100vh;
-      background: transparent; /* pozadina je kroz .cmpc-bg */
+      background: transparent;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 24px;
       padding: 40px 20px;
-      margin-top: 100vh; /* da bude ispod prethodne content sekcije */
+      margin-top: 100vh;
       z-index: 10;
       color: white;
       text-shadow: 0 0 8px rgba(0,0,0,0.8);
@@ -271,151 +270,102 @@
       user-select: none;
     }
 
-    /* NOVO: Stilovi za marquee vest bar */
-#newsBar {
-  position: relative;
-  background: rgba(255, 255, 255, 0.1);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 0.5rem 1rem;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 5;
-}
+    /* NOVO: Marquee stilovi */
+    #newsBar {
+      margin-top: 20px;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      max-width: 800px;
+      border-top: 1px solid rgba(255,255,255,0.3);
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+    }
 
-.marquee {
-  flex: 1;
-  overflow: hidden;
-  white-space: nowrap;
-}
+    .marquee {
+      white-space: nowrap;
+      overflow: hidden;
+      position: relative;
+    }
 
-.marquee span {
-  display: inline-block;
-  animation: marqueeScroll 20s linear infinite;
-  font-weight: 500;
-  color: #fff;
-}
+    .marquee span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marquee 15s linear infinite;
+      color: white;
+      font-size: 16px;
+    }
 
-@keyframes marqueeScroll {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
 
-#newsBtn {
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #fff;
-  padding: 0.3rem 1rem;
-  border-radius: 4px;
-  margin-left: 1rem;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
+    /* Sekcija za prikaz vesti */
+    #newsSection {
+      margin-top: 20px;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
 
-#newsSection {
-  position: relative;
-  background: rgba(0, 0, 0, 0.8);
-  padding: 2rem;
-  text-align: center;
-  color: #fff;
-  z-index: 5;
-  backdrop-filter: blur(8px);
-}
+    #newsSection img {
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    }
 
-.news-content {
-  position: relative;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-#newsImage {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-
-#closeNewsBtn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: transparent;
-  color: #fff;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
+    #newsFallback {
+      color: white;
+      font-style: italic;
+    }
   </style>
 </head>
-<body>
 
-  <!-- Stara pozadina -->
+<body>
   <section class="hero" id="hero">
-    <div class="language-switcher">
-      <button id="langBtn">EN</button>
-    </div>
+    <div class="language-switcher"><button id="langBtn">EN</button></div>
     <div class="scroll-indicator">↓</div>
   </section>
 
-  <!-- Nova pozadina, ispod stare -->
   <div class="cmpc-bg" id="cmpcBg"></div>
 
-<!-- NOVO: Marquee bar sa vestima -->
-<div id="newsBar">
-  <div class="marquee">
-    <span id="marqueeText">Prijava novih članova je u toku // Kontaktirajte nas putem telefona, socijalnih mreža ili e-maila</span>
-  </div>
-  <button id="newsBtn">vesti.saznaj</button>
-</div>
-
-<!-- NOVO: Sekcija za prikaz vesti -->
-<div id="newsSection" style="display:none;">
-  <div class="news-content">
-    <img id="newsImage" src="Vesti.jpg" alt="Vesti" onerror="showFallback()" />
-    <p id="newsFallback" style="display:none;">Trenutno nema dodatnih vesti.</p>
-    <button id="closeNewsBtn">×</button>
-  </div>
-</div>
-  
-  <!-- Glavni sadržaj -->
   <section class="content" id="content">
     <h1 id="headline">Centar za promociju savremene muzike</h1>
     <button id="infoBtn">INFORMATOR</button>
 
-    <!-- Sekcija sa videom i dugmetom -->
     <section id="videoSection" aria-label="Video i dodatna slika">
-      <iframe
-        src="https://www.youtube.com/embed/V4AV4OCU6pk"
-        title="YouTube video - Bez kompasa"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
+      <iframe src="https://www.youtube.com/embed/V4AV4OCU6pk" title="YouTube video - Bez kompasa" allowfullscreen></iframe>
       <button id="loadImageBtn">ekspozicija.read</button>
       <img id="additionalImage" src="Ekspozicija - Bez kompasa.png" alt="Ekspozicija - Bez kompasa" />
     </section>
   </section>
 
-  <!-- Nova sekcija sa posebnom pozadinom -->
   <section id="newSection" aria-label="Nova sekcija sa CMPC pozadinom">
     <h2>Naslov nove sekcije</h2>
     <div class="scroll-indicator">↓</div>
+
+    <!-- NOVO: Marquee bar sa vestima -->
+    <div id="newsBar">
+      <div class="marquee">
+        <span id="marqueeText">Prijava novih članova je u toku // Kontaktirajte nas putem telefona, socijalnih mreža ili e-maila</span>
+      </div>
+    </div>
+
+    <button id="newsBtn">vesti.saznaj</button>
+
+    <!-- NOVO: Sekcija za prikaz vesti -->
+    <div id="newsSection">
+      <img id="newsImage" src="Vesti.jpg" alt="Vesti" onerror="showFallback()" />
+      <p id="newsFallback" style="display:none;">Trenutno nema dodatnih vesti.</p>
+      <button id="closeNewsBtn">×</button>
+    </div>
   </section>
 
-  <!-- Informator sekcija -->
   <section id="infoSection" aria-label="Informator sa slikama">
     <button id="backBtn" aria-label="Nazad">&#8592;</button>
     <img src="Magnituda_informator-1.png" alt="Strana 1 informatora" />
-    <img src="Magnituda_informator-2.png" alt="Strana 2 informatora" />
-    <img src="Magnituda_informator-3.png" alt="Strana 3 informatora" />
-    <img src="Magnituda_informator-4.png" alt="Strana 4 informatora" />
-    <img src="Magnituda_informator-5.png" alt="Strana 5 informatora" />
-    <img src="Magnituda_informator-6.png" alt="Strana 6 informatora" />
+    <!-- dodatne slike -->
   </section>
 
   <script>
@@ -429,13 +379,15 @@
     const languageSwitcher = document.querySelector('.language-switcher');
     const scrollIndicator = document.querySelector('.scroll-indicator');
     const cmpcBg = document.getElementById('cmpcBg');
-
     const loadImageBtn = document.getElementById('loadImageBtn');
     const additionalImage = document.getElementById('additionalImage');
+    const newsBtn = document.getElementById('newsBtn');
+    const newsSection = document.getElementById('newsSection');
+    const closeNewsBtn = document.getElementById('closeNewsBtn');
+    const newsFallback = document.getElementById('newsFallback');
 
     let currentLang = 'sr';
 
-    // Za čuvanje pozicije skrola pre otvaranja informatora
     let lastScrollPos = 0;
 
     function updateLanguage() {
@@ -446,6 +398,7 @@
         infoBtn.disabled = false;
         loadImageBtn.textContent = 'ekspozicija.read';
         loadImageBtn.disabled = false;
+        newsBtn.textContent = 'vesti.saznaj';
       } else {
         langBtn.textContent = 'SR';
         headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
@@ -453,6 +406,7 @@
         infoBtn.disabled = true;
         loadImageBtn.textContent = 'exposition.read';
         loadImageBtn.disabled = true;
+        newsBtn.textContent = 'more.news';
       }
     }
 
@@ -461,78 +415,64 @@
       updateLanguage();
     });
 
-    function showInfo() {
-      // Zapamti trenutnu poziciju scrolla
-      lastScrollPos = window.scrollY || window.pageYOffset;
+    infoBtn.addEventListener('click', () => {
+      if (currentLang === 'sr') showInfo();
+    });
 
+    function showInfo() {
+      lastScrollPos = window.scrollY || window.pageYOffset;
       infoSection.style.display = 'flex';
       backBtn.style.display = 'flex';
-
-      // Sakrij glavne sekcije
       hero.style.display = 'none';
       content.style.display = 'none';
       languageSwitcher.style.display = 'none';
       scrollIndicator.style.display = 'none';
-
-      // Scroll na vrh info sekcije
       window.scrollTo(0, 0);
     }
 
     function hideInfo() {
       infoSection.style.display = 'none';
       backBtn.style.display = 'none';
-
-      // Vrati glavne sekcije
       hero.style.display = 'flex';
       content.style.display = 'flex';
       languageSwitcher.style.display = 'flex';
       scrollIndicator.style.display = 'block';
-
-      // Vrati skrol na prethodnu poziciju
       window.scrollTo(0, lastScrollPos);
     }
 
-    infoBtn.addEventListener('click', () => {
-      if (currentLang === 'sr') {
-        showInfo();
-      }
-    });
-
-    backBtn.addEventListener('click', () => {
-      hideInfo();
-    });
+    backBtn.addEventListener('click', hideInfo);
 
     loadImageBtn.addEventListener('click', () => {
-      if (additionalImage.style.display === 'none' || additionalImage.style.display === '') {
-        additionalImage.style.display = 'block';
-      } else {
-        additionalImage.style.display = 'none';
-      }
+      additionalImage.style.display = additionalImage.style.display === 'block' ? 'none' : 'block';
     });
+
+    newsBtn.addEventListener('click', () => {
+      newsSection.style.display = 'flex';
+    });
+
+    closeNewsBtn.addEventListener('click', () => {
+      newsSection.style.display = 'none';
+    });
+
+    function showFallback() {
+      newsFallback.style.display = 'block';
+    }
 
     window.addEventListener('scroll', () => {
       const scrollPos = window.scrollY || window.pageYOffset;
       const windowHeight = window.innerHeight;
 
-      // Blur efekat na staru pozadinu i fade-out kad prelazimo u novu sekciju
       if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 1.9) {
-        // blur staru pozadinu
         hero.classList.add('blur');
         hero.classList.remove('fade-out');
         headline.classList.add('visible');
-
-        // nova pozadina još nije vidljiva
         cmpcBg.classList.remove('visible');
       } else if (scrollPos >= windowHeight * 2.3) {
-        // Kad smo na ili ispod nove sekcije, gasimo staru pozadinu
         hero.classList.add('fade-out');
         hero.classList.remove('blur');
         headline.classList.remove('visible');
-
-        // Pojavljuje se nova pozadina
         cmpcBg.classList.add('visible');
       } else {
-        // Vraćamo staru pozadinu u normalu, skrivamo novu
         hero.classList.remove('blur', 'fade-out');
         headline.classList.remove('visible');
         cmpcBg.classList.remove('visible');
@@ -540,38 +480,6 @@
     });
 
     updateLanguage();
-
-    // NOVO: Prikazivanje i zatvaranje sekcije sa vestima
-const newsBtn = document.getElementById("newsBtn");
-const newsSection = document.getElementById("newsSection");
-const closeNewsBtn = document.getElementById("closeNewsBtn");
-const newsImage = document.getElementById("newsImage");
-const fallback = document.getElementById("newsFallback");
-
-if (newsBtn) {
-  newsBtn.addEventListener("click", () => {
-    newsSection.style.display = "block";
-    window.scrollTo({
-      top: newsSection.offsetTop,
-      behavior: "smooth"
-    });
-  });
-}
-
-if (closeNewsBtn) {
-  closeNewsBtn.addEventListener("click", () => {
-    newsSection.style.display = "none";
-  });
-}
-
-function showFallback() {
-  if (fallback) {
-    fallback.style.display = "block";
-  }
-  if (newsImage) {
-    newsImage.style.display = "none";
-  }
-}
   </script>
 </body>
 </html>
