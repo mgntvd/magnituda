@@ -143,12 +143,12 @@
       opacity: 1;
     }
 
-    #infoBtn, #loadImageBtn, #newsBtn, #closeNewsBtn {
+    #infoBtn, #loadImageBtn, #newsBtn {
       background: rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(10px);
       border: none;
       padding: 8px 16px;
-      border-radius: 0;
+      border-radius: 0px;
       cursor: pointer;
       font-family: inherit;
       font-weight: 600;
@@ -159,8 +159,7 @@
 
     #infoBtn:hover,
     #loadImageBtn:hover,
-    #newsBtn:hover,
-    #closeNewsBtn:hover {
+    #newsBtn:hover {
       background-color: rgba(255, 255, 255, 0.4);
     }
 
@@ -270,21 +269,24 @@
       user-select: none;
     }
 
-    /* NOVO: Marquee stilovi */
+    /* NOVO: News bar sa glassmorphism i blur ivicama */
     #newsBar {
       margin-top: 20px;
       position: relative;
       overflow: hidden;
       width: 100%;
       max-width: 800px;
-      border-top: 1px solid rgba(255,255,255,0.3);
-      border-bottom: 1px solid rgba(255,255,255,0.3);
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 10px 0;
     }
 
     .marquee {
       white-space: nowrap;
       overflow: hidden;
       position: relative;
+      mask-image: linear-gradient(to right, transparent, white 10%, white 90%, transparent);
     }
 
     .marquee span {
@@ -300,7 +302,6 @@
       100% { transform: translateX(-100%); }
     }
 
-    /* Sekcija za prikaz vesti */
     #newsSection {
       margin-top: 20px;
       display: none;
@@ -321,7 +322,6 @@
     }
   </style>
 </head>
-
 <body>
   <section class="hero" id="hero">
     <div class="language-switcher"><button id="langBtn">EN</button></div>
@@ -334,38 +334,39 @@
     <h1 id="headline">Centar za promociju savremene muzike</h1>
     <button id="infoBtn">INFORMATOR</button>
 
-    <section id="videoSection" aria-label="Video i dodatna slika">
-      <iframe src="https://www.youtube.com/embed/V4AV4OCU6pk" title="YouTube video - Bez kompasa" allowfullscreen></iframe>
+    <section id="videoSection">
+      <iframe src="https://www.youtube.com/embed/V4AV4OCU6pk" allowfullscreen></iframe>
       <button id="loadImageBtn">ekspozicija.read</button>
       <img id="additionalImage" src="Ekspozicija - Bez kompasa.png" alt="Ekspozicija - Bez kompasa" />
     </section>
   </section>
 
-  <section id="newSection" aria-label="Nova sekcija sa CMPC pozadinom">
+  <section id="newSection">
     <h2>Naslov nove sekcije</h2>
     <div class="scroll-indicator">↓</div>
 
-    <!-- NOVO: Marquee bar sa vestima -->
     <div id="newsBar">
       <div class="marquee">
-        <span id="marqueeText">Prijava novih članova je u toku // Kontaktirajte nas putem telefona, socijalnih mreža ili e-maila</span>
+        <span>Prijava novih članova je u toku // Kontaktirajte nas putem telefona, socijalnih mreža ili e-maila</span>
       </div>
     </div>
 
     <button id="newsBtn">vesti.saznaj</button>
 
-    <!-- NOVO: Sekcija za prikaz vesti -->
     <div id="newsSection">
       <img id="newsImage" src="Vesti.jpg" alt="Vesti" onerror="showFallback()" />
       <p id="newsFallback" style="display:none;">Trenutno nema dodatnih vesti.</p>
-      <button id="closeNewsBtn">×</button>
     </div>
   </section>
 
-  <section id="infoSection" aria-label="Informator sa slikama">
-    <button id="backBtn" aria-label="Nazad">&#8592;</button>
+  <section id="infoSection">
+    <button id="backBtn">&#8592;</button>
     <img src="Magnituda_informator-1.png" alt="Strana 1 informatora" />
-    <!-- dodatne slike -->
+    <img src="Magnituda_informator-2.png" alt="Strana 2 informatora" />
+    <img src="Magnituda_informator-3.png" alt="Strana 3 informatora" />
+    <img src="Magnituda_informator-4.png" alt="Strana 4 informatora" />
+    <img src="Magnituda_informator-5.png" alt="Strana 5 informatora" />
+    <img src="Magnituda_informator-6.png" alt="Strana 6 informatora" />
   </section>
 
   <script>
@@ -383,12 +384,11 @@
     const additionalImage = document.getElementById('additionalImage');
     const newsBtn = document.getElementById('newsBtn');
     const newsSection = document.getElementById('newsSection');
-    const closeNewsBtn = document.getElementById('closeNewsBtn');
     const newsFallback = document.getElementById('newsFallback');
 
     let currentLang = 'sr';
-
     let lastScrollPos = 0;
+    let newsVisible = false;
 
     function updateLanguage() {
       if (currentLang === 'sr') {
@@ -447,11 +447,8 @@
     });
 
     newsBtn.addEventListener('click', () => {
-      newsSection.style.display = 'flex';
-    });
-
-    closeNewsBtn.addEventListener('click', () => {
-      newsSection.style.display = 'none';
+      newsVisible = !newsVisible;
+      newsSection.style.display = newsVisible ? 'flex' : 'none';
     });
 
     function showFallback() {
