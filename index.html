@@ -404,129 +404,119 @@
   </section>
 
   <script>
-    const hero = document.getElementById('hero');
-    const cmpcBg = document.getElementById('cmpcBg');
-    const headline = document.getElementById('headline');
-    const infoBtn = document.getElementById('infoBtn');
-    const infoSection = document.getElementById('infoSection');
-    const backBtn = document.getElementById('backBtn');
-    const content = document.getElementById('content');
-    const languageSwitcher = document.querySelector('.language-switcher');
-    const scrollIndicator = document.querySelector('.scroll-indicator');
-    const loadImageBtn = document.getElementById('loadImageBtn');
-    const additionalImage = document.getElementById('additionalImage');
-    const newsBtn = document.getElementById('newsBtn');
-    const newsSection = document.getElementById('newsSection');
-    const fallback = document.getElementById('newsFallback');
-    const langBtn = document.getElementById('langBtn');
-    const kontaktBg = document.getElementById('kontaktBg');
-    const kontaktText = document.getElementById('kontaktText');
+  const hero = document.getElementById('hero');
+  const cmpcBg = document.getElementById('cmpcBg');
+  const headline = document.getElementById('headline');
+  const infoBtn = document.getElementById('infoBtn');
+  const infoSection = document.getElementById('infoSection');
+  const backBtn = document.getElementById('backBtn');
+  const content = document.getElementById('content');
+  const languageSwitcher = document.querySelector('.language-switcher');
+  const scrollIndicator = document.querySelector('.scroll-indicator');
+  const loadImageBtn = document.getElementById('loadImageBtn');
+  const additionalImage = document.getElementById('additionalImage');
+  const newsBtn = document.getElementById('newsBtn');
+  const newsSection = document.getElementById('newsSection');
+  const fallback = document.getElementById('newsFallback');
+  const langBtn = document.getElementById('langBtn');
+  const kontaktBg = document.getElementById('kontaktBg');
+  const kontaktText = document.getElementById('kontaktText');
 
+  let currentLang = 'sr';
+  let lastScrollPos = 0;
 
-    let currentLang = 'sr';
-    let lastScrollPos = 0;
-
-    function updateLanguage() {
-      if (currentLang === 'sr') {
-        langBtn.textContent = 'EN';
-        headline.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
-        infoBtn.textContent = 'INFORMATOR';
-        loadImageBtn.textContent = 'ekspozicija.čitaj';
-        newsBtn.textContent = 'vesti.saznaj';
-      } else {
-        langBtn.textContent = 'SR';
-        headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
-        infoBtn.textContent = 'OUR STORY';
-        loadImageBtn.textContent = 'exposition.read';
-        newsBtn.textContent = 'news.more';
-      }
+  function updateLanguage() {
+    if (currentLang === 'sr') {
+      langBtn.textContent = 'EN';
+      headline.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
+      infoBtn.textContent = 'INFORMATOR';
+      loadImageBtn.textContent = 'ekspozicija.čitaj';
+      newsBtn.textContent = 'vesti.saznaj';
+    } else {
+      langBtn.textContent = 'SR';
+      headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
+      infoBtn.textContent = 'OUR STORY';
+      loadImageBtn.textContent = 'exposition.read';
+      newsBtn.textContent = 'news.more';
     }
-
-    langBtn.addEventListener('click', () => {
-      currentLang = currentLang === 'sr' ? 'en' : 'sr';
-      updateLanguage();
-    });
-
-    infoBtn.addEventListener('click', () => {
-      if (currentLang === 'sr') {
-        lastScrollPos = window.scrollY || window.pageYOffset;
-        infoSection.style.display = 'flex';
-        backBtn.style.display = 'flex';
-        hero.style.display = 'none';
-        content.style.display = 'none';
-        languageSwitcher.style.display = 'none';
-        scrollIndicator.style.display = 'none';
-        window.scrollTo(0, 0);
-      }
-    });
-
-    backBtn.addEventListener('click', () => {
-      infoSection.style.display = 'none';
-      backBtn.style.display = 'none';
-      hero.style.display = 'flex';
-      content.style.display = 'flex';
-      languageSwitcher.style.display = 'flex';
-      scrollIndicator.style.display = 'block';
-      window.scrollTo(0, lastScrollPos);
-    });
-
-    loadImageBtn.addEventListener('click', () => {
-      const isVisible = additionalImage.style.display === 'block';
-      additionalImage.style.display = isVisible ? 'none' : 'block';
-    });
-
-    window.addEventListener('scroll', () => {
-      const scrollPos = window.scrollY || window.pageYOffset;
-      const windowHeight = window.innerHeight;
-  const kontaktRect = kontaktText.getBoundingClientRect();
-  const kontaktTop = kontaktRect.top;
-  const kontaktVisible = kontaktTop < window.innerHeight * 0.6;
-
-  if (kontaktVisible) {
-    kontaktBg.classList.add('blur');
-  } else {
-    kontaktBg.classList.remove('blur');
   }
-    
-      if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 2) {
-        hero.classList.add('blur');
-        hero.classList.remove('fade-out');
-        headline.classList.add('visible');
-        cmpcBg.classList.remove('visible');
-      } else if (scrollPos >= windowHeight * 2.2) {
-        hero.classList.add('fade-out');
-        hero.classList.remove('blur');
-        headline.classList.remove('visible');
-        cmpcBg.classList.add('visible');
-      } else {
-        hero.classList.remove('blur', 'fade-out');
-        headline.classList.remove('visible');
-        cmpcBg.classList.remove('visible');
-        newsSection.style.display = 'none';
-      }
-      // ---- KONTROLA ZA KONTAKT ----
-// tweakuj ovu vrednost da odrediš kada da krene kontakt blur i slika
-const kontaktStart = windowHeight * 3.4; //   tweakuj ovde (npr. 3.2, 3.5 itd)
 
-if (scrollPos >= kontaktStart && scrollPos < kontaktStart + windowHeight) {
-  kontaktBg.classList.add('visible');
-  kontaktBg.classList.remove('blur');
-} else if (scrollPos >= kontaktStart + windowHeight) {
-  kontaktBg.classList.add('blur');
-} else {
-  kontaktBg.classList.remove('visible', 'blur');
-}
-    });
-
-    newsBtn.addEventListener('click', () => {
-      newsSection.style.display = newsSection.style.display === 'none' ? 'block' : 'none';
-    });
-
-    function showFallback() {
-      fallback.style.display = 'block';
-    }
-
+  langBtn.addEventListener('click', () => {
+    currentLang = currentLang === 'sr' ? 'en' : 'sr';
     updateLanguage();
-  </script>
+  });
+
+  infoBtn.addEventListener('click', () => {
+    if (currentLang === 'sr') {
+      lastScrollPos = window.scrollY || window.pageYOffset;
+      infoSection.style.display = 'flex';
+      backBtn.style.display = 'flex';
+      hero.style.display = 'none';
+      content.style.display = 'none';
+      languageSwitcher.style.display = 'none';
+      scrollIndicator.style.display = 'none';
+      window.scrollTo(0, 0);
+    }
+  });
+
+  backBtn.addEventListener('click', () => {
+    infoSection.style.display = 'none';
+    backBtn.style.display = 'none';
+    hero.style.display = 'flex';
+    content.style.display = 'flex';
+    languageSwitcher.style.display = 'flex';
+    scrollIndicator.style.display = 'block';
+    window.scrollTo(0, lastScrollPos);
+  });
+
+  loadImageBtn.addEventListener('click', () => {
+    const isVisible = additionalImage.style.display === 'block';
+    additionalImage.style.display = isVisible ? 'none' : 'block';
+  });
+
+  window.addEventListener('scroll', () => {
+    const scrollPos = window.scrollY || window.pageYOffset;
+    const windowHeight = window.innerHeight;
+
+    // HERO section blur/fade
+    if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 2) {
+      hero.classList.add('blur');
+      hero.classList.remove('fade-out');
+      headline.classList.add('visible');
+      cmpcBg.classList.remove('visible');
+      kontaktBg.classList.remove('visible', 'blur');
+    } else if (scrollPos >= windowHeight * 2.2 && scrollPos < windowHeight * 3.2) {
+      hero.classList.add('fade-out');
+      hero.classList.remove('blur');
+      headline.classList.remove('visible');
+      cmpcBg.classList.add('visible');
+      kontaktBg.classList.remove('visible', 'blur');
+    } else if (scrollPos >= windowHeight * 3.2 && scrollPos < windowHeight * 4.2) {
+      // Sad CMPC se fade-out, Kontakt ulazi
+      hero.classList.remove('blur', 'fade-out');
+      cmpcBg.classList.remove('visible');
+      kontaktBg.classList.add('visible');
+      kontaktBg.classList.remove('blur');
+    } else if (scrollPos >= windowHeight * 4.2) {
+      kontaktBg.classList.add('visible', 'blur');
+    } else {
+      hero.classList.remove('blur', 'fade-out');
+      headline.classList.remove('visible');
+      cmpcBg.classList.remove('visible');
+      kontaktBg.classList.remove('visible', 'blur');
+      newsSection.style.display = 'none';
+    }
+  });
+
+  newsBtn.addEventListener('click', () => {
+    newsSection.style.display = newsSection.style.display === 'none' ? 'block' : 'none';
+  });
+
+  function showFallback() {
+    fallback.style.display = 'block';
+  }
+
+  updateLanguage();
+</script>
 </body>
 </html>
