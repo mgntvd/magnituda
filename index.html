@@ -384,10 +384,12 @@
 
 <!-- Kontakt sekcija -->
 <section id="contactSection">
+  <div id="kontaktText">
   <h2>Kontaktirajte nas</h2>
   <p>Za sve informacije i saradnje, pišite nam putem e-maila ili nas posetite lično.</p>
   <p><strong>Email:</strong> info@magnituda.rs</p>
   <p><strong>Adresa:</strong> Beograd, Srbija</p>
+  </div>
 </section>
   
   <!-- Informator -->
@@ -418,6 +420,7 @@
     const fallback = document.getElementById('newsFallback');
     const langBtn = document.getElementById('langBtn');
     const kontaktBg = document.getElementById('kontaktBg');
+    const kontaktText = document.getElementById('kontaktText');
 
 
     let currentLang = 'sr';
@@ -475,7 +478,16 @@
     window.addEventListener('scroll', () => {
       const scrollPos = window.scrollY || window.pageYOffset;
       const windowHeight = window.innerHeight;
+  const kontaktRect = kontaktText.getBoundingClientRect();
+  const kontaktTop = kontaktRect.top;
+  const kontaktVisible = kontaktTop < window.innerHeight * 0.6;
 
+  if (kontaktVisible) {
+    kontaktBg.classList.add('blur');
+  } else {
+    kontaktBg.classList.remove('blur');
+  }
+    
       if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 2) {
         hero.classList.add('blur');
         hero.classList.remove('fade-out');
