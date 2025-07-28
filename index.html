@@ -245,19 +245,11 @@
       justify-content: flex-start;
       gap: 24px;
       padding: 40px 20px;
-      margin-top: 20vh;
+      margin-top: 10vh;
       z-index: 10;
       color: white;
       text-shadow: 0 0 8px rgba(0,0,0,0.8);
       user-select: none;
-    }
-
-    .scroll-indicator {
-      position: absolute;
-      bottom: 30px;
-      font-size: 2rem;
-      animation: bounce 2s infinite;
-      color: white;
     }
 
     /* NOVO: News bar */
@@ -447,17 +439,16 @@
       hero.classList.remove('blur');
       headline.classList.remove('visible');
       cmpcBg.classList.add('visible');
-      newsBar.style.display = 'block';
     } else {
       hero.classList.remove('blur', 'fade-out');
       headline.classList.remove('visible');
       cmpcBg.classList.remove('visible');
-      newsBar.style.display = 'none';
       newsSection.style.display = 'none';
     }
   });
 
   newsBtn.addEventListener('click', () => {
+    newsBar.style.display = 'block';
     newsSection.style.display = newsSection.style.display === 'none' ? 'block' : 'none';
   });
 
