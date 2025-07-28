@@ -254,17 +254,19 @@
 
     /* NOVO: News bar */
     #newsBar {
-      width: 100%;
-      padding: 12px 0;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      color: white;
-      font-size: 16px;
-      font-weight: 500;
-      position: relative;
-      overflow: hidden;
-      border-radius: 8px;
-    }
+  width: 100%;
+  padding: 12px 0;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  overflow: hidden;
+  border-radius: 8px; /* Po želji, možeš vratiti ako želiš rounded */
+}
 
     .marquee {
       white-space: nowrap;
