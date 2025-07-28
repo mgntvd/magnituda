@@ -475,38 +475,42 @@
   });
 
   window.addEventListener('scroll', () => {
-    const scrollPos = window.scrollY || window.pageYOffset;
-    const windowHeight = window.innerHeight;
+  const scrollPos = window.scrollY || window.pageYOffset;
+  const windowHeight = window.innerHeight;
 
-    // HERO section blur/fade
-    if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 2) {
-      hero.classList.add('blur');
-      hero.classList.remove('fade-out');
-      headline.classList.add('visible');
-      cmpcBg.classList.remove('visible');
-      kontaktBg.classList.remove('visible', 'blur');
-    } else if (scrollPos >= windowHeight * 2.2 && scrollPos < windowHeight * 3.2) {
-      hero.classList.add('fade-out');
-      hero.classList.remove('blur');
-      headline.classList.remove('visible');
-      cmpcBg.classList.add('visible');
-      kontaktBg.classList.remove('visible', 'blur');
-    } else if (scrollPos >= windowHeight * 3.2 && scrollPos < windowHeight * 4.2) {
-      // Sad CMPC se fade-out, Kontakt ulazi
-      hero.classList.remove('blur', 'fade-out');
-      cmpcBg.classList.remove('visible');
-      kontaktBg.classList.add('visible');
-      kontaktBg.classList.remove('blur');
-    } else if (scrollPos >= windowHeight * 4.2) {
-      kontaktBg.classList.add('visible', 'blur');
-    } else {
-      hero.classList.remove('blur', 'fade-out');
-      headline.classList.remove('visible');
-      cmpcBg.classList.remove('visible');
-      kontaktBg.classList.remove('visible', 'blur');
-      newsSection.style.display = 'none';
-    }
-  });
+  // HERO prikaz i blur
+  if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 2) {
+    hero.classList.add('blur');
+    hero.classList.remove('fade-out');
+    hero.style.display = 'flex'; // Obezbeđujemo da je vidljiv
+    headline.classList.add('visible');
+    cmpcBg.classList.remove('visible');
+    kontaktBg.classList.remove('visible', 'blur');
+  } else if (scrollPos >= windowHeight * 2.2 && scrollPos < windowHeight * 3.2) {
+    hero.classList.add('fade-out');
+    hero.classList.remove('blur');
+    hero.style.display = 'flex'; // Još je tu, ali sa opacity 0
+    headline.classList.remove('visible');
+    cmpcBg.classList.add('visible');
+    kontaktBg.classList.remove('visible', 'blur');
+  } else if (scrollPos >= windowHeight * 3.2 && scrollPos < windowHeight * 4.2) {
+    hero.style.display = 'none'; // SKLANJAMO hero iz prikaza
+    cmpcBg.classList.remove('visible');
+    kontaktBg.classList.add('visible');
+    kontaktBg.classList.remove('blur');
+  } else if (scrollPos >= windowHeight * 4.2) {
+    hero.style.display = 'none'; // I dalje ga držimo skrivenim
+    kontaktBg.classList.add('visible', 'blur');
+  } else {
+    // Resetovanje kada se vratimo na sam vrh
+    hero.classList.remove('blur', 'fade-out');
+    hero.style.display = 'flex'; // Prikazujemo ga ponovo
+    headline.classList.remove('visible');
+    cmpcBg.classList.remove('visible');
+    kontaktBg.classList.remove('visible', 'blur');
+    newsSection.style.display = 'none';
+  }
+});
 
   newsBtn.addEventListener('click', () => {
     newsSection.style.display = newsSection.style.display === 'none' ? 'block' : 'none';
