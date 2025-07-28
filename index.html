@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>M A G N I T V DÆ</title>
+  <title>Magnituda</title>
 
   <!-- Geomanist font -->
   <style>
@@ -18,7 +18,7 @@
       box-sizing: border-box;
     }
 
-    body, html {
+    html, body {
       height: 100%;
       font-family: 'Geomanist', sans-serif;
       scroll-behavior: smooth;
@@ -47,7 +47,6 @@
     .hero.fade-out {
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.8s ease-in-out;
     }
 
     .cmpc-bg {
@@ -56,11 +55,13 @@
       left: 0;
       width: 100%;
       height: 100vh;
-      background: url("CMPC.jpg") no-repeat center center/cover;
+      background: url("CMPC.jpg") no-repeat center center/contain;
+      background-color: black;
       opacity: 0;
       z-index: 0;
       transition: opacity 0.8s ease-in-out;
       pointer-events: none;
+      background-size: contain;
     }
 
     .cmpc-bg.visible {
@@ -195,7 +196,6 @@
       cursor: pointer;
       font-size: 24px;
       color: black;
-      user-select: none;
       display: none;
       align-items: center;
       justify-content: center;
@@ -253,7 +253,6 @@
     }
 
     #newsBar {
-      display: block;
       width: 100%;
       padding: 12px 0;
       background: rgba(255, 255, 255, 0.1);
@@ -261,7 +260,6 @@
       color: white;
       font-size: 16px;
       font-weight: 500;
-      position: relative;
       overflow: hidden;
       border-radius: 8px;
     }
@@ -300,22 +298,11 @@
     #newsFallback {
       margin-top: 10px;
     }
-
-    /*   OPTIMIZACIJA CMPC I HERO POZADINA ZA MOBILNE UREĐAJE */
-    @media (max-width: 768px) {
-      .cmpc-bg {
-        background-position: center 20%;
-      }
-
-      .hero {
-        background-position: center top;
-      }
-    }
   </style>
 </head>
 <body>
 
-<!-- HERO -->
+<!-- Hero -->
 <section class="hero" id="hero">
   <div class="language-switcher">
     <button id="langBtn">EN</button>
@@ -323,7 +310,7 @@
   <div class="scroll-indicator">↓</div>
 </section>
 
-<!-- CMPC pozadina -->
+<!-- Pozadina -->
 <div class="cmpc-bg" id="cmpcBg"></div>
 
 <!-- Glavni sadržaj -->
@@ -333,7 +320,7 @@
 
   <section id="videoSection">
     <iframe src="https://www.youtube.com/embed/V4AV4OCU6pk" allowfullscreen></iframe>
-    <button id="loadImageBtn">ekspozicija.čitaj</button>
+    <button id="loadImageBtn">ekspozicija.read</button>
     <img id="additionalImage" src="Ekspozicija - Bez kompasa.png" alt="Ekspozicija - Bez kompasa" />
   </section>
 </section>
@@ -346,11 +333,11 @@
     </div>
   </div>
   <button id="newsBtn">vesti.saznaj</button>
+
   <div id="newsSection">
     <img src="Vesti.jpg" alt="Vesti" onerror="showFallback()" />
     <p id="newsFallback" style="display:none;">Trenutno nema dodatnih vesti.</p>
   </div>
-  <div class="scroll-indicator">↓</div>
 </section>
 
 <!-- Informator -->
@@ -362,14 +349,12 @@
   <img src="Magnituda_informator-4.png" alt="Strana 4 informatora" />
   <img src="Magnituda_informator-5.png" alt="Strana 5 informatora" />
   <img src="Magnituda_informator-6.png" alt="Strana 6 informatora" />
-  <div style="height: 100px;"></div>
 </section>
 
 <script>
-  const langBtn = document.getElementById('langBtn');
-  const headline = document.getElementById('headline');
   const hero = document.getElementById('hero');
   const cmpcBg = document.getElementById('cmpcBg');
+  const headline = document.getElementById('headline');
   const infoBtn = document.getElementById('infoBtn');
   const infoSection = document.getElementById('infoSection');
   const backBtn = document.getElementById('backBtn');
@@ -381,6 +366,7 @@
   const newsBtn = document.getElementById('newsBtn');
   const newsSection = document.getElementById('newsSection');
   const fallback = document.getElementById('newsFallback');
+  const langBtn = document.getElementById('langBtn');
 
   let currentLang = 'sr';
   let lastScrollPos = 0;
@@ -390,7 +376,7 @@
       langBtn.textContent = 'EN';
       headline.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
       infoBtn.textContent = 'INFORMATOR';
-      loadImageBtn.textContent = 'ekspozicija.čitaj';
+      loadImageBtn.textContent = 'ekspozicija.read';
       newsBtn.textContent = 'vesti.saznaj';
     } else {
       langBtn.textContent = 'SR';
@@ -407,16 +393,14 @@
   });
 
   infoBtn.addEventListener('click', () => {
-    if (currentLang === 'sr') {
-      lastScrollPos = window.scrollY || window.pageYOffset;
-      infoSection.style.display = 'flex';
-      backBtn.style.display = 'flex';
-      hero.style.display = 'none';
-      content.style.display = 'none';
-      languageSwitcher.style.display = 'none';
-      scrollIndicator.style.display = 'none';
-      window.scrollTo(0, 0);
-    }
+    lastScrollPos = window.scrollY || window.pageYOffset;
+    infoSection.style.display = 'flex';
+    backBtn.style.display = 'flex';
+    hero.style.display = 'none';
+    content.style.display = 'none';
+    languageSwitcher.style.display = 'none';
+    scrollIndicator.style.display = 'none';
+    window.scrollTo(0, 0);
   });
 
   backBtn.addEventListener('click', () => {
@@ -430,11 +414,11 @@
   });
 
   loadImageBtn.addEventListener('click', () => {
-    additionalImage.style.display = additionalImage.style.display === 'block' ? 'none' : 'block';
+    additionalImage.style.display = additionalImage.style.display === 'none' ? 'block' : 'none';
   });
 
   newsBtn.addEventListener('click', () => {
-    newsSection.style.display = newsSection.style.display === 'block' ? 'none' : 'block';
+    newsSection.style.display = newsSection.style.display === 'none' ? 'block' : 'none';
   });
 
   function showFallback() {
@@ -459,6 +443,7 @@
       hero.classList.remove('blur', 'fade-out');
       headline.classList.remove('visible');
       cmpcBg.classList.remove('visible');
+      newsSection.style.display = 'none';
     }
   });
 
