@@ -422,12 +422,12 @@
       const scrollPos = window.scrollY || window.pageYOffset;
       const windowHeight = window.innerHeight;
 
-      if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 1.8) {
+      if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 2.2) {
         hero.classList.add('blur');
         hero.classList.remove('fade-out');
         headline.classList.add('visible');
         cmpcBg.classList.remove('visible');
-      } else if (scrollPos >= windowHeight * 2.2) {
+      } else if (scrollPos >= windowHeight * 1.8) {
         hero.classList.add('fade-out');
         hero.classList.remove('blur');
         headline.classList.remove('visible');
