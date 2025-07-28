@@ -4,8 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Magnituda</title>
-
-  <!-- Geomanist font -->
   <style>
     @font-face {
       font-family: 'Geomanist';
@@ -117,7 +115,6 @@
     .content {
       position: relative;
       min-height: 100vh;
-      background-color: transparent;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -254,7 +251,6 @@
 
     /* NOVO: News bar */
     #newsBar {
-      display: none;
       width: 100%;
       padding: 12px 0;
       background: rgba(255, 255, 255, 0.1);
@@ -305,159 +301,155 @@
 </head>
 <body>
 
-<!-- Hero sekcija -->
-<section class="hero" id="hero">
-  <div class="language-switcher">
-    <button id="langBtn">EN</button>
-  </div>
-  <div class="scroll-indicator">↓</div>
-</section>
-
-<!-- CMPC pozadina -->
-<div class="cmpc-bg" id="cmpcBg"></div>
-
-<!-- Glavni sadržaj -->
-<section class="content" id="content">
-  <h1 id="headline">Centar za promociju savremene muzike</h1>
-  <button id="infoBtn">INFORMATOR</button>
-
-  <section id="videoSection" aria-label="Video i dodatna slika">
-    <iframe src="https://www.youtube.com/embed/V4AV4OCU6pk" allowfullscreen></iframe>
-    <button id="loadImageBtn">ekspozicija.read</button>
-    <img id="additionalImage" src="Ekspozicija - Bez kompasa.png" alt="Ekspozicija - Bez kompasa" />
-  </section>
-</section>
-
-<!-- Nova sekcija -->
-<section id="newSection" aria-label="Nova sekcija sa CMPC pozadinom">
-  <div id="newsBar">
-    <div class="marquee">
-      <span id="marqueeText">Prijava novih članova je u toku // Kontaktirajte nas putem telefona, socijalnih mreža ili e-maila</span>
+  <!-- Hero sekcija -->
+  <section class="hero" id="hero">
+    <div class="language-switcher">
+      <button id="langBtn">EN</button>
     </div>
-  </div>
-  <button id="newsBtn">vesti.saznaj</button>
+    <div class="scroll-indicator">↓</div>
+  </section>
 
-  <div id="newsSection">
-    <img src="Vesti.jpg" alt="Vesti" onerror="showFallback()" />
-    <p id="newsFallback" style="display:none;">Trenutno nema dodatnih vesti.</p>
-  </div>
+  <!-- CMPC pozadina -->
+  <div class="cmpc-bg" id="cmpcBg"></div>
 
-  <div class="scroll-indicator">↓</div>
-</section>
+  <!-- Glavni sadržaj -->
+  <section class="content" id="content">
+    <h1 id="headline">Centar za promociju savremene muzike</h1>
+    <button id="infoBtn">INFORMATOR</button>
+    <section id="videoSection">
+      <iframe src="https://www.youtube.com/embed/V4AV4OCU6pk" allowfullscreen></iframe>
+      <button id="loadImageBtn">ekspozicija.read</button>
+      <img id="additionalImage" src="Ekspozicija - Bez kompasa.png" alt="Ekspozicija - Bez kompasa" />
+    </section>
+  </section>
 
-<!-- Informator -->
-<section id="infoSection" aria-label="Informator sa slikama">
-  <button id="backBtn" aria-label="Nazad">&#8592;</button>
-  <img src="Magnituda_informator-1.png" alt="Strana 1 informatora" />
-  <img src="Magnituda_informator-2.png" alt="Strana 2 informatora" />
-  <img src="Magnituda_informator-3.png" alt="Strana 3 informatora" />
-  <img src="Magnituda_informator-4.png" alt="Strana 4 informatora" />
-  <img src="Magnituda_informator-5.png" alt="Strana 5 informatora" />
-  <img src="Magnituda_informator-6.png" alt="Strana 6 informatora" />
-</section>
+  <!-- Nova sekcija -->
+  <section id="newSection">
+    <div id="newsBar">
+      <div class="marquee">
+        <span id="marqueeText">Prijava novih članova je u toku // Kontaktirajte nas putem telefona, socijalnih mreža ili e-maila</span>
+      </div>
+    </div>
+    <button id="newsBtn">vesti.saznaj</button>
+    <div id="newsSection">
+      <img src="Vesti.jpg" alt="Vesti" onerror="showFallback()" />
+      <p id="newsFallback" style="display:none;">Trenutno nema dodatnih vesti.</p>
+    </div>
+    <div class="scroll-indicator">↓</div>
+  </section>
 
-<script>
-  const hero = document.getElementById('hero');
-  const cmpcBg = document.getElementById('cmpcBg');
-  const headline = document.getElementById('headline');
-  const infoBtn = document.getElementById('infoBtn');
-  const infoSection = document.getElementById('infoSection');
-  const backBtn = document.getElementById('backBtn');
-  const content = document.getElementById('content');
-  const languageSwitcher = document.querySelector('.language-switcher');
-  const scrollIndicator = document.querySelector('.scroll-indicator');
-  const loadImageBtn = document.getElementById('loadImageBtn');
-  const additionalImage = document.getElementById('additionalImage');
-  const newsBar = document.getElementById('newsBar');
-  const newsBtn = document.getElementById('newsBtn');
-  const newsSection = document.getElementById('newsSection');
-  const fallback = document.getElementById('newsFallback');
-  const langBtn = document.getElementById('langBtn');
+  <!-- Informator -->
+  <section id="infoSection">
+    <button id="backBtn">&#8592;</button>
+    <img src="Magnituda_informator-1.png" alt="Strana 1 informatora" />
+    <img src="Magnituda_informator-2.png" alt="Strana 2 informatora" />
+    <img src="Magnituda_informator-3.png" alt="Strana 3 informatora" />
+    <img src="Magnituda_informator-4.png" alt="Strana 4 informatora" />
+    <img src="Magnituda_informator-5.png" alt="Strana 5 informatora" />
+    <img src="Magnituda_informator-6.png" alt="Strana 6 informatora" />
+  </section>
 
-  let currentLang = 'sr';
-  let lastScrollPos = 0;
+  <script>
+    const hero = document.getElementById('hero');
+    const cmpcBg = document.getElementById('cmpcBg');
+    const headline = document.getElementById('headline');
+    const infoBtn = document.getElementById('infoBtn');
+    const infoSection = document.getElementById('infoSection');
+    const backBtn = document.getElementById('backBtn');
+    const content = document.getElementById('content');
+    const languageSwitcher = document.querySelector('.language-switcher');
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    const loadImageBtn = document.getElementById('loadImageBtn');
+    const additionalImage = document.getElementById('additionalImage');
+    const newsBtn = document.getElementById('newsBtn');
+    const newsSection = document.getElementById('newsSection');
+    const fallback = document.getElementById('newsFallback');
+    const langBtn = document.getElementById('langBtn');
 
-  function updateLanguage() {
-    if (currentLang === 'sr') {
-      langBtn.textContent = 'EN';
-      headline.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
-      infoBtn.textContent = 'INFORMATOR';
-      loadImageBtn.textContent = 'ekspozicija.read';
-      newsBtn.textContent = 'vesti.saznaj';
-    } else {
-      langBtn.textContent = 'SR';
-      headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
-      infoBtn.textContent = 'OUR STORY';
-      loadImageBtn.textContent = 'exposition.read';
-      newsBtn.textContent = 'news.more';
+    let currentLang = 'sr';
+    let lastScrollPos = 0;
+
+    function updateLanguage() {
+      if (currentLang === 'sr') {
+        langBtn.textContent = 'EN';
+        headline.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
+        infoBtn.textContent = 'INFORMATOR';
+        loadImageBtn.textContent = 'ekspozicija.read';
+        newsBtn.textContent = 'vesti.saznaj';
+      } else {
+        langBtn.textContent = 'SR';
+        headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
+        infoBtn.textContent = 'OUR STORY';
+        loadImageBtn.textContent = 'exposition.read';
+        newsBtn.textContent = 'news.more';
+      }
     }
-  }
 
-  langBtn.addEventListener('click', () => {
-    currentLang = currentLang === 'sr' ? 'en' : 'sr';
+    langBtn.addEventListener('click', () => {
+      currentLang = currentLang === 'sr' ? 'en' : 'sr';
+      updateLanguage();
+    });
+
+    infoBtn.addEventListener('click', () => {
+      if (currentLang === 'sr') {
+        lastScrollPos = window.scrollY || window.pageYOffset;
+        infoSection.style.display = 'flex';
+        backBtn.style.display = 'flex';
+        hero.style.display = 'none';
+        content.style.display = 'none';
+        languageSwitcher.style.display = 'none';
+        scrollIndicator.style.display = 'none';
+        window.scrollTo(0, 0);
+      }
+    });
+
+    backBtn.addEventListener('click', () => {
+      infoSection.style.display = 'none';
+      backBtn.style.display = 'none';
+      hero.style.display = 'flex';
+      content.style.display = 'flex';
+      languageSwitcher.style.display = 'flex';
+      scrollIndicator.style.display = 'block';
+      window.scrollTo(0, lastScrollPos);
+    });
+
+    loadImageBtn.addEventListener('click', () => {
+      const isVisible = additionalImage.style.display === 'block';
+      additionalImage.style.display = isVisible ? 'none' : 'block';
+    });
+
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY || window.pageYOffset;
+      const windowHeight = window.innerHeight;
+
+      if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 1.8) {
+        hero.classList.add('blur');
+        hero.classList.remove('fade-out');
+        headline.classList.add('visible');
+        cmpcBg.classList.remove('visible');
+      } else if (scrollPos >= windowHeight * 2.2) {
+        hero.classList.add('fade-out');
+        hero.classList.remove('blur');
+        headline.classList.remove('visible');
+        cmpcBg.classList.add('visible');
+      } else {
+        hero.classList.remove('blur', 'fade-out');
+        headline.classList.remove('visible');
+        cmpcBg.classList.remove('visible');
+        newsSection.style.display = 'none';
+      }
+    });
+
+    newsBtn.addEventListener('click', () => {
+      newsSection.style.display = newsSection.style.display === 'none' ? 'block' : 'none';
+    });
+
+    function showFallback() {
+      fallback.style.display = 'block';
+    }
+
     updateLanguage();
-  });
-
-  infoBtn.addEventListener('click', () => {
-    if (currentLang === 'sr') {
-      lastScrollPos = window.scrollY || window.pageYOffset;
-      infoSection.style.display = 'flex';
-      backBtn.style.display = 'flex';
-      hero.style.display = 'none';
-      content.style.display = 'none';
-      languageSwitcher.style.display = 'none';
-      scrollIndicator.style.display = 'none';
-      window.scrollTo(0, 0);
-    }
-  });
-
-  backBtn.addEventListener('click', () => {
-    infoSection.style.display = 'none';
-    backBtn.style.display = 'none';
-    hero.style.display = 'flex';
-    content.style.display = 'flex';
-    languageSwitcher.style.display = 'flex';
-    scrollIndicator.style.display = 'block';
-    window.scrollTo(0, lastScrollPos);
-  });
-
-  loadImageBtn.addEventListener('click', () => {
-    additionalImage.style.display = additionalImage.style.display === 'none' ? 'block' : 'none';
-  });
-
-  window.addEventListener('scroll', () => {
-    const scrollPos = window.scrollY || window.pageYOffset;
-    const windowHeight = window.innerHeight;
-
-    if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 1.8) {
-      hero.classList.add('blur');
-      hero.classList.remove('fade-out');
-      headline.classList.add('visible');
-      cmpcBg.classList.remove('visible');
-    } else if (scrollPos >= windowHeight * 2.2) {
-      hero.classList.add('fade-out');
-      hero.classList.remove('blur');
-      headline.classList.remove('visible');
-      cmpcBg.classList.add('visible');
-    } else {
-      hero.classList.remove('blur', 'fade-out');
-      headline.classList.remove('visible');
-      cmpcBg.classList.remove('visible');
-      newsSection.style.display = 'none';
-    }
-  });
-
-  newsBtn.addEventListener('click', () => {
-    newsBar.style.display = 'block';
-    newsSection.style.display = newsSection.style.display === 'none' ? 'block' : 'none';
-  });
-
-  function showFallback() {
-    fallback.style.display = 'block';
-  }
-
-  updateLanguage();
-</script>
+  </script>
 </body>
 </html>
 
