@@ -152,14 +152,12 @@
       cursor: pointer;
       font-family: inherit;
       font-weight: 600;
-      color: white;
+      color: black;
       font-size: 16px;
       transition: background-color 0.3s ease;
     }
 
-    #infoBtn:hover,
-    #loadImageBtn:hover,
-    #newsBtn:hover {
+    #infoBtn:hover, #loadImageBtn:hover, #newsBtn:hover {
       background-color: rgba(255, 255, 255, 0.4);
     }
 
@@ -244,181 +242,167 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       gap: 24px;
       padding: 40px 20px;
-      margin-top: 0vh;
+      margin-top: 100vh;
       z-index: 10;
       color: white;
       text-shadow: 0 0 8px rgba(0,0,0,0.8);
       user-select: none;
     }
 
-    #newSection h2 {
-      font-size: 2rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-
-    #newSection .scroll-indicator {
+    .scroll-indicator {
       position: absolute;
       bottom: 30px;
       font-size: 2rem;
       animation: bounce 2s infinite;
       color: white;
-      user-select: none;
     }
 
-    /* NOVO: News bar sa glassmorphism i blur ivicama */
+    /* NOVO: News bar */
     #newsBar {
-      margin-top: 20px;
+      display: none;
+      width: 100%;
+      padding: 12px 0;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
       position: relative;
       overflow: hidden;
-      width: 100%;
-      max-width: 800px;
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.1);
       border-radius: 8px;
-      padding: 10px 0;
     }
 
     .marquee {
       white-space: nowrap;
       overflow: hidden;
-      position: relative;
-      mask-image: linear-gradient(to right, transparent, white 10%, white 90%, transparent);
     }
 
     .marquee span {
       display: inline-block;
       padding-left: 100%;
-      animation: marquee 15s linear infinite;
-      color: white;
-      font-size: 16px;
+      animation: marquee 12s linear infinite;
     }
 
     @keyframes marquee {
-      0% { transform: translateX(0); }
+      0% { transform: translateX(0%); }
       100% { transform: translateX(-100%); }
     }
 
     #newsSection {
-      margin-top: 20px;
       display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
+      margin-top: 20px;
+      background-color: rgba(255,255,255,0.1);
+      backdrop-filter: blur(12px);
+      padding: 16px;
+      border-radius: 8px;
+      color: white;
     }
 
     #newsSection img {
       max-width: 100%;
       border-radius: 8px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.6);
     }
 
     #newsFallback {
-      color: white;
-      font-style: italic;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <section class="hero" id="hero">
-    <div class="language-switcher"><button id="langBtn">EN</button></div>
-    <div class="scroll-indicator">↓</div>
+
+<!-- Hero sekcija -->
+<section class="hero" id="hero">
+  <div class="language-switcher">
+    <button id="langBtn">EN</button>
+  </div>
+  <div class="scroll-indicator">↓</div>
+</section>
+
+<!-- CMPC pozadina -->
+<div class="cmpc-bg" id="cmpcBg"></div>
+
+<!-- Glavni sadržaj -->
+<section class="content" id="content">
+  <h1 id="headline">Centar za promociju savremene muzike</h1>
+  <button id="infoBtn">INFORMATOR</button>
+
+  <section id="videoSection" aria-label="Video i dodatna slika">
+    <iframe src="https://www.youtube.com/embed/V4AV4OCU6pk" allowfullscreen></iframe>
+    <button id="loadImageBtn">ekspozicija.read</button>
+    <img id="additionalImage" src="Ekspozicija - Bez kompasa.png" alt="Ekspozicija - Bez kompasa" />
   </section>
+</section>
 
-  <div class="cmpc-bg" id="cmpcBg"></div>
-
-  <section class="content" id="content">
-    <h1 id="headline">Centar za promociju savremene muzike</h1>
-    <button id="infoBtn">INFORMATOR</button>
-
-    <section id="videoSection">
-      <iframe src="https://www.youtube.com/embed/V4AV4OCU6pk" allowfullscreen></iframe>
-      <button id="loadImageBtn">ekspozicija.read</button>
-      <img id="additionalImage" src="Ekspozicija - Bez kompasa.png" alt="Ekspozicija - Bez kompasa" />
-    </section>
-  </section>
-
-  <section id="newSection">
-      <div class="scroll-indicator">↓</div>
-
-    <div id="newsBar">
-      <div class="marquee">
-        <span>Prijava novih članova je u toku // Kontaktirajte nas putem telefona, socijalnih mreža ili e-maila</span>
-      </div>
+<!-- Nova sekcija -->
+<section id="newSection" aria-label="Nova sekcija sa CMPC pozadinom">
+  <div id="newsBar">
+    <div class="marquee">
+      <span id="marqueeText">Prijava novih članova je u toku // Kontaktirajte nas putem telefona, socijalnih mreža ili e-maila</span>
     </div>
+  </div>
+  <button id="newsBtn">vesti.saznaj</button>
 
-    <button id="newsBtn">vesti.saznaj</button>
+  <div id="newsSection">
+    <img src="Vesti.jpg" alt="Vesti" onerror="showFallback()" />
+    <p id="newsFallback" style="display:none;">Trenutno nema dodatnih vesti.</p>
+  </div>
 
-    <div id="newsSection">
-      <img id="newsImage" src="Vesti.jpg" alt="Vesti" onerror="showFallback()" />
-      <p id="newsFallback" style="display:none;">Trenutno nema dodatnih vesti.</p>
-    </div>
-  </section>
+  <div class="scroll-indicator">↓</div>
+</section>
 
-  <section id="infoSection">
-    <button id="backBtn">&#8592;</button>
-    <img src="Magnituda_informator-1.png" alt="Strana 1 informatora" />
-    <img src="Magnituda_informator-2.png" alt="Strana 2 informatora" />
-    <img src="Magnituda_informator-3.png" alt="Strana 3 informatora" />
-    <img src="Magnituda_informator-4.png" alt="Strana 4 informatora" />
-    <img src="Magnituda_informator-5.png" alt="Strana 5 informatora" />
-    <img src="Magnituda_informator-6.png" alt="Strana 6 informatora" />
-  </section>
+<!-- Informator -->
+<section id="infoSection" aria-label="Informator sa slikama">
+  <button id="backBtn" aria-label="Nazad">&#8592;</button>
+  <img src="Magnituda_informator-1.png" alt="Strana 1 informatora" />
+</section>
 
-  <script>
-    const langBtn = document.getElementById('langBtn');
-    const headline = document.getElementById('headline');
-    const hero = document.getElementById('hero');
-    const infoBtn = document.getElementById('infoBtn');
-    const infoSection = document.getElementById('infoSection');
-    const backBtn = document.getElementById('backBtn');
-    const content = document.getElementById('content');
-    const languageSwitcher = document.querySelector('.language-switcher');
-    const scrollIndicator = document.querySelector('.scroll-indicator');
-    const cmpcBg = document.getElementById('cmpcBg');
-    const loadImageBtn = document.getElementById('loadImageBtn');
-    const additionalImage = document.getElementById('additionalImage');
-    const newsBtn = document.getElementById('newsBtn');
-    const newsSection = document.getElementById('newsSection');
-    const newsFallback = document.getElementById('newsFallback');
+<script>
+  const hero = document.getElementById('hero');
+  const cmpcBg = document.getElementById('cmpcBg');
+  const headline = document.getElementById('headline');
+  const infoBtn = document.getElementById('infoBtn');
+  const infoSection = document.getElementById('infoSection');
+  const backBtn = document.getElementById('backBtn');
+  const content = document.getElementById('content');
+  const languageSwitcher = document.querySelector('.language-switcher');
+  const scrollIndicator = document.querySelector('.scroll-indicator');
+  const loadImageBtn = document.getElementById('loadImageBtn');
+  const additionalImage = document.getElementById('additionalImage');
+  const newsBar = document.getElementById('newsBar');
+  const newsBtn = document.getElementById('newsBtn');
+  const newsSection = document.getElementById('newsSection');
+  const fallback = document.getElementById('newsFallback');
+  const langBtn = document.getElementById('langBtn');
 
-    let currentLang = 'sr';
-    let lastScrollPos = 0;
-    let newsVisible = false;
+  let currentLang = 'sr';
+  let lastScrollPos = 0;
 
-    function updateLanguage() {
-      if (currentLang === 'sr') {
-        langBtn.textContent = 'EN';
-        headline.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
-        infoBtn.textContent = 'INFORMATOR';
-        infoBtn.disabled = false;
-        loadImageBtn.textContent = 'ekspozicija.read';
-        loadImageBtn.disabled = false;
-        newsBtn.textContent = 'vesti.saznaj';
-      } else {
-        langBtn.textContent = 'SR';
-        headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
-        infoBtn.textContent = 'OUR STORY';
-        infoBtn.disabled = true;
-        loadImageBtn.textContent = 'exposition.read';
-        loadImageBtn.disabled = true;
-        newsBtn.textContent = 'more.news';
-      }
+  function updateLanguage() {
+    if (currentLang === 'sr') {
+      langBtn.textContent = 'EN';
+      headline.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
+      infoBtn.textContent = 'INFORMATOR';
+      loadImageBtn.textContent = 'ekspozicija.read';
+      newsBtn.textContent = 'vesti.saznaj';
+    } else {
+      langBtn.textContent = 'SR';
+      headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
+      infoBtn.textContent = 'OUR STORY';
+      loadImageBtn.textContent = 'exposition.read';
+      newsBtn.textContent = 'news.more';
     }
+  }
 
-    langBtn.addEventListener('click', () => {
-      currentLang = currentLang === 'sr' ? 'en' : 'sr';
-      updateLanguage();
-    });
+  langBtn.addEventListener('click', () => {
+    currentLang = currentLang === 'sr' ? 'en' : 'sr';
+    updateLanguage();
+  });
 
-    infoBtn.addEventListener('click', () => {
-      if (currentLang === 'sr') showInfo();
-    });
-
-    function showInfo() {
+  infoBtn.addEventListener('click', () => {
+    if (currentLang === 'sr') {
       lastScrollPos = window.scrollY || window.pageYOffset;
       infoSection.style.display = 'flex';
       backBtn.style.display = 'flex';
@@ -428,55 +412,56 @@
       scrollIndicator.style.display = 'none';
       window.scrollTo(0, 0);
     }
+  });
 
-    function hideInfo() {
-      infoSection.style.display = 'none';
-      backBtn.style.display = 'none';
-      hero.style.display = 'flex';
-      content.style.display = 'flex';
-      languageSwitcher.style.display = 'flex';
-      scrollIndicator.style.display = 'block';
-      window.scrollTo(0, lastScrollPos);
+  backBtn.addEventListener('click', () => {
+    infoSection.style.display = 'none';
+    backBtn.style.display = 'none';
+    hero.style.display = 'flex';
+    content.style.display = 'flex';
+    languageSwitcher.style.display = 'flex';
+    scrollIndicator.style.display = 'block';
+    window.scrollTo(0, lastScrollPos);
+  });
+
+  loadImageBtn.addEventListener('click', () => {
+    additionalImage.style.display = additionalImage.style.display === 'none' ? 'block' : 'none';
+  });
+
+  window.addEventListener('scroll', () => {
+    const scrollPos = window.scrollY || window.pageYOffset;
+    const windowHeight = window.innerHeight;
+
+    if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 1.9) {
+      hero.classList.add('blur');
+      hero.classList.remove('fade-out');
+      headline.classList.add('visible');
+      cmpcBg.classList.remove('visible');
+    } else if (scrollPos >= windowHeight * 1.6) {
+      hero.classList.add('fade-out');
+      hero.classList.remove('blur');
+      headline.classList.remove('visible');
+      cmpcBg.classList.add('visible');
+      newsBar.style.display = 'block';
+    } else {
+      hero.classList.remove('blur', 'fade-out');
+      headline.classList.remove('visible');
+      cmpcBg.classList.remove('visible');
+      newsBar.style.display = 'none';
+      newsSection.style.display = 'none';
     }
+  });
 
-    backBtn.addEventListener('click', hideInfo);
+  newsBtn.addEventListener('click', () => {
+    newsSection.style.display = newsSection.style.display === 'none' ? 'block' : 'none';
+  });
 
-    loadImageBtn.addEventListener('click', () => {
-      additionalImage.style.display = additionalImage.style.display === 'block' ? 'none' : 'block';
-    });
+  function showFallback() {
+    fallback.style.display = 'block';
+  }
 
-    newsBtn.addEventListener('click', () => {
-      newsVisible = !newsVisible;
-      newsSection.style.display = newsVisible ? 'flex' : 'none';
-    });
-
-    function showFallback() {
-      newsFallback.style.display = 'block';
-    }
-
-    window.addEventListener('scroll', () => {
-      const scrollPos = window.scrollY || window.pageYOffset;
-      const windowHeight = window.innerHeight;
-
-      if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 1.8) {
-        hero.classList.add('blur');
-        hero.classList.remove('fade-out');
-        headline.classList.add('visible');
-        cmpcBg.classList.remove('visible');
-      } else if (scrollPos >= windowHeight * 2) {
-        hero.classList.add('fade-out');
-        hero.classList.remove('blur');
-        headline.classList.remove('visible');
-        cmpcBg.classList.add('visible');
-      } else {
-        hero.classList.remove('blur', 'fade-out');
-        headline.classList.remove('visible');
-        cmpcBg.classList.remove('visible');
-      }
-    });
-
-    updateLanguage();
-  </script>
+  updateLanguage();
+</script>
 </body>
 </html>
 
