@@ -1,452 +1,454 @@
 <!DOCTYPE html>
 <html lang="sr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Magnituda</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Magnituda</title>
+  <style>
+    @font-face {
+      font-family: 'Geomanist';
+      src: url('Geomanist-Regular.otf') format('opentype');
+    }
 
-  <style>
-    @font-face {
-      font-family: 'Geomanist';
-      src: url('Geomanist-Regular.otf') format('opentype');
-    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    body, html {
+      height: 100%;
+      font-family: 'Geomanist', sans-serif;
+      scroll-behavior: smooth;
+    }
 
-    html, body {
-      height: 100%;
-      font-family: 'Geomanist', sans-serif;
-      scroll-behavior: smooth;
-    }
+    .hero {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: url("Home - SPLASH FULL.png") no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: filter 0.6s ease-in-out, opacity 0.6s ease-in-out;
+      z-index: 1;
+      opacity: 1;
+      pointer-events: auto;
+    }
 
-    .hero {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: url("Home - SPLASH FULL.png") no-repeat center center/cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: filter 0.6s ease-in-out, opacity 0.6s ease-in-out;
-      z-index: 1;
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .hero.blur {
+      filter: blur(6px) brightness(0.6);
+    }
 
-    .hero.blur {
-      filter: blur(6px) brightness(0.6);
-    }
+    .hero.fade-out {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease-in-out;
+    }
 
-    .hero.fade-out {
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.8s ease-in-out;
-    }
+    .cmpc-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: url("CMPC.jpg") no-repeat center center/cover;
+      opacity: 0;
+      z-index: 0;
+      transition: opacity 0.8s ease-in-out;
+      pointer-events: none;
+    }
 
-    .cmpc-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: url("CMPC.jpg") no-repeat center 30%/cover;
-      opacity: 0;
-      z-index: 0;
-      transition: opacity 0.8s ease-in-out;
-      pointer-events: none;
-    }
+    .cmpc-bg.visible {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 1;
+    }
 
-    .cmpc-bg.visible {
-      opacity: 1;
-      pointer-events: auto;
-      z-index: 1;
-    }
+    .language-switcher {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1100;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      padding: 8px 16px;
+      display: flex;
+      gap: 12px;
+    }
 
-    @media (max-width: 768px) {
-      .cmpc-bg {
-        background-position: center top !important;
-      }
-    }
+    .language-switcher button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-family: inherit;
+      color: black;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+      transition: background-color 0.3s ease;
+    }
 
-    .language-switcher {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1100;
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-      padding: 8px 16px;
-      display: flex;
-      gap: 12px;
-    }
+    .language-switcher button:hover {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
 
-    .language-switcher button {
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-      font-family: inherit;
-      color: black;
-      font-weight: 600;
-      padding: 8px 16px;
-      border-radius: 8px;
-      backdrop-filter: blur(10px);
-      transition: background-color 0.3s ease;
-    }
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      font-size: 2rem;
+      animation: bounce 2s infinite;
+      color: white;
+      z-index: 5;
+    }
 
-    .language-switcher button:hover {
-      background-color: rgba(255, 255, 255, 0.4);
-    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
 
-    .scroll-indicator {
-      position: absolute;
-      bottom: 30px;
-      font-size: 2rem;
-      animation: bounce 2s infinite;
-      color: white;
-      z-index: 5;
-    }
+    .content {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      margin-top: 100vh;
+      z-index: 5;
+      gap: 24px;
+    }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(10px); }
-    }
+    .content h1 {
+      font-size: 2rem;
+      color: white;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
 
-    .content {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 20px;
-      margin-top: 100vh;
-      z-index: 5;
-      gap: 24px;
-    }
+    .content h1.visible {
+      opacity: 1;
+    }
 
-    .content h1 {
-      font-size: 2rem;
-      color: white;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-      text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
+    #infoBtn, #loadImageBtn, #newsBtn {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 0px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+      color: black;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
 
-    .content h1.visible {
-      opacity: 1;
-    }
+    #infoBtn:hover, #loadImageBtn:hover, #newsBtn:hover {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
 
-    #infoBtn, #loadImageBtn, #newsBtn {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      border: none;
-      padding: 8px 16px;
-      cursor: pointer;
-      font-family: inherit;
-      font-weight: 600;
-      color: black;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
+    #infoSection {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      overflow-y: auto;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      z-index: 1000;
+    }
 
-    #infoBtn:hover, #loadImageBtn:hover, #newsBtn:hover {
-      background-color: rgba(255, 255, 255, 0.4);
-    }
+    #infoSection img {
+      max-width: 90vw;
+      margin: 16px 0;
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
+      border-radius: 8px;
+    }
 
-    #infoSection {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #000;
-      overflow-y: auto;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px 0;
-      z-index: 1000;
-    }
+    #backBtn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1100;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 4px;
+      padding: 12px;
+      cursor: pointer;
+      font-size: 24px;
+      color: black;
+      user-select: none;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-shadow: 0 0 2px rgba(255,255,255,0.8);
+      transition: background-color 0.3s ease;
+    }
 
-    #infoSection img {
-      max-width: 90vw;
-      margin: 16px 0;
-      box-shadow: 0 0 20px rgba(0,0,0,0.7);
-      border-radius: 8px;
-    }
+    #backBtn:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
 
-    #backBtn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1100;
-      background: rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(10px);
-      border-radius: 4px;
-      padding: 12px;
-      cursor: pointer;
-      font-size: 24px;
-      color: black;
-      user-select: none;
-      display: none;
-    }
+    #videoSection {
+      min-height: 100vh;
+      margin-top: 130px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+      z-index: 10;
+    }
 
-    #videoSection {
-      min-height: 100vh;
-      margin-top: 130px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-      position: relative;
-      z-index: 10;
-    }
+    #videoSection iframe {
+      width: 90vw;
+      max-width: 560px;
+      height: 315px;
+      border: none;
+      border-radius: 8px;
+    }
 
-    #videoSection iframe {
-      width: 90vw;
-      max-width: 560px;
-      height: 315px;
-      border: none;
-      border-radius: 8px;
-    }
+    #additionalImage {
+      display: none;
+      max-width: 90vw;
+      margin-top: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    }
 
-    #additionalImage {
-      display: none;
-      max-width: 90vw;
-      margin-top: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.7);
-    }
+    #newSection {
+      position: relative;
+      min-height: 100vh;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 24px;
+      padding: 40px 20px;
+      margin-top: 30vh;
+      z-index: 10;
+      color: white;
+      text-shadow: 0 0 8px rgba(0,0,0,0.8);
+      user-select: none;
+    }
 
-    #newSection {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 24px;
-      padding: 40px 20px;
-      margin-top: 10vh;
-      z-index: 10;
-      color: white;
-      text-shadow: 0 0 8px rgba(0,0,0,0.8);
-    }
+    /* NOVO: News bar */
+    #newsBar {
+      width: 100%;
+      padding: 12px 0;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+    }
 
-    #newsBar {
-      display: block;
-      width: 100%;
-      padding: 12px 0;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      color: white;
-      font-size: 16px;
-      font-weight: 500;
-      position: sticky;
-      overflow: hidden;
-      border-radius: 8px;
-    }
+    .marquee {
+      white-space: nowrap;
+      overflow: hidden;
+    }
 
-    .marquee {
-      white-space: nowrap;
-      overflow: hidden;
-    }
+    .marquee span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marquee 12s linear infinite;
+    }
 
-    .marquee span {
-      display: inline-block;
-      padding-left: 100%;
-      animation: marquee 12s linear infinite;
-    }
+    @keyframes marquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-100%); }
+    }
 
-    @keyframes marquee {
-      0% { transform: translateX(0%); }
-      100% { transform: translateX(-100%); }
-    }
+    #newsSection {
+      display: none;
+      margin-top: 20px;
+      background-color: rgba(255,255,255,0.1);
+      backdrop-filter: blur(12px);
+      padding: 16px;
+      border-radius: 8px;
+      color: white;
+    }
 
-    #newsSection {
-      display: none;
-      margin-top: 20px;
-      background-color: rgba(255,255,255,0.1);
-      backdrop-filter: blur(12px);
-      padding: 16px;
-      border-radius: 8px;
-      color: white;
-    }
+    #newsSection img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
 
-    #newsSection img {
-      max-width: 100%;
-      border-radius: 8px;
-    }
-
-    #newsFallback {
-      margin-top: 10px;
-    }
-  </style>
+    #newsFallback {
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
 
-<!-- HERO -->
-<section class="hero" id="hero">
-  <div class="language-switcher">
-    <button id="langBtn">EN</button>
-  </div>
-  <div class="scroll-indicator">↓</div>
-</section>
+  <!-- Hero sekcija -->
+  <section class="hero" id="hero">
+    <div class="language-switcher">
+      <button id="langBtn">EN</button>
+    </div>
+    <div class="scroll-indicator">↓</div>
+  </section>
 
-<!-- CMPC pozadina -->
-<div class="cmpc-bg" id="cmpcBg"></div>
+  <!-- CMPC pozadina -->
+  <div class="cmpc-bg" id="cmpcBg"></div>
 
-<!-- Glavni sadržaj -->
-<section class="content" id="content">
-  <h1 id="headline">Centar za promociju savremene muzike</h1>
-  <button id="infoBtn">INFORMATOR</button>
+  <!-- Glavni sadržaj -->
+  <section class="content" id="content">
+    <h1 id="headline">Centar za promociju savremene muzike</h1>
+    <button id="infoBtn">INFORMATOR</button>
+    <section id="videoSection">
+      <iframe src="https://www.youtube.com/embed/V4AV4OCU6pk" allowfullscreen></iframe>
+      <button id="loadImageBtn">ekspozicija.read</button>
+      <img id="additionalImage" src="Ekspozicija - Bez kompasa.png" alt="Ekspozicija - Bez kompasa" />
+    </section>
+  </section>
 
-  <section id="videoSection">
-    <iframe src="https://www.youtube.com/embed/V4AV4OCU6pk" allowfullscreen></iframe>
-    <button id="loadImageBtn">ekspozicija.read</button>
-    <img id="additionalImage" src="Ekspozicija - Bez kompasa.png" alt="Ekspozicija - Bez kompasa" />
-  </section>
-</section>
+  <!-- Nova sekcija -->
+  <section id="newSection">
+    <div id="newsBar">
+      <div class="marquee">
+        <span id="marqueeText">Prijava novih članova je u toku // Kontaktirajte nas putem telefona, socijalnih mreža ili e-maila</span>
+      </div>
+    </div>
+    <button id="newsBtn">vesti.saznaj</button>
+    <div id="newsSection">
+      <img src="Vesti.jpg" alt="Vesti" onerror="showFallback()" />
+      <p id="newsFallback" style="display:none;">Trenutno nema dodatnih vesti.</p>
+    </div>
+    <div class="scroll-indicator">↓</div>
+  </section>
 
-<!-- Nova sekcija -->
-<section id="newSection">
-  <div id="newsBar">
-    <div class="marquee">
-      <span id="marqueeText">Prijava novih članova je u toku // Kontaktirajte nas putem telefona, socijalnih mreža ili e-maila</span>
-    </div>
-  </div>
-  <button id="newsBtn">vesti.saznaj</button>
-  <div id="newsSection">
-    <img src="Vesti.jpg" alt="Vesti" onerror="showFallback()" />
-    <p id="newsFallback" style="display:none;">Trenutno nema dodatnih vesti.</p>
-  </div>
-  <div class="scroll-indicator">↓</div>
-</section>
+  <!-- Informator -->
+  <section id="infoSection">
+    <button id="backBtn">&#8592;</button>
+    <img src="Magnituda_informator-1.png" alt="Strana 1 informatora" />
+    <img src="Magnituda_informator-2.png" alt="Strana 2 informatora" />
+    <img src="Magnituda_informator-3.png" alt="Strana 3 informatora" />
+    <img src="Magnituda_informator-4.png" alt="Strana 4 informatora" />
+    <img src="Magnituda_informator-5.png" alt="Strana 5 informatora" />
+    <img src="Magnituda_informator-6.png" alt="Strana 6 informatora" />
+  </section>
 
-<!-- Informator -->
-<section id="infoSection">
-  <button id="backBtn">&#8592;</button>
-  <img src="Magnituda_informator-1.png" alt="Strana 1 informatora" />
-  <img src="Magnituda_informator-2.png" alt="Strana 2 informatora" />
-  <img src="Magnituda_informator-3.png" alt="Strana 3 informatora" />
-  <img src="Magnituda_informator-4.png" alt="Strana 4 informatora" />
-  <img src="Magnituda_informator-5.png" alt="Strana 5 informatora" />
-  <img src="Magnituda_informator-6.png" alt="Strana 6 informatora" />
-  <div style="height: 100px;"></div>
-</section>
+  <script>
+    const hero = document.getElementById('hero');
+    const cmpcBg = document.getElementById('cmpcBg');
+    const headline = document.getElementById('headline');
+    const infoBtn = document.getElementById('infoBtn');
+    const infoSection = document.getElementById('infoSection');
+    const backBtn = document.getElementById('backBtn');
+    const content = document.getElementById('content');
+    const languageSwitcher = document.querySelector('.language-switcher');
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    const loadImageBtn = document.getElementById('loadImageBtn');
+    const additionalImage = document.getElementById('additionalImage');
+    const newsBtn = document.getElementById('newsBtn');
+    const newsSection = document.getElementById('newsSection');
+    const fallback = document.getElementById('newsFallback');
+    const langBtn = document.getElementById('langBtn');
 
-<script>
-  const langBtn = document.getElementById('langBtn');
-  const headline = document.getElementById('headline');
-  const hero = document.getElementById('hero');
-  const cmpcBg = document.getElementById('cmpcBg');
-  const infoBtn = document.getElementById('infoBtn');
-  const infoSection = document.getElementById('infoSection');
-  const backBtn = document.getElementById('backBtn');
-  const content = document.getElementById('content');
-  const languageSwitcher = document.querySelector('.language-switcher');
-  const scrollIndicator = document.querySelector('.scroll-indicator');
-  const loadImageBtn = document.getElementById('loadImageBtn');
-  const additionalImage = document.getElementById('additionalImage');
-  const newsBtn = document.getElementById('newsBtn');
-  const newsSection = document.getElementById('newsSection');
-  const fallback = document.getElementById('newsFallback');
+    let currentLang = 'sr';
+    let lastScrollPos = 0;
 
-  let currentLang = 'sr';
-  let lastScrollPos = 0;
+    function updateLanguage() {
+      if (currentLang === 'sr') {
+        langBtn.textContent = 'EN';
+        headline.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
+        infoBtn.textContent = 'INFORMATOR';
+        loadImageBtn.textContent = 'ekspozicija.read';
+        newsBtn.textContent = 'vesti.saznaj';
+      } else {
+        langBtn.textContent = 'SR';
+        headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
+        infoBtn.textContent = 'OUR STORY';
+        loadImageBtn.textContent = 'exposition.read';
+        newsBtn.textContent = 'news.more';
+      }
+    }
 
-  function updateLanguage() {
-    if (currentLang === 'sr') {
-      langBtn.textContent = 'EN';
-      headline.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
-      infoBtn.textContent = 'INFORMATOR';
-      loadImageBtn.textContent = 'ekspozicija.read';
-      newsBtn.textContent = 'vesti.saznaj';
-    } else {
-      langBtn.textContent = 'SR';
-      headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
-      infoBtn.textContent = 'OUR STORY';
-      loadImageBtn.textContent = 'exposition.read';
-      newsBtn.textContent = 'news.more';
-    }
-  }
+    langBtn.addEventListener('click', () => {
+      currentLang = currentLang === 'sr' ? 'en' : 'sr';
+      updateLanguage();
+    });
 
-  langBtn.addEventListener('click', () => {
-    currentLang = currentLang === 'sr' ? 'en' : 'sr';
-    updateLanguage();
-  });
+    infoBtn.addEventListener('click', () => {
+      if (currentLang === 'sr') {
+        lastScrollPos = window.scrollY || window.pageYOffset;
+        infoSection.style.display = 'flex';
+        backBtn.style.display = 'flex';
+        hero.style.display = 'none';
+        content.style.display = 'none';
+        languageSwitcher.style.display = 'none';
+        scrollIndicator.style.display = 'none';
+        window.scrollTo(0, 0);
+      }
+    });
 
-  infoBtn.addEventListener('click', () => {
-    if (currentLang === 'sr') {
-      lastScrollPos = window.scrollY || window.pageYOffset;
-      infoSection.style.display = 'flex';
-      backBtn.style.display = 'flex';
-      hero.style.display = 'none';
-      content.style.display = 'none';
-      languageSwitcher.style.display = 'none';
-      scrollIndicator.style.display = 'none';
-      window.scrollTo(0, 0);
-    }
-  });
+    backBtn.addEventListener('click', () => {
+      infoSection.style.display = 'none';
+      backBtn.style.display = 'none';
+      hero.style.display = 'flex';
+      content.style.display = 'flex';
+      languageSwitcher.style.display = 'flex';
+      scrollIndicator.style.display = 'block';
+      window.scrollTo(0, lastScrollPos);
+    });
 
-  backBtn.addEventListener('click', () => {
-    infoSection.style.display = 'none';
-    backBtn.style.display = 'none';
-    hero.style.display = 'flex';
-    content.style.display = 'flex';
-    languageSwitcher.style.display = 'flex';
-    scrollIndicator.style.display = 'block';
-    window.scrollTo(0, lastScrollPos);
-  });
+    loadImageBtn.addEventListener('click', () => {
+      const isVisible = additionalImage.style.display === 'block';
+      additionalImage.style.display = isVisible ? 'none' : 'block';
+    });
 
-  loadImageBtn.addEventListener('click', () => {
-    additionalImage.style.display = additionalImage.style.display === 'block' ? 'none' : 'block';
-  });
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY || window.pageYOffset;
+      const windowHeight = window.innerHeight;
 
-  newsBtn.addEventListener('click', () => {
-    newsSection.style.display = newsSection.style.display === 'block' ? 'none' : 'block';
-  });
+      if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 2) {
+        hero.classList.add('blur');
+        hero.classList.remove('fade-out');
+        headline.classList.add('visible');
+        cmpcBg.classList.remove('visible');
+      } else if (scrollPos >= windowHeight * 2.2) {
+        hero.classList.add('fade-out');
+        hero.classList.remove('blur');
+        headline.classList.remove('visible');
+        cmpcBg.classList.add('visible');
+      } else {
+        hero.classList.remove('blur', 'fade-out');
+        headline.classList.remove('visible');
+        cmpcBg.classList.remove('visible');
+        newsSection.style.display = 'none';
+      }
+    });
 
-  function showFallback() {
-    fallback.style.display = 'block';
-  }
+    newsBtn.addEventListener('click', () => {
+      newsSection.style.display = newsSection.style.display === 'none' ? 'block' : 'none';
+    });
 
-  window.addEventListener('scroll', () => {
-    const scrollPos = window.scrollY || window.pageYOffset;
-    const windowHeight = window.innerHeight;
+    function showFallback() {
+      fallback.style.display = 'block';
+    }
 
-    if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 1.8) {
-      hero.classList.add('blur');
-      hero.classList.remove('fade-out');
-      headline.classList.add('visible');
-      cmpcBg.classList.remove('visible');
-    } else if (scrollPos >= windowHeight * 2.2) {
-      hero.classList.add('fade-out');
-      hero.classList.remove('blur');
-      headline.classList.remove('visible');
-      cmpcBg.classList.add('visible');
-    } else {
-      hero.classList.remove('blur', 'fade-out');
-      headline.classList.remove('visible');
-      cmpcBg.classList.remove('visible');
-    }
-  });
-
-  updateLanguage();
-</script>
-
+    updateLanguage();
+  </script>
 </body>
 </html>
-
