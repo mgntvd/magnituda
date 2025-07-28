@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Magnituda</title>
+
+  <!-- Geomanist font -->
   <style>
     @font-face {
       font-family: 'Geomanist';
@@ -54,7 +56,7 @@
       left: 0;
       width: 100%;
       height: 100vh;
-      background: url("CMPC.jpg") no-repeat center center/cover;
+      background: url("CMPC.jpg") no-repeat center 30%/cover; /* <<< Tweakuj ovde */
       opacity: 0;
       z-index: 0;
       transition: opacity 0.8s ease-in-out;
@@ -115,6 +117,7 @@
     .content {
       position: relative;
       min-height: 100vh;
+      background-color: transparent;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -242,15 +245,15 @@
       justify-content: flex-start;
       gap: 24px;
       padding: 40px 20px;
-      margin-top: 30vh;
+      margin-top: 10vh;
       z-index: 10;
       color: white;
       text-shadow: 0 0 8px rgba(0,0,0,0.8);
       user-select: none;
     }
 
-    /* NOVO: News bar */
     #newsBar {
+      display: block;
       width: 100%;
       padding: 12px 0;
       background: rgba(255, 255, 255, 0.1);
@@ -300,8 +303,6 @@
   </style>
 </head>
 <body>
-
-  <!-- Hero sekcija -->
   <section class="hero" id="hero">
     <div class="language-switcher">
       <button id="langBtn">EN</button>
@@ -309,13 +310,12 @@
     <div class="scroll-indicator">↓</div>
   </section>
 
-  <!-- CMPC pozadina -->
   <div class="cmpc-bg" id="cmpcBg"></div>
 
-  <!-- Glavni sadržaj -->
   <section class="content" id="content">
     <h1 id="headline">Centar za promociju savremene muzike</h1>
     <button id="infoBtn">INFORMATOR</button>
+
     <section id="videoSection">
       <iframe src="https://www.youtube.com/embed/V4AV4OCU6pk" allowfullscreen></iframe>
       <button id="loadImageBtn">ekspozicija.read</button>
@@ -323,7 +323,6 @@
     </section>
   </section>
 
-  <!-- Nova sekcija -->
   <section id="newSection">
     <div id="newsBar">
       <div class="marquee">
@@ -331,6 +330,7 @@
       </div>
     </div>
     <button id="newsBtn">vesti.saznaj</button>
+
     <div id="newsSection">
       <img src="Vesti.jpg" alt="Vesti" onerror="showFallback()" />
       <p id="newsFallback" style="display:none;">Trenutno nema dodatnih vesti.</p>
@@ -338,7 +338,6 @@
     <div class="scroll-indicator">↓</div>
   </section>
 
-  <!-- Informator -->
   <section id="infoSection">
     <button id="backBtn">&#8592;</button>
     <img src="Magnituda_informator-1.png" alt="Strana 1 informatora" />
@@ -361,6 +360,7 @@
     const scrollIndicator = document.querySelector('.scroll-indicator');
     const loadImageBtn = document.getElementById('loadImageBtn');
     const additionalImage = document.getElementById('additionalImage');
+    const newsBar = document.getElementById('newsBar');
     const newsBtn = document.getElementById('newsBtn');
     const newsSection = document.getElementById('newsSection');
     const fallback = document.getElementById('newsFallback');
@@ -368,6 +368,7 @@
 
     let currentLang = 'sr';
     let lastScrollPos = 0;
+    let imageLoaded = false;
 
     function updateLanguage() {
       if (currentLang === 'sr') {
@@ -391,16 +392,14 @@
     });
 
     infoBtn.addEventListener('click', () => {
-      if (currentLang === 'sr') {
-        lastScrollPos = window.scrollY || window.pageYOffset;
-        infoSection.style.display = 'flex';
-        backBtn.style.display = 'flex';
-        hero.style.display = 'none';
-        content.style.display = 'none';
-        languageSwitcher.style.display = 'none';
-        scrollIndicator.style.display = 'none';
-        window.scrollTo(0, 0);
-      }
+      lastScrollPos = window.scrollY || window.pageYOffset;
+      infoSection.style.display = 'flex';
+      backBtn.style.display = 'flex';
+      hero.style.display = 'none';
+      content.style.display = 'none';
+      languageSwitcher.style.display = 'none';
+      scrollIndicator.style.display = 'none';
+      window.scrollTo(0, 0);
     });
 
     backBtn.addEventListener('click', () => {
@@ -414,15 +413,23 @@
     });
 
     loadImageBtn.addEventListener('click', () => {
-      const isVisible = additionalImage.style.display === 'block';
-      additionalImage.style.display = isVisible ? 'none' : 'block';
+      if (!imageLoaded) {
+        additionalImage.style.display = 'block';
+        imageLoaded = true;
+      } else {
+        additionalImage.style.display = additionalImage.style.display === 'none' ? 'block' : 'none';
+      }
+    });
+
+    newsBtn.addEventListener('click', () => {
+      newsSection.style.display = newsSection.style.display === 'none' ? 'block' : 'none';
     });
 
     window.addEventListener('scroll', () => {
       const scrollPos = window.scrollY || window.pageYOffset;
       const windowHeight = window.innerHeight;
 
-      if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 2) {
+      if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 1.8) {
         hero.classList.add('blur');
         hero.classList.remove('fade-out');
         headline.classList.add('visible');
@@ -436,12 +443,7 @@
         hero.classList.remove('blur', 'fade-out');
         headline.classList.remove('visible');
         cmpcBg.classList.remove('visible');
-        newsSection.style.display = 'none';
       }
-    });
-
-    newsBtn.addEventListener('click', () => {
-      newsSection.style.display = newsSection.style.display === 'none' ? 'block' : 'none';
     });
 
     function showFallback() {
