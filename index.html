@@ -205,6 +205,28 @@
       background: rgba(255, 255, 255, 0.5);
     }
 
+    #downloadPdfBtn {
+  position: fixed;
+  top: 20px;
+  left: 70px; /* da ne ide preko backBtn */
+  z-index: 1100;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 4px;
+  padding: 12px;
+  cursor: pointer;
+  font-size: 20px;
+  color: black;
+  user-select: none;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+#downloadPdfBtn:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
     #videoSection {
       min-height: 100vh;
       margin-top: 130px;
@@ -397,6 +419,7 @@
   <!-- Informator -->
   <section id="infoSection">
     <button id="backBtn">&#8592;</button>
+    <a href="Magnituda - Centar za promociju savremene muzike.pdf" download id="downloadPdfBtn" title="preuzmi.pdf"> </a>
     <img src="Magnituda_informator-1.png" alt="Strana 1 informatora" />
     <img src="Magnituda_informator-2.png" alt="Strana 2 informatora" />
     <img src="Magnituda_informator-3.png" alt="Strana 3 informatora" />
@@ -434,12 +457,21 @@
       infoBtn.textContent = 'INFORMATOR';
       loadImageBtn.textContent = 'ekspozicija.čitaj';
       newsBtn.textContent = 'vesti.saznaj';
+
+      const downloadBtn = document.getElementById('downloadPdfBtn');
+    downloadBtn.href = 'Magnituda_informator.pdf';
+    downloadBtn.title = 'preuzmi.pdf';
+
     } else {
       langBtn.textContent = 'SR';
       headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
       infoBtn.textContent = 'OUR STORY';
       loadImageBtn.textContent = 'exposition.read';
       newsBtn.textContent = 'news.more';
+
+      const downloadBtn = document.getElementById('downloadPdfBtn');
+    downloadBtn.href = 'Our_Story.pdf';
+    downloadBtn.title = 'download.pdf';
     }
   }
 
