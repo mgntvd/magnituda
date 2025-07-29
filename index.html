@@ -398,7 +398,7 @@
     <button id="newsBtn">vesti.saznaj</button>
     <div id="newsSection">
       <img src="Vesti.jpg" alt="Vesti" onerror="showFallback()" />
-      <p id="newsFallback" style="display:none;">Trenutno nema dodatnih vesti.</p>
+      <p id="newsFallback" style="display:none;"></p>
     </div>
     <div class="scroll-indicator">↓</div>
   </section>
@@ -452,6 +452,7 @@
         newsBtn.textContent = 'vesti.saznaj';
         downloadBtn.href = 'Magnituda - Centar za promociju savremene muzike.pdf';
         downloadBtn.title = 'preuzmi.pdf';
+        fallback.textContent = 'Trenutno nema dodatnih vesti..';
       } else {
         langBtn.textContent = 'SR';
         headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
@@ -460,6 +461,7 @@
         newsBtn.textContent = 'news.more';
         downloadBtn.href = 'Our_Story.pdf';
         downloadBtn.title = 'download.pdf';
+        fallback.textContent = 'No additional news at the moment..';
       }
     }
 
