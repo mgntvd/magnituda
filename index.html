@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="favicon-32x32.png">
   <title>M A G N I T V DÆ</title>
+
   <style>
     @font-face {
       font-family: 'Geomanist';
@@ -66,6 +67,29 @@
       opacity: 1;
       pointer-events: auto;
       z-index: 1;
+    }
+
+    .kontakt-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: url("Studio.jpg") no-repeat center center/cover;
+      opacity: 0;
+      z-index: 0;
+      transition: opacity 0.8s ease-in-out, filter 0.6s ease-in-out;
+      pointer-events: none;
+    }
+
+    .kontakt-bg.visible {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 1;
+    }
+
+    .kontakt-bg.blur {
+      filter: blur(4px) brightness(0.8);
     }
 
     .language-switcher {
@@ -206,26 +230,26 @@
     }
 
     #downloadPdfBtn {
-  position: fixed;
-  top: 20px;
-  left: 90px; /* da ne ide preko backBtn */
-  z-index: 1100;
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(10px);
-  border-radius: 4px;
-  padding: 12px;
-  cursor: pointer;
-  font-size: 20px;
-  color: black;
-  user-select: none;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
+      position: fixed;
+      top: 20px;
+      left: 90px;
+      z-index: 1100;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 4px;
+      padding: 12px;
+      cursor: pointer;
+      font-size: 20px;
+      color: black;
+      user-select: none;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
 
-#downloadPdfBtn:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
+    #downloadPdfBtn:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
 
     #videoSection {
       min-height: 100vh;
@@ -272,7 +296,6 @@
       user-select: none;
     }
 
-    /* NOVO: News bar */
     #newsBar {
       width: 100%;
       padding: 12px 0;
@@ -284,9 +307,8 @@
       position: relative;
       overflow: hidden;
       border-radius: 8px;
-      margin-top: 0px; /* OVDE MENjAS ODMAK newsBar */
     }
-   
+
     .marquee {
       white-space: nowrap;
       overflow: hidden;
@@ -322,50 +344,27 @@
       margin-top: 10px;
     }
 
-    .kontakt-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: url("Studio.jpg") no-repeat center center/cover;
-  opacity: 0;
-  z-index: 0;
-  transition: opacity 0.8s ease-in-out, filter 0.6s ease-in-out;
-  pointer-events: none;
-}
-
-.kontakt-bg.visible {
-  opacity: 1;
-  pointer-events: auto;
-  z-index: 1;
-}
-
-.kontakt-bg.blur {
-  filter: blur(4px) brightness(0.8);
-}
-
-#contactSection {
-  position: relative;
-  min-height: 100vh;
-  background: transparent;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-  z-index: 10;
-  color: white;
-  text-align: center;
-  gap: 20px;
-  text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
-}
-
+    #contactSection {
+      position: relative;
+      min-height: 100vh;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      z-index: 10;
+      color: white;
+      text-align: center;
+      gap: 20px;
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+    }
   </style>
 </head>
+
 <body>
 
-  <!-- Hero sekcija -->
+    <!-- Hero sekcija -->
   <section class="hero" id="hero">
     <div class="language-switcher">
       <button id="langBtn">EN</button>
@@ -373,16 +372,15 @@
     <div class="scroll-indicator">↓</div>
   </section>
 
-  <!-- CMPC pozadina -->
+  <!-- CMPC i Kontakt pozadine -->
   <div class="cmpc-bg" id="cmpcBg"></div>
-
-  <!-- Kontakt pozadina -->
-<div class="kontakt-bg" id="kontaktBg"></div>
+  <div class="kontakt-bg" id="kontaktBg"></div>
 
   <!-- Glavni sadržaj -->
   <section class="content" id="content">
     <h1 id="headline">Centar za promociju savremene muzike</h1>
     <button id="infoBtn">INFORMATOR</button>
+
     <section id="videoSection">
       <iframe src="https://www.youtube.com/embed/V4AV4OCU6pk" allowfullscreen></iframe>
       <button id="loadImageBtn">ekspozicija.čitaj</button>
@@ -405,178 +403,159 @@
     <div class="scroll-indicator">↓</div>
   </section>
 
-<!-- Kontakt sekcija -->
-<section id="contactSection">
-  <div id="kontaktText">
-  <h2>K O N T A K T</h2>
-  <p>+381 62 1364246</p>
-  <p>magnituda.music@gmail.com</p>
-  <p><strong>Cankareva 25</strong><p>Lokal 1</p>
-  <p>Novi Sad</p>
-  </div>
-</section>
-  
-  <!-- Informator -->
-<section id="infoSection">
-  <button id="backBtn">&#8592;</button>
-  <a href="Magnituda - Centar za promociju savremene muzike.pdf" download id="downloadPdfBtn" title="preuzmi.pdf"> </a>
+  <!-- Kontakt sekcija -->
+  <section id="contactSection">
+    <div id="kontaktText">
+      <h2>K O N T A K T</h2>
+      <p>+381 62 1364246</p>
+      <p>magnituda.music@gmail.com</p>
+      <p><strong>Cankareva 25</strong><p>Lokal 1</p>
+      <p>Novi Sad</p>
+    </div>
+  </section>
 
-  <!-- SR slike -->
-  <div id="infoImagesSR">
-    <img src="Magnituda_informator-1.png" alt="Strana 1 informatora" />
-    <img src="Magnituda_informator-2.png" alt="Strana 2 informatora" />
-    <img src="Magnituda_informator-3.png" alt="Strana 3 informatora" />
-    <img src="Magnituda_informator-4.png" alt="Strana 4 informatora" />
-    <img src="Magnituda_informator-5.png" alt="Strana 5 informatora" />
-    <img src="Magnituda_informator-6.png" alt="Strana 6 informatora" />
-  </div>
+  <!-- Info sekcija: prikazuje slike u zavisnosti od jezika -->
+  <section id="infoSection">
+    <button id="backBtn">&#8592;</button>
+    <a href="Magnituda - Centar za promociju savremene muzike.pdf" download id="downloadPdfBtn" title="preuzmi.pdf"> </a>
+  </section>
 
-  <!-- EN slike -->
-  <div id="infoImagesEN" style="display: none;">
-    <img src="Our_Story-1.png" alt="Our Story Page 1" />
-    <img src="Our_Story-2.png" alt="Our Story Page 2" />
-    <img src="Our_Story-3.png" alt="Our Story Page 3" />
-    <img src="Our_Story-4.png" alt="Our Story Page 4" />
-    <img src="Our_Story-5.png" alt="Our Story Page 5" />
-    <img src="Our_Story-6.png" alt="Our Story Page 6" />
-  </div>
-</section>
-
+  <!-- Script -->
   <script>
-  const hero = document.getElementById('hero');
-  const cmpcBg = document.getElementById('cmpcBg');
-  const headline = document.getElementById('headline');
-  const infoBtn = document.getElementById('infoBtn');
-  const infoSection = document.getElementById('infoSection');
-  const backBtn = document.getElementById('backBtn');
-  const content = document.getElementById('content');
-  const languageSwitcher = document.querySelector('.language-switcher');
-  const scrollIndicator = document.querySelector('.scroll-indicator');
-  const loadImageBtn = document.getElementById('loadImageBtn');
-  const additionalImage = document.getElementById('additionalImage');
-  const newsBtn = document.getElementById('newsBtn');
-  const newsSection = document.getElementById('newsSection');
-  const fallback = document.getElementById('newsFallback');
-  const langBtn = document.getElementById('langBtn');
-  const kontaktBg = document.getElementById('kontaktBg');
-  const kontaktText = document.getElementById('kontaktText');
+    const hero = document.getElementById('hero');
+    const cmpcBg = document.getElementById('cmpcBg');
+    const headline = document.getElementById('headline');
+    const infoBtn = document.getElementById('infoBtn');
+    const infoSection = document.getElementById('infoSection');
+    const backBtn = document.getElementById('backBtn');
+    const content = document.getElementById('content');
+    const languageSwitcher = document.querySelector('.language-switcher');
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    const loadImageBtn = document.getElementById('loadImageBtn');
+    const additionalImage = document.getElementById('additionalImage');
+    const newsBtn = document.getElementById('newsBtn');
+    const newsSection = document.getElementById('newsSection');
+    const fallback = document.getElementById('newsFallback');
+    const langBtn = document.getElementById('langBtn');
+    const kontaktBg = document.getElementById('kontaktBg');
+    const downloadBtn = document.getElementById('downloadPdfBtn');
 
-  let currentLang = 'sr';
-  let lastScrollPos = 0;
+    let currentLang = 'sr';
+    let lastScrollPos = 0;
 
-  function updateLanguage() {
-  const downloadBtn = document.getElementById('downloadPdfBtn');
-  const infoImagesSR = document.getElementById('infoImagesSR');
-  const infoImagesEN = document.getElementById('infoImagesEN');
+    function updateLanguage() {
+      if (currentLang === 'sr') {
+        langBtn.textContent = 'EN';
+        headline.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
+        infoBtn.textContent = 'INFORMATOR';
+        loadImageBtn.textContent = 'ekspozicija.čitaj';
+        newsBtn.textContent = 'vesti.saznaj';
+        downloadBtn.href = 'Magnituda - Centar za promociju savremene muzike.pdf';
+        downloadBtn.title = 'preuzmi.pdf';
+      } else {
+        langBtn.textContent = 'SR';
+        headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
+        infoBtn.textContent = 'OUR STORY';
+        loadImageBtn.textContent = 'exposition.read';
+        newsBtn.textContent = 'news.more';
+        downloadBtn.href = 'Our_Story.pdf';
+        downloadBtn.title = 'download.pdf';
+      }
+    }
 
-  if (currentLang === 'sr') {
-    langBtn.textContent = 'EN';
-    headline.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
-    infoBtn.textContent = 'INFORMATOR';
-    loadImageBtn.textContent = 'ekspozicija.čitaj';
-    newsBtn.textContent = 'vesti.saznaj';
+    langBtn.addEventListener('click', () => {
+      currentLang = currentLang === 'sr' ? 'en' : 'sr';
+      updateLanguage();
+    });
 
-    downloadBtn.href = 'Magnituda - Centar za promociju savremene muzike.pdf';
-    downloadBtn.title = 'preuzmi.pdf';
-
-    infoImagesSR.style.display = 'block';
-    infoImagesEN.style.display = 'none';
-
-  } else {
-    langBtn.textContent = 'SR';
-    headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
-    infoBtn.textContent = 'OUR STORY';
-    loadImageBtn.textContent = 'exposition.read';
-    newsBtn.textContent = 'news.more';
-
-    downloadBtn.href = 'Our_Story.pdf';
-    downloadBtn.title = 'download.pdf';
-
-    infoImagesSR.style.display = 'none';
-    infoImagesEN.style.display = 'block';
-  }
-}
-
-  langBtn.addEventListener('click', () => {
-    currentLang = currentLang === 'sr' ? 'en' : 'sr';
-    updateLanguage();
-  });
-
-  infoBtn.addEventListener('click', () => {
-    if (currentLang === 'sr') {
+    infoBtn.addEventListener('click', () => {
       lastScrollPos = window.scrollY || window.pageYOffset;
+      infoSection.innerHTML = ''; // resetuj sadržaj
+      infoSection.appendChild(backBtn);
+      infoSection.appendChild(downloadBtn);
+
+      const prefix = currentLang === 'sr' ? 'Magnituda_informator' : 'Our_Story';
+      for (let i = 1; i <= 6; i++) {
+        const img = document.createElement('img');
+        img.src = `${prefix}-${i}.png`;
+        img.alt = `${prefix} - page ${i}`;
+        infoSection.appendChild(img);
+      }
+
       infoSection.style.display = 'flex';
       backBtn.style.display = 'flex';
+      downloadBtn.style.display = 'flex';
       hero.style.display = 'none';
       content.style.display = 'none';
       languageSwitcher.style.display = 'none';
       scrollIndicator.style.display = 'none';
       window.scrollTo(0, 0);
+    });
+
+    backBtn.addEventListener('click', () => {
+      infoSection.style.display = 'none';
+      backBtn.style.display = 'none';
+      downloadBtn.style.display = 'none';
+      hero.style.display = 'flex';
+      content.style.display = 'flex';
+      languageSwitcher.style.display = 'flex';
+      scrollIndicator.style.display = 'block';
+      window.scrollTo(0, lastScrollPos);
+    });
+
+    loadImageBtn.addEventListener('click', () => {
+      const isVisible = additionalImage.style.display === 'block';
+      additionalImage.style.display = isVisible ? 'none' : 'block';
+    });
+
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY || window.pageYOffset;
+      const windowHeight = window.innerHeight;
+
+      if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 2) {
+        hero.classList.add('blur');
+        hero.classList.remove('fade-out');
+        hero.style.display = 'flex';
+        headline.classList.add('visible');
+        cmpcBg.classList.remove('visible');
+        kontaktBg.classList.remove('visible', 'blur');
+      } else if (scrollPos >= windowHeight * 2.2 && scrollPos < windowHeight * 3.2) {
+        hero.classList.add('fade-out');
+        hero.classList.remove('blur');
+        hero.style.display = 'flex';
+        headline.classList.remove('visible');
+        cmpcBg.classList.add('visible');
+        kontaktBg.classList.remove('visible', 'blur');
+      } else if (scrollPos >= windowHeight * 3.2 && scrollPos < windowHeight * 4.2) {
+        hero.style.display = 'none';
+        cmpcBg.classList.remove('visible');
+        kontaktBg.classList.add('visible');
+        kontaktBg.classList.remove('blur');
+      } else if (scrollPos >= windowHeight * 4) {
+        hero.style.display = 'none';
+        kontaktBg.classList.add('visible', 'blur');
+      } else {
+        hero.classList.remove('blur', 'fade-out');
+        hero.style.display = 'flex';
+        headline.classList.remove('visible');
+        cmpcBg.classList.remove('visible');
+        kontaktBg.classList.remove('visible', 'blur');
+        newsSection.style.display = 'none';
+      }
+    });
+
+    newsBtn.addEventListener('click', () => {
+      newsSection.style.display = newsSection.style.display === 'none' ? 'block' : 'none';
+    });
+
+    function showFallback() {
+      fallback.style.display = 'block';
     }
-  });
 
-  backBtn.addEventListener('click', () => {
-    infoSection.style.display = 'none';
-    backBtn.style.display = 'none';
-    hero.style.display = 'flex';
-    content.style.display = 'flex';
-    languageSwitcher.style.display = 'flex';
-    scrollIndicator.style.display = 'block';
-    window.scrollTo(0, lastScrollPos);
-  });
-
-  loadImageBtn.addEventListener('click', () => {
-    const isVisible = additionalImage.style.display === 'block';
-    additionalImage.style.display = isVisible ? 'none' : 'block';
-  });
-
-  window.addEventListener('scroll', () => {
-  const scrollPos = window.scrollY || window.pageYOffset;
-  const windowHeight = window.innerHeight;
-
-  // HERO prikaz i blur
-  if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 2) {
-    hero.classList.add('blur');
-    hero.classList.remove('fade-out');
-    hero.style.display = 'flex'; // Obezbeđujemo da je vidljiv
-    headline.classList.add('visible');
-    cmpcBg.classList.remove('visible');
-    kontaktBg.classList.remove('visible', 'blur');
-  } else if (scrollPos >= windowHeight * 2.2 && scrollPos < windowHeight * 3.2) {
-    hero.classList.add('fade-out');
-    hero.classList.remove('blur');
-    hero.style.display = 'flex'; // Još je tu, ali sa opacity 0
-    headline.classList.remove('visible');
-    cmpcBg.classList.add('visible');
-    kontaktBg.classList.remove('visible', 'blur');
-  } else if (scrollPos >= windowHeight * 3.2 && scrollPos < windowHeight * 4.2) {
-    hero.style.display = 'none'; // SKLANJAMO hero iz prikaza
-    cmpcBg.classList.remove('visible');
-    kontaktBg.classList.add('visible');
-    kontaktBg.classList.remove('blur');
-  } else if (scrollPos >= windowHeight * 4) {
-    hero.style.display = 'none'; // I dalje ga držimo skrivenim
-    kontaktBg.classList.add('visible', 'blur');
-  } else {
-    // Resetovanje kada se vratimo na sam vrh
-    hero.classList.remove('blur', 'fade-out');
-    hero.style.display = 'flex'; // Prikazujemo ga ponovo
-    headline.classList.remove('visible');
-    cmpcBg.classList.remove('visible');
-    kontaktBg.classList.remove('visible', 'blur');
-    newsSection.style.display = 'none';
-  }
-});
-
-  newsBtn.addEventListener('click', () => {
-    newsSection.style.display = newsSection.style.display === 'none' ? 'block' : 'none';
-  });
-
-  function showFallback() {
-    fallback.style.display = 'block';
-  }
-
-  updateLanguage();
-</script>
+    updateLanguage();
+  </script>
 </body>
 </html>
+
+
+
