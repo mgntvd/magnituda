@@ -417,11 +417,23 @@
   <!-- Kontakt sekcija -->
   <section id="contactSection">
     <div id="kontaktText">
+      <!-- SR tekst -->
+      <div id="kontaktTextSr">
       <h2>// K O N T A K T //</h2>
       <p>+381 62 1364246</p>
       <p>magnituda.music@gmail.com</p>
       <p><strong>Cankareva 25</strong> (Lokal 1)</p>
       <p><strong>Novi Sad</strong></p>
+    </div>
+
+    <!-- EN tekst -->
+    <div id="kontaktTextEn" style="display: none;">
+      <h2>// C O N T A C T  & booking //</h2>
+      <p>+381 62 1364246</p>
+      <p>magnituda.music@gmail.com</p>
+      <p><strong>Cankareva 25</strong> (Lokal 1)</p>
+      <p><strong>Novi Sad</strong></p>
+    </div>
     </div>
   </section>
 
@@ -455,6 +467,11 @@
     let lastScrollPos = 0;
 
     function updateLanguage() {
+
+      const kontaktTextSr = document.getElementById('kontaktTextSr');
+      const kontaktTextEn = document.getElementById('kontaktTextEn');
+
+
       if (currentLang === 'sr') {
         langBtn.textContent = 'EN';
         headline.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
@@ -464,6 +481,8 @@
         downloadBtn.href = 'Magnituda - Centar za promociju savremene muzike.pdf';
         downloadBtn.title = 'preuzmi.pdf';
         fallback.textContent = 'Trenutno nema dodatnih vesti..';
+        kontaktTextSr.style.display = 'block';
+        kontaktTextEn.style.display = 'none';
       } else {
         langBtn.textContent = 'SR';
         headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
@@ -473,6 +492,8 @@
         downloadBtn.href = 'Our_Story.pdf';
         downloadBtn.title = 'download.pdf';
         fallback.textContent = 'No additional news at the moment..';
+        kontaktTextSr.style.display = 'none';
+        kontaktTextEn.style.display = 'block';
       }
     }
 
