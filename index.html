@@ -363,27 +363,32 @@
 
    #kontaktText {
   margin-top: auto;
-  padding-bottom: 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding-bottom: 50px; /* razmak od dna stranice */
 }
 
-/* SR i EN varijante su sada fleks kontejneri sa razmakom između redova */
 #kontaktTextSr,
 #kontaktTextEn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px; /* razmak između redova teksta */
-
 }
 
+/* Naslov (h2) ima veći razmak ispod */
 #kontaktTextSr h2,
-#kontaktTextEn h2,    
+#kontaktTextEn h2 {
+  margin: 0 0 20px 0;
+}
+
+/* Paragrafi imaju manji razmak ispod */
 #kontaktTextSr p,
 #kontaktTextEn p {
-  margin: 0; /* uklanjamo marginu da gap radi pravilno */
+  margin: 0 0 10px 0;
+}
+
+/* Poslednji paragraf nema dodatnog razmaka */
+#kontaktTextSr p:last-child,
+#kontaktTextEn p:last-child {
+  margin-bottom: 0;
 }
 
   </style>
