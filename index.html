@@ -423,6 +423,71 @@
   margin-bottom: 0;
 }
 
+    /* Nova sekcija: Dugmad u meniju */
+#menuButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  gap: 10px;
+}
+
+.menuItem {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Crta ispod svakog dugmeta */
+.menuItem::after {
+  content: "";
+  display: block;
+  margin: 8px auto 0 auto;
+  width: 60%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Stil za sekciju sa slikama (BEND) */
+#bandSection .bandImages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+#bandSection img {
+  max-width: 90%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+/* Nazad dugme */
+.backButton {
+  background: none;
+  border: 1px solid white;
+  color: white;
+  padding: 8px 20px;
+  font-size: 16px;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+/* Placeholder sadržaj */
+#comingSoonSection {
+  text-align: center;
+  margin-top: 40px;
+  color: white;
+  font-size: 22px;
+}
+    
   </style>
 </head>
 
@@ -467,6 +532,33 @@
     <div class="scroll-indicator">↓</div>
   </section>
 
+<!-- NOVA SEKCIJA: Dugmad u stilu otvorenog menija -->
+<section id="additionalMenu">
+  <div id="menuButtons">
+    <!-- DUGMAD (OVDE SE POJAVLJUJU NAZIVI KOJE KASNIJE PREVODIMO U updateContent) -->
+    <button class="menuItem" onclick="openBandSection()">BEND</button> <!-- ← OVDE SE KASNIJE MENJA NAZIV U updateContent -->
+    <button class="menuItem" onclick="showComingSoon(2)">Dugme 2</button> <!-- ← OVDE SE KASNIJE MENJA NAZIV U updateContent -->
+    <button class="menuItem" onclick="showComingSoon(3)">Dugme 3</button> <!-- ← OVDE SE KASNIJE MENJA NAZIV U updateContent -->
+    <button class="menuItem" onclick="showComingSoon(4)">Dugme 4</button> <!-- ← OVDE SE KASNIJE MENJA NAZIV U updateContent -->
+  </div>
+
+  <!-- SEKCIJA ZA BEND dugme -->
+  <div id="bandSection" style="display: none;">
+    <button class="backButton" onclick="goBackFromBand()">← Nazad</button>
+    <div class="bandImages">
+      <img src="Bass.jpg" alt="Bas gitara">
+      <img src="Bubnjevi.jpg" alt="Bubnjevi">
+      <img src="Gitara.jpg" alt="Gitara">
+    </div>
+  </div>
+
+  <!-- SEKCIJA ZA PLACEHOLDER dugmad (2, 3, 4) -->
+  <div id="comingSoonSection" style="display: none;">
+    <button class="backButton" onclick="goBackFromSoon()">← Nazad</button>
+    <p id="comingSoonText">Uskoro...</p>
+  </div>
+</section>
+ 
   <!-- Kontakt sekcija -->
 <section id="contactSection">
   <div id="kontaktText">
@@ -640,6 +732,32 @@
     }
 
     updateLanguage();
+
+function openBandSection() {
+  document.getElementById('bandSection').style.display = 'block';
+  document.getElementById('menuButtons').style.display = 'none';
+  document.getElementById('comingSoonSection').style.display = 'none';
+}
+
+function goBackFromBand() {
+  document.getElementById('bandSection').style.display = 'none';
+  document.getElementById('menuButtons').style.display = 'flex';
+}
+
+function showComingSoon(n) {
+  const lang = currentLang;
+  const msg = lang === 'en' ? "Soon..." : "Uskoro...";
+  document.getElementById('comingSoonText').innerText = msg;
+  document.getElementById('comingSoonSection').style.display = 'block';
+  document.getElementById('menuButtons').style.display = 'none';
+  document.getElementById('bandSection').style.display = 'none';
+}
+
+function goBackFromSoon() {
+  document.getElementById('comingSoonSection').style.display = 'none';
+  document.getElementById('menuButtons').style.display = 'flex';
+}
+    
   </script>
 </body>
 </html>
