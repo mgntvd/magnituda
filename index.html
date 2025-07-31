@@ -37,417 +37,259 @@
   <meta name="twitter:title" content="Magnituda – Centar za promociju savremene muzike">
   <meta name="twitter:description" content="Pronađi svoj muzički glas u zajednici posvećenoj progresivnim muzičkim pravcima.">
   <meta name="twitter:image" content="https://mgntvd.github.io/magnituda/og.image.jpg">
-  
+
+
   <style>
-  @font-face {
-    font-family: 'Geomanist';
-    src: url('Geomanist-Regular.otf') format('opentype');
-  }
+    @font-face {
+      font-family: 'Geomanist';
+      src: url('Geomanist-Regular.otf') format('opentype');
+    }
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  body, html {
-    height: 100%;
-    font-family: 'Geomanist', sans-serif;
-    scroll-behavior: smooth;
-  }
+    body, html {
+      height: 100%;
+      font-family: 'Geomanist', sans-serif;
+      scroll-behavior: smooth;
+      background-color: black;
+    }
 
-  .hero {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: url("Home - SPLASH FULL.png") no-repeat center center/cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: filter 0.6s ease-in-out, opacity 0.6s ease-in-out;
-    z-index: 1;
-    opacity: 1;
-    pointer-events: auto;
-  }
+    .hero {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: url("Home - SPLASH FULL.png") no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: filter 0.6s ease-in-out, opacity 0.6s ease-in-out;
+      z-index: 1;
+      opacity: 1;
+      pointer-events: auto;
+    }
 
-  .hero.blur {
-    filter: blur(6px) brightness(0.8);
-  }
+    .hero.blur {
+      filter: blur(6px) brightness(0.8);
+    }
 
-  .hero.fade-out {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.8s ease-in-out;
-  }
+    .hero.fade-out {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease-in-out;
+    }
 
-  .cmpc-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: url("CMPC.jpg") no-repeat center 30%/cover;
-    opacity: 0;
-    z-index: 0;
-    transition: opacity 0.8s ease-in-out;
-    pointer-events: none;
-  }
+    .cmpc-bg, .kontakt-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-size: cover;
+      background-repeat: no-repeat;
+      opacity: 0;
+      z-index: 0;
+      transition: opacity 0.8s ease-in-out, filter 0.6s ease-in-out;
+      pointer-events: none;
+    }
 
-  .cmpc-bg.visible {
-    opacity: 1;
-    pointer-events: auto;
-    z-index: 1;
-  }
+    .cmpc-bg.visible, .kontakt-bg.visible {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 1;
+    }
 
-  .kontakt-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: url("Studio.jpg") no-repeat center center/cover;
-    opacity: 0;
-    z-index: 0;
-    transition: opacity 0.8s ease-in-out, filter 0.6s ease-in-out;
-    pointer-events: none;
-  }
+    .kontakt-bg.blur {
+      filter: blur(4px) brightness(0.8);
+    }
 
-  .kontakt-bg.visible {
-    opacity: 1;
-    pointer-events: auto;
-    z-index: 1;
-  }
+    .language-switcher {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1100;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      padding: 8px 16px;
+      display: flex;
+      gap: 12px;
+    }
 
-  .kontakt-bg.blur {
-    filter: blur(4px) brightness(0.8);
-  }
+    .language-switcher button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-family: inherit;
+      color: white;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
 
-  .language-switcher {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1100;
-    backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    padding: 8px 16px;
-    display: flex;
-    gap: 12px;
-  }
+    .language-switcher button:hover {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
 
-  .language-switcher button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    font-family: inherit;
-    color: black;
-    font-weight: 600;
-    padding: 8px 16px;
-    border-radius: 8px;
-    backdrop-filter: blur(10px);
-    transition: background-color 0.3s ease;
-  }
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      font-size: 2rem;
+      animation: bounce 2s infinite;
+      color: white;
+      z-index: 5;
+    }
 
-  .language-switcher button:hover {
-    background-color: rgba(255, 255, 255, 0.4);
-  }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
 
-  .scroll-indicator {
-    position: absolute;
-    bottom: 30px;
-    font-size: 2rem;
-    animation: bounce 2s infinite;
-    color: white;
-    z-index: 5;
-  }
+    .content {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      margin-top: 100vh;
+      z-index: 5;
+      gap: 24px;
+    }
 
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(10px); }
-  }
+    .content h1 {
+      font-size: 2rem;
+      color: white;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
 
-  .content {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 40px 20px;
-    margin-top: 100vh;
-    z-index: 5;
-    gap: 24px;
-  }
+    .content h1.visible {
+      opacity: 1;
+    }
 
-  .content h1 {
-    font-size: 2rem;
-    color: white;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-  }
+    #infoBtn, #loadImageBtn, #newsBtn {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 16px;
+      color: white;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
 
-  .content h1.visible {
-    opacity: 1;
-  }
+    #infoBtn:hover, #loadImageBtn:hover, #newsBtn:hover {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
 
-  #infoBtn, #loadImageBtn, #newsBtn {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    border: none;
-    padding: 8px 16px;
-    border-radius: 0px;
-    cursor: pointer;
-    font-family: inherit;
-    font-weight: 600;
-    color: black;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-  }
+    #newSection {
+      position: relative;
+      min-height: 100vh;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 24px;
+      padding: 40px 20px;
+      margin-top: 30vh;
+      z-index: 10;
+      color: white;
+      text-shadow: 0 0 8px rgba(0,0,0,0.8);
+      user-select: none;
+    }
 
-  #infoBtn:hover, #loadImageBtn:hover, #newsBtn:hover {
-    background-color: rgba(255, 255, 255, 0.4);
-  }
+    #menuButtons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 40px;
+      gap: 10px;
+    }
 
-  #infoSection {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #000;
-    overflow-y: auto;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 0;
-    z-index: 1000;
-  }
+    .menuItem {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: white;
+      font-size: 20px;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+      transition: background-color 0.3s ease;
+    }
 
-  #infoSection img {
-    max-width: 90vw;
-    margin: 16px 0;
-    box-shadow: 0 0 20px rgba(0,0,0,0.7);
-    border-radius: 8px;
-  }
+    .menuItem:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
 
-  #backBtn {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 10000;
-    font-size: 32px;
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(8px);
-    border: none;
-    color: black;
-    padding: 10px 16px;
-    cursor: pointer;
-    border-radius: 8px;
-  }
+    .band-overlay, .soon-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 60px 20px;
+      overflow-y: auto;
+    }
 
-  #backBtn:hover {
-    background: rgba(255, 255, 255, 0.2);
-  }
+    .band-overlay .bandImages {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-top: 40px;
+    }
 
-  #downloadPdfBtn {
-    position: fixed;
-    top: 20px;
-    left: 90px;
-    z-index: 1100;
-    background: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
-    border-radius: 4px;
-    padding: 12px;
-    cursor: pointer;
-    font-size: 20px;
-    color: black;
-    user-select: none;
-    text-decoration: none;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
-  }
+    .band-overlay img {
+      max-width: 90%;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
 
-  #downloadPdfBtn:hover {
-    background: rgba(255, 255, 255, 0.5);
-  }
+    .soon-overlay img {
+      max-width: 90%;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
+      margin-top: 40px;
+    }
 
-  #videoSection {
-    min-height: 100vh;
-    margin-top: 130px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    position: relative;
-    z-index: 10;
-  }
-
-  #videoSection iframe {
-    width: 90vw;
-    max-width: 560px;
-    height: 315px;
-    border: none;
-    border-radius: 8px;
-  }
-
-  #additionalImage {
-    display: none;
-    max-width: 90vw;
-    margin-top: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.7);
-  }
-
-  #newSection {
-    position: relative;
-    min-height: 200vh; /*   dodatno produžen skrol */
-    background: transparent;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 40px;
-    padding: 60px 20px;
-    margin-top: 30vh;
-    z-index: 10;
-    color: white;
-    text-shadow: 0 0 8px rgba(0,0,0,0.8);
-    user-select: none;
-  }
-
-  #newsBar {
-    width: 100%;
-    padding: 12px 0;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-    color: white;
-    font-size: 16px;
-    font-weight: 500;
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-  }
-
-  .marquee {
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  .marquee span {
-    display: inline-block;
-    padding-left: 100%;
-    animation: marquee 12s linear infinite;
-  }
-
-  @keyframes marquee {
-    0% { transform: translateX(0%); }
-    100% { transform: translateX(-100%); }
-  }
-
-  #newsSection {
-    display: none;
-    margin-top: 20px;
-    background-color: rgba(255,255,255,0.1);
-    backdrop-filter: blur(12px);
-    padding: 16px;
-    border-radius: 8px;
-    color: white;
-  }
-
-  #newsSection img {
-    max-width: 100%;
-    border-radius: 8px;
-  }
-
-  #newsFallback {
-    margin-top: 10px;
-  }
-
-  #kontaktText {
-    margin-top: auto;
-    padding-bottom: 100px; /*   dodatni prostor za skrol */
-  }
-
-  /* NOVA DUGMAD - sve četiri imaju isti izgled */
-
-  .menuItem {
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    color: white;
-    font-size: 20px;
-    padding: 12px 24px;
-    cursor: pointer;
-    border-radius: 12px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    transition: all 0.3s ease;
-  }
-
-  .menuItem:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: scale(1.05);
-  }
-
-  /* BEND/DUgme 2/3 interaktivni overlay */
-
-  .band-overlay, .soon-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: black;
-    z-index: 9999;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 60px 20px;
-    overflow-y: auto;
-  }
-
-  .band-overlay .bandImages {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    margin-top: 40px;
-  }
-
-  .band-overlay img {
-    max-width: 90%;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255,255,255,0.3);
-  }
-
-  .backButton {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 10000;
-    font-size: 32px;
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(8px);
-    border: none;
-    color: white;
-    padding: 10px 16px;
-    cursor: pointer;
-    border-radius: 8px;
-  }
-
-  .backButton:hover {
-    background: rgba(255, 255, 255, 0.3);
-  }
-</style>
-
+    .backButton {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 10000;
+      font-size: 32px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(8px);
+      border: none;
+      color: white;
+      padding: 10px 16px;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 
 <body>
@@ -460,9 +302,9 @@
     <div class="scroll-indicator">↓</div>
   </section>
 
-  <!-- CMPC i Kontakt pozadine -->
-  <div class="cmpc-bg" id="cmpcBg"></div>
-  <div class="kontakt-bg" id="kontaktBg"></div>
+  <!-- Pozadine -->
+  <div class="cmpc-bg" id="cmpcBg" style="background-image: url('CMPC.jpg');"></div>
+  <div class="kontakt-bg" id="kontaktBg" style="background-image: url('Studio.jpg');"></div>
 
   <!-- Glavni sadržaj -->
   <section class="content" id="content">
@@ -472,27 +314,19 @@
     <section id="videoSection">
       <iframe src="https://www.youtube.com/embed/V4AV4OCU6pk" allowfullscreen></iframe>
       <button id="loadImageBtn">ekspozicija.čitaj</button>
-      <img id="additionalImage" src="Ekspozicija - Bez kompasa.png" alt="Ekspozicija - Bez kompasa" />
+      <img id="additionalImage" src="Ekspozicija - Bez kompasa.png" style="display:none;" />
     </section>
   </section>
 
-  <!-- Nova sekcija: vesti + dodatna dugmad -->
+  <!-- Nova sekcija -->
   <section id="newSection">
-    <div id="newsBar">
-      <div class="marquee">
-        <span id="marqueeText">Prijava novih članova je u toku // Kontaktirajte nas putem telefona, socijalnih mreža ili e-maila</span>
-      </div>
-    </div>
-
     <button id="newsBtn">vesti.saznaj</button>
-
-    <div id="newsSection">
+    <div id="newsSection" style="display:none;">
       <img src="Vesti.jpg" alt="Vesti" onerror="showFallback()" />
       <p id="newsFallback" style="display:none;"></p>
     </div>
 
-    <!-- Dodatna dugmad sa većim razmakom -->
-    <div id="menuButtons" style="margin-top: 80px;">
+    <div id="menuButtons">
       <button class="menuItem" onclick="openBandOverlay()">BEND</button>
       <button class="menuItem" onclick="openSoonOverlay(2)">Dugme 2</button>
       <button class="menuItem" onclick="openSoonOverlay(3)">Dugme 3</button>
@@ -500,255 +334,226 @@
     </div>
   </section>
 
-  <!-- Interaktivna BEND sekcija (overlay) -->
-  <section id="bandOverlay" class="band-overlay" style="display:none;">
+  <!-- Overlay: BEND -->
+  <section id="bandOverlay" class="band-overlay">
     <button class="backButton" onclick="closeBandOverlay()">←</button>
     <div class="bandImages">
-      <img src="Bas.jpg" alt="Bas gitara">
-      <img src="Bubanj.jpg" alt="Bubnjevi">
+      <img src="Bas.jpg" alt="Bas">
+      <img src="Bubanj.jpg" alt="Bubanj">
       <img src="Gitara.jpg" alt="Gitara">
     </div>
   </section>
 
-  <!-- Placeholder interaktivna sekcija (dugme 2-4) -->
-  <section id="soonOverlay" class="soon-overlay" style="display:none;">
+  <!-- Overlay: SOON -->
+  <section id="soonOverlay" class="soon-overlay">
     <button class="backButton" onclick="closeSoonOverlay()">←</button>
-    <p id="comingSoonText" style="font-size: 24px; color: white; text-align: center;">Uskoro...</p>
+    <img id="soonImage" src="" onerror="soonFallback()" style="display:none;" />
+    <p id="comingSoonText" style="font-size:24px; color:white; text-align:center; display:none;"></p>
   </section>
- 
+
   <!-- Kontakt sekcija -->
-<section id="contactSection">
-  <div id="kontaktText">
-    <!-- SR tekst -->
-    <div id="kontaktTextSr">
-      <h2>// K O N T A K T //</h2>
-      <p>📞 +381 62 1364246</p>
-      <p>📧 magnituda.music@gmail.com</p>
-      <p><strong>📫 Cankareva 25</strong> lokal 1</p>
-      <p><strong>📍 Novi Sad</strong></p>
+  <section id="contactSection">
+    <div id="kontaktText">
+      <div id="kontaktTextSr">
+        <h2>// K O N T A K T //</h2>
+        <p>  +381 62 1364246</p>
+        <p>  magnituda.music@gmail.com</p>
+        <p><strong>  Cankareva 25</strong> lokal 1</p>
+        <p><strong>  Novi Sad</strong></p>
+      </div>
+      <div id="kontaktTextEn" style="display:none;">
+        <h2>// C O N T A C T & booking //</h2>
+        <p>  +381 62 1364246</p>
+        <p>  magnituda.music@gmail.com</p>
+        <p><strong>  Cankareva 25</strong> office 1</p>
+        <p><strong>  Novi Sad</strong> Serbia</p>
+      </div>
     </div>
-
-    <!-- EN tekst -->
-    <div id="kontaktTextEn" style="display: none;">
-      <h2>// C O N T A C T & booking //</h2>
-      <p>📞 +381 62 1364246</p>
-      <p>📧 magnituda.music@gmail.com</p>
-      <p><strong>📫 Cankareva 25</strong> office 1</p>
-      <p><strong>📍 Novi Sad</strong> Serbia</p>
-    </div>
-  </div>
-</section>
-
-  <!-- Info sekcija: prikazuje slike u zavisnosti od jezika -->
-  <section id="infoSection">
-    <button id="backBtn">&#8592;</button>
-    <a href="Magnituda - Centar za promociju savremene muzike.pdf" download id="downloadPdfBtn" title="preuzmi.pdf">📎</a>
   </section>
 
-  <!-- Script -->
-  <script>
-    const hero = document.getElementById('hero');
-    const cmpcBg = document.getElementById('cmpcBg');
-    const headline = document.getElementById('headline');
-    const infoBtn = document.getElementById('infoBtn');
-    const infoSection = document.getElementById('infoSection');
-    const backBtn = document.getElementById('backBtn');
-    const content = document.getElementById('content');
-    const languageSwitcher = document.querySelector('.language-switcher');
-    const scrollIndicator = document.querySelector('.scroll-indicator');
-    const loadImageBtn = document.getElementById('loadImageBtn');
-    const additionalImage = document.getElementById('additionalImage');
-    const newsBtn = document.getElementById('newsBtn');
-    const newsSection = document.getElementById('newsSection');
-    const fallback = document.getElementById('newsFallback');
-    const langBtn = document.getElementById('langBtn');
-    const kontaktBg = document.getElementById('kontaktBg');
-    const downloadBtn = document.getElementById('downloadPdfBtn');
+  <!-- Info sekcija -->
+  <section id="infoSection" style="display:none;">
+    <button id="backBtn">←</button>
+    <a id="downloadPdfBtn" download title="preuzmi.pdf"> </a>
+  </section>
 
-    let currentLang = 'sr';
+  <!-- SCRIPT -->
+  <script>
+    const langBtn = document.getElementById("langBtn");
+    const headline = document.getElementById("headline");
+    const infoBtn = document.getElementById("infoBtn");
+    const loadImageBtn = document.getElementById("loadImageBtn");
+    const additionalImage = document.getElementById("additionalImage");
+    const newsBtn = document.getElementById("newsBtn");
+    const newsSection = document.getElementById("newsSection");
+    const fallback = document.getElementById("newsFallback");
+    const kontaktTextSr = document.getElementById("kontaktTextSr");
+    const kontaktTextEn = document.getElementById("kontaktTextEn");
+    const downloadBtn = document.getElementById("downloadPdfBtn");
+    const infoSection = document.getElementById("infoSection");
+    const backBtn = document.getElementById("backBtn");
+    const hero = document.getElementById("hero");
+    const content = document.getElementById("content");
+    const scrollIndicator = document.querySelector(".scroll-indicator");
+    const languageSwitcher = document.querySelector(".language-switcher");
+    const cmpcBg = document.getElementById("cmpcBg");
+    const kontaktBg = document.getElementById("kontaktBg");
+
+    let currentLang = "sr";
     let lastScrollPos = 0;
 
     function updateLanguage() {
-
-      const kontaktTextSr = document.getElementById('kontaktTextSr');
-      const kontaktTextEn = document.getElementById('kontaktTextEn');
-
-
-      if (currentLang === 'sr') {
-        langBtn.textContent = 'EN';
-        headline.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
-        infoBtn.textContent = 'INFORMATOR';
-        loadImageBtn.textContent = 'ekspozicija.čitaj';
-        newsBtn.textContent = 'vesti.saznaj';
-        downloadBtn.href = 'Magnituda - Centar za promociju savremene muzike.pdf';
-        downloadBtn.title = 'preuzmi.pdf';
-        fallback.textContent = 'Trenutno nema dodatnih vesti..';
-        kontaktTextSr.style.display = 'block';
-        kontaktTextEn.style.display = 'none';
-        document.querySelectorAll('.menuItem')[0].textContent = 'BEND'; // ← ovde menjaš ime BEND
-        document.querySelectorAll('.menuItem')[1].textContent = 'Dugme 2'; // ← ovde menjaš ime dugmeta 2
-        document.querySelectorAll('.menuItem')[2].textContent = 'Dugme 3'; // ← ovde menjaš ime dugmeta 3
-        document.querySelectorAll('.menuItem')[3].textContent = 'Dugme 4'; // ← ovde menjaš ime dugmeta 4
-
+      if (currentLang === "sr") {
+        langBtn.textContent = "EN";
+        headline.textContent = "CENTAR ZA PROMOCIJU SAVREMENE MUZIKE";
+        infoBtn.textContent = "INFORMATOR";
+        loadImageBtn.textContent = "ekspozicija.čitaj";
+        newsBtn.textContent = "vesti.saznaj";
+        downloadBtn.href = "Magnituda - Centar za promociju savremene muzike.pdf";
+        downloadBtn.title = "preuzmi.pdf";
+        fallback.textContent = "Trenutno nema dodatnih vesti..";
+        document.querySelectorAll(".menuItem")[0].textContent = "BEND";
+        document.querySelectorAll(".menuItem")[1].textContent = "Dugme 2";
+        document.querySelectorAll(".menuItem")[2].textContent = "Dugme 3";
+        document.querySelectorAll(".menuItem")[3].textContent = "Dugme 4";
       } else {
-        langBtn.textContent = 'SR';
-        headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
-        infoBtn.textContent = 'OUR STORY';
-        loadImageBtn.textContent = 'exposition.read';
-        newsBtn.textContent = 'news.more';
-        downloadBtn.href = 'Our_Story.pdf';
-        downloadBtn.title = 'download.pdf';
-        fallback.textContent = 'No additional news at the moment..';
-        kontaktTextSr.style.display = 'none';
-        kontaktTextEn.style.display = 'block';
-        document.querySelectorAll('.menuItem')[0].textContent = 'BAND'; // ← ovde menjaš ime BEND
-        document.querySelectorAll('.menuItem')[1].textContent = 'Button 2'; // ← ovde menjaš ime dugmeta 2
-        document.querySelectorAll('.menuItem')[2].textContent = 'Button 3'; // ← ovde menjaš ime dugmeta 3
-        document.querySelectorAll('.menuItem')[3].textContent = 'Button 4'; // ← ovde menjaš ime dugmeta 4
+        langBtn.textContent = "SR";
+        headline.textContent = "CONTEMPORARY MUSIC PROMOTION CENTRE";
+        infoBtn.textContent = "OUR STORY";
+        loadImageBtn.textContent = "exposition.read";
+        newsBtn.textContent = "news.more";
+        downloadBtn.href = "Our_Story.pdf";
+        downloadBtn.title = "download.pdf";
+        fallback.textContent = "No additional news at the moment..";
+        document.querySelectorAll(".menuItem")[0].textContent = "BAND";
+        document.querySelectorAll(".menuItem")[1].textContent = "Button 2";
+        document.querySelectorAll(".menuItem")[2].textContent = "Button 3";
+        document.querySelectorAll(".menuItem")[3].textContent = "Button 4";
       }
     }
 
-    langBtn.addEventListener('click', () => {
-      currentLang = currentLang === 'sr' ? 'en' : 'sr';
+    langBtn.addEventListener("click", () => {
+      currentLang = currentLang === "sr" ? "en" : "sr";
       updateLanguage();
     });
 
-    infoBtn.addEventListener('click', () => {
+    infoBtn.addEventListener("click", () => {
       lastScrollPos = window.scrollY || window.pageYOffset;
-      infoSection.innerHTML = ''; // resetuj sadržaj
+      infoSection.innerHTML = "";
       infoSection.appendChild(backBtn);
       infoSection.appendChild(downloadBtn);
 
-      const prefix = currentLang === 'sr' ? 'Magnituda_informator' : 'Our_Story';
+      const prefix = currentLang === "sr" ? "Magnituda_informator" : "Our_Story";
       for (let i = 1; i <= 6; i++) {
-        const img = document.createElement('img');
+        const img = document.createElement("img");
         img.src = `${prefix}-${i}.png`;
-        img.alt = `${prefix} - page ${i}`;
         infoSection.appendChild(img);
       }
 
-      infoSection.style.display = 'flex';
-      backBtn.style.display = 'flex';
-      downloadBtn.style.display = 'flex';
-      hero.style.display = 'none';
-      content.style.display = 'none';
-      languageSwitcher.style.display = 'none';
-      scrollIndicator.style.display = 'none';
+      infoSection.style.display = "flex";
+      backBtn.style.display = "flex";
+      downloadBtn.style.display = "flex";
+      hero.style.display = "none";
+      content.style.display = "none";
+      languageSwitcher.style.display = "none";
+      scrollIndicator.style.display = "none";
       window.scrollTo(0, 0);
     });
 
-    backBtn.addEventListener('click', () => {
-      infoSection.style.display = 'none';
-      backBtn.style.display = 'none';
-      downloadBtn.style.display = 'none';
-      hero.style.display = 'flex';
-      content.style.display = 'flex';
-      languageSwitcher.style.display = 'flex';
-      scrollIndicator.style.display = 'block';
+    backBtn.addEventListener("click", () => {
+      infoSection.style.display = "none";
+      hero.style.display = "flex";
+      content.style.display = "flex";
+      languageSwitcher.style.display = "flex";
+      scrollIndicator.style.display = "block";
       window.scrollTo(0, lastScrollPos);
     });
 
-    loadImageBtn.addEventListener('click', () => {
-      const isVisible = additionalImage.style.display === 'block';
-      additionalImage.style.display = isVisible ? 'none' : 'block';
+    loadImageBtn.addEventListener("click", () => {
+      const visible = additionalImage.style.display === "block";
+      additionalImage.style.display = visible ? "none" : "block";
     });
 
-    window.addEventListener('scroll', () => {
+    window.addEventListener("scroll", () => {
       const scrollPos = window.scrollY || window.pageYOffset;
-      const windowHeight = window.innerHeight;
+      const h = window.innerHeight;
 
-      if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 2) {
-        hero.classList.add('blur');
-        hero.classList.remove('fade-out');
-        hero.style.display = 'flex';
-        headline.classList.add('visible');
-        cmpcBg.classList.remove('visible');
-        kontaktBg.classList.remove('visible', 'blur');
-      } else if (scrollPos >= windowHeight * 2.2 && scrollPos < windowHeight * 3.2) {
-        hero.classList.add('fade-out');
-        hero.classList.remove('blur');
-        hero.style.display = 'flex';
-        headline.classList.remove('visible');
-        cmpcBg.classList.add('visible');
-        kontaktBg.classList.remove('visible', 'blur');
-      } else if (scrollPos >= windowHeight * 3.2 && scrollPos < windowHeight * 4.2) {
-        hero.style.display = 'none';
-        cmpcBg.classList.remove('visible');
-        kontaktBg.classList.add('visible');
-        kontaktBg.classList.remove('blur');
-      } else if (scrollPos >= windowHeight * 4) {
-        hero.style.display = 'none';
-        kontaktBg.classList.add('visible', 'blur');
+      if (scrollPos > h / 2 && scrollPos < h * 2) {
+        hero.classList.add("blur");
+        hero.classList.remove("fade-out");
+        hero.style.display = "flex";
+        headline.classList.add("visible");
+        cmpcBg.classList.remove("visible");
+        kontaktBg.classList.remove("visible", "blur");
+      } else if (scrollPos >= h * 2.2 && scrollPos < h * 3.2) {
+        hero.classList.add("fade-out");
+        hero.classList.remove("blur");
+        hero.style.display = "flex";
+        headline.classList.remove("visible");
+        cmpcBg.classList.add("visible");
+        kontaktBg.classList.remove("visible", "blur");
+      } else if (scrollPos >= h * 3.2 && scrollPos < h * 4.2) {
+        hero.style.display = "none";
+        cmpcBg.classList.remove("visible");
+        kontaktBg.classList.add("visible");
+        kontaktBg.classList.remove("blur");
+      } else if (scrollPos >= h * 4) {
+        hero.style.display = "none";
+        kontaktBg.classList.add("visible", "blur");
       } else {
-        hero.classList.remove('blur', 'fade-out');
-        hero.style.display = 'flex';
-        headline.classList.remove('visible');
-        cmpcBg.classList.remove('visible');
-        kontaktBg.classList.remove('visible', 'blur');
-        newsSection.style.display = 'none';
+        hero.classList.remove("blur", "fade-out");
+        hero.style.display = "flex";
+        headline.classList.remove("visible");
+        cmpcBg.classList.remove("visible");
+        kontaktBg.classList.remove("visible", "blur");
+        newsSection.style.display = "none";
       }
     });
 
-    newsBtn.addEventListener('click', () => {
-      newsSection.style.display = newsSection.style.display === 'none' ? 'block' : 'none';
+    newsBtn.addEventListener("click", () => {
+      newsSection.style.display = newsSection.style.display === "none" ? "block" : "none";
     });
 
     function showFallback() {
-      fallback.style.display = 'block';
+      fallback.style.display = "block";
+    }
+
+    function soonFallback() {
+      const fallbackText = currentLang === "en" ? "Coming soon..." : "Uskoro...";
+      document.getElementById("soonImage").style.display = "none";
+      document.getElementById("comingSoonText").textContent = fallbackText;
+      document.getElementById("comingSoonText").style.display = "block";
+    }
+
+    function openBandOverlay() {
+      lastScrollPos = window.scrollY || window.pageYOffset;
+      document.getElementById("bandOverlay").style.display = "flex";
+      window.scrollTo(0, 0);
+    }
+
+    function closeBandOverlay() {
+      document.getElementById("bandOverlay").style.display = "none";
+      window.scrollTo(0, lastScrollPos);
+    }
+
+    function openSoonOverlay(n) {
+      lastScrollPos = window.scrollY || window.pageYOffset;
+      const imageName = `Dugme-${n}.jpg`;
+      const img = document.getElementById("soonImage");
+      img.style.display = "block";
+      img.src = imageName;
+      document.getElementById("comingSoonText").style.display = "none";
+      document.getElementById("soonOverlay").style.display = "flex";
+      window.scrollTo(0, 0);
+    }
+
+    function closeSoonOverlay() {
+      document.getElementById("soonOverlay").style.display = "none";
+      window.scrollTo(0, lastScrollPos);
     }
 
     updateLanguage();
-
-function openBandSection() {
-  document.getElementById('bandSection').style.display = 'block';
-  document.getElementById('menuButtons').style.display = 'none';
-  document.getElementById('comingSoonSection').style.display = 'none';
-}
-
-function goBackFromBand() {
-  document.getElementById('bandSection').style.display = 'none';
-  document.getElementById('menuButtons').style.display = 'flex';
-}
-
-function showComingSoon(n) {
-  const lang = currentLang;
-  const msg = lang === 'en' ? "Soon..." : "Uskoro...";
-  document.getElementById('comingSoonText').innerText = msg;
-  document.getElementById('comingSoonSection').style.display = 'block';
-  document.getElementById('menuButtons').style.display = 'none';
-  document.getElementById('bandSection').style.display = 'none';
-}
-
-function goBackFromSoon() {
-  document.getElementById('comingSoonSection').style.display = 'none';
-  document.getElementById('menuButtons').style.display = 'flex';
-}
-
-// === INTERAKTIVNE SEKCIJE: BEND & SOON dugmad ===
-
-function openBandOverlay() {
-  document.getElementById('bandOverlay').style.display = 'flex';
-  window.scrollTo(0, 0);
-}
-
-function closeBandOverlay() {
-  document.getElementById('bandOverlay').style.display = 'none';
-}
-
-function openSoonOverlay(n) {
-  const lang = currentLang;
-  const msg = lang === 'en' ? "Coming soon..." : "Uskoro...";
-  document.getElementById('comingSoonText').innerText = msg;
-  document.getElementById('soonOverlay').style.display = 'flex';
-  window.scrollTo(0, 0);
-}
-
-function closeSoonOverlay() {
-  document.getElementById('soonOverlay').style.display = 'none';
-}
-    
   </script>
 </body>
 </html>
-
 
