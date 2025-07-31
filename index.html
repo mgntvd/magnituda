@@ -452,22 +452,6 @@
   background-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Stil za sekciju sa slikama (BEND) */
-#bandSection .bandImages {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  margin-top: 40px;
-}
-
-#bandSection img {
-  max-width: 90%;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-}
-
 /* Nazad dugme */
 .backButton {
   background: none;
@@ -486,6 +470,50 @@
   margin-top: 40px;
   color: white;
   font-size: 22px;
+}
+
+.band-overlay, .soon-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  z-index: 9999;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 60px 20px;
+  overflow-y: auto;
+}
+
+.band-overlay .bandImages {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.band-overlay img {
+  max-width: 90%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+.backButton {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 10000;
+  font-size: 32px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(8px);
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  cursor: pointer;
+  border-radius: 8px;
 }
     
   </style>
@@ -517,7 +545,7 @@
     </section>
   </section>
 
-  <!-- Nova sekcija: NEWSECTION (ažurirana!) -->
+  <!-- Nova sekcija: vesti + dodatna dugmad -->
   <section id="newSection">
     <div id="newsBar">
       <div class="marquee">
@@ -532,32 +560,29 @@
       <p id="newsFallback" style="display:none;"></p>
     </div>
 
-    <!-- Dugmad u stilu otvorenog menija (IZ KOD PREMEŠTENO OVDE) -->
-    <div id="menuButtons">
-      <button class="menuItem" onclick="openBandSection()">BEND</button>
-      <button class="menuItem" onclick="showComingSoon(2)">Dugme 2</button>
-      <button class="menuItem" onclick="showComingSoon(3)">Dugme 3</button>
-      <button class="menuItem" onclick="showComingSoon(4)">Dugme 4</button>
+    <!-- Dodatna dugmad sa većim razmakom -->
+    <div id="menuButtons" style="margin-top: 80px;">
+      <button class="menuItem" onclick="openBandOverlay()">BEND</button>
+      <button class="menuItem" onclick="openSoonOverlay(2)">Dugme 2</button>
+      <button class="menuItem" onclick="openSoonOverlay(3)">Dugme 3</button>
+      <button class="menuItem" onclick="openSoonOverlay(4)">Dugme 4</button>
     </div>
+  </section>
 
-    <!-- SEKCIJA ZA BEND dugme -->
-    <div id="bandSection" style="display: none;">
-      <button class="backButton" onclick="goBackFromBand()">← Nazad</button>
-      <div class="bandImages">
-        <img src="Bass.jpg" alt="Bas gitara">
-        <img src="Bubnjevi.jpg" alt="Bubnjevi">
-        <img src="Gitara.jpg" alt="Gitara">
-      </div>
+  <!-- Interaktivna BEND sekcija (overlay) -->
+  <section id="bandOverlay" class="band-overlay" style="display:none;">
+    <button class="backButton" onclick="closeBandOverlay()">←</button>
+    <div class="bandImages">
+      <img src="Bas.jpg" alt="Bas gitara">
+      <img src="Bubanj.jpg" alt="Bubnjevi">
+      <img src="Gitara.jpg" alt="Gitara">
     </div>
+  </section>
 
-    <!-- Placeholder za ostala dugmad -->
-    <div id="comingSoonSection" style="display: none;">
-      <button class="backButton" onclick="goBackFromSoon()">← Nazad</button>
-      <p id="comingSoonText">Uskoro...</p>
-    </div>
-
-    <!-- Pomeren scroll indikator na dno newSection -->
-    <div class="scroll-indicator">↓</div>
+  <!-- Placeholder interaktivna sekcija (dugme 2-4) -->
+  <section id="soonOverlay" class="soon-overlay" style="display:none;">
+    <button class="backButton" onclick="closeSoonOverlay()">←</button>
+    <p id="comingSoonText" style="font-size: 24px; color: white; text-align: center;">Uskoro...</p>
   </section>
  
   <!-- Kontakt sekcija -->
@@ -766,6 +791,29 @@ function showComingSoon(n) {
 function goBackFromSoon() {
   document.getElementById('comingSoonSection').style.display = 'none';
   document.getElementById('menuButtons').style.display = 'flex';
+}
+
+// === INTERAKTIVNE SEKCIJE: BEND & SOON dugmad ===
+
+function openBandOverlay() {
+  document.getElementById('bandOverlay').style.display = 'flex';
+  window.scrollTo(0, 0);
+}
+
+function closeBandOverlay() {
+  document.getElementById('bandOverlay').style.display = 'none';
+}
+
+function openSoonOverlay(n) {
+  const lang = currentLang;
+  const msg = lang === 'en' ? "Coming soon..." : "Uskoro...";
+  document.getElementById('comingSoonText').innerText = msg;
+  document.getElementById('soonOverlay').style.display = 'flex';
+  window.scrollTo(0, 0);
+}
+
+function closeSoonOverlay() {
+  document.getElementById('soonOverlay').style.display = 'none';
 }
     
   </script>
