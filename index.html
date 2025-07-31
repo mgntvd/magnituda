@@ -38,418 +38,393 @@
   <meta name="twitter:description" content="Pronađi svoj muzički glas u zajednici posvećenoj progresivnim muzičkim pravcima.">
   <meta name="twitter:image" content="https://mgntvd.github.io/magnituda/og.image.jpg">
 
+<style>
+  @font-face {
+    font-family: 'Geomanist';
+    src: url('Geomanist-Regular.otf') format('opentype');
+  }
 
-  <style>
-    @font-face {
-  font-family: 'Geomanist';
-  src: url('Geomanist-Regular.otf') format('opentype');
-}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  body, html {
+    height: 100%;
+    font-family: 'Geomanist', sans-serif;
+    scroll-behavior: smooth;
+  }
 
-body, html {
-  height: 100%;
-  font-family: 'Geomanist', sans-serif;
-  scroll-behavior: smooth;
-  background: #000; /* Po defaultu tamna pozadina */
-  color: white;
-}
+  .hero {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: url("Home - SPLASH FULL.png") no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: filter 0.6s ease-in-out, opacity 0.6s ease-in-out;
+    z-index: 1;
+    opacity: 1;
+    pointer-events: auto;
+  }
 
-.hero {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: url("Home - SPLASH FULL.png") no-repeat center center/cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: filter 0.6s ease-in-out, opacity 0.6s ease-in-out;
-  z-index: 1;
-  opacity: 1;
-  pointer-events: auto;
-}
+  .hero.blur {
+    filter: blur(6px) brightness(0.8);
+  }
 
-.hero.blur {
-  filter: blur(6px) brightness(0.8);
-}
+  .hero.fade-out {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease-in-out;
+  }
 
-.hero.fade-out {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.8s ease-in-out;
-}
+  .cmpc-bg, .kontakt-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    opacity: 0;
+    z-index: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease-in-out, filter 0.6s ease-in-out;
+  }
 
-.cmpc-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: url("CMPC.jpg") no-repeat center 30%/cover;
-  opacity: 0;
-  z-index: 0;
-  transition: opacity 0.8s ease-in-out;
-  pointer-events: none;
-}
+  .cmpc-bg.visible,
+  .kontakt-bg.visible {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+  }
 
-.cmpc-bg.visible {
-  opacity: 1;
-  pointer-events: auto;
-  z-index: 1;
-}
+  .kontakt-bg.blur {
+    filter: blur(4px) brightness(0.8);
+  }
 
-.kontakt-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: url("Studio.jpg") no-repeat center center/cover;
-  opacity: 0;
-  z-index: 0;
-  transition: opacity 0.8s ease-in-out, filter 0.6s ease-in-out;
-  pointer-events: none;
-}
+  .language-switcher {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1100;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 8px 16px;
+    display: flex;
+    gap: 12px;
+  }
 
-.kontakt-bg.visible {
-  opacity: 1;
-  pointer-events: auto;
-  z-index: 1;
-}
+  .language-switcher button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: inherit;
+    color: black;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    transition: background-color 0.3s ease;
+  }
 
-.kontakt-bg.blur {
-  filter: blur(4px) brightness(0.8);
-}
+  .language-switcher button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
 
-.language-switcher {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1100;
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  padding: 8px 16px;
-  display: flex;
-  gap: 12px;
-}
+  .scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    font-size: 2rem;
+    animation: bounce 2s infinite;
+    color: white;
+    z-index: 5;
+  }
 
-.language-switcher button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  font-family: inherit;
-  color: black;
-  font-weight: 600;
-  padding: 8px 16px;
-  border-radius: 8px;
-  backdrop-filter: blur(10px);
-  transition: background-color 0.3s ease;
-}
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+  }
 
-.language-switcher button:hover {
-  background-color: rgba(255, 255, 255, 0.4);
-}
+  .content {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 100vh;
+    z-index: 5;
+    gap: 24px;
+  }
 
-.scroll-indicator {
-  position: absolute;
-  bottom: 30px;
-  font-size: 2rem;
-  animation: bounce 2s infinite;
-  color: white;
-  z-index: 5;
-}
+  .content h1 {
+    font-size: 2rem;
+    color: white;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(10px); }
-}
+  .content h1.visible {
+    opacity: 1;
+  }
 
-.content {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 40px 20px;
-  margin-top: 100vh;
-  z-index: 5;
-  gap: 24px;
-}
+  #infoBtn, #loadImageBtn, #newsBtn {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 0;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+    color: black;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
 
-.content h1 {
-  font-size: 2rem;
-  color: white;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-}
+  #infoBtn:hover, #loadImageBtn:hover, #newsBtn:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
 
-.content h1.visible {
-  opacity: 1;
-}
+  #infoSection {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    overflow-y: auto;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    z-index: 1000;
+  }
 
-#infoBtn, #loadImageBtn, #newsBtn {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  border: none;
-  padding: 8px 16px;
-  border-radius: 0px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  color: black;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
+  #infoSection img {
+    max-width: 90vw;
+    margin: 16px 0;
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    border-radius: 8px;
+  }
 
-#infoBtn:hover, #loadImageBtn:hover, #newsBtn:hover {
-  background-color: rgba(255, 255, 255, 0.4);
-}
+  #backBtn, .backButton {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 10000;
+    font-size: 32px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+    border: none;
+    padding: 10px 16px;
+    cursor: pointer;
+    border-radius: 8px;
+  }
 
-#infoSection {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: #000;
-  overflow-y: auto;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px 0;
-  z-index: 1000;
-}
+  #backBtn {
+    color: black;
+  }
 
-#infoSection img {
-  max-width: 90vw;
-  margin: 16px 0;
-  box-shadow: 0 0 20px rgba(0,0,0,0.7);
-  border-radius: 8px;
-}
+  .backButton {
+    color: white;
+  }
 
-#backBtn {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 10000;
-  font-size: 32px;
-  background: rgba(255,255,255,0.2);
-  backdrop-filter: blur(8px);
-  border: none;
-  color: black;
-  padding: 10px 16px;
-  cursor: pointer;
-  border-radius: 8px;
-}
+  #backBtn:hover, .backButton:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
 
-#backBtn:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
+  #downloadPdfBtn {
+    position: fixed;
+    top: 20px;
+    left: 90px;
+    z-index: 1100;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    border-radius: 4px;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 20px;
+    color: black;
+    user-select: none;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
 
-#downloadPdfBtn {
-  position: fixed;
-  top: 20px;
-  left: 90px;
-  z-index: 1100;
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(10px);
-  border-radius: 4px;
-  padding: 12px;
-  cursor: pointer;
-  font-size: 20px;
-  color: black;
-  user-select: none;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
+  #downloadPdfBtn:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
 
-#downloadPdfBtn:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
+  #videoSection {
+    min-height: 100vh;
+    margin-top: 130px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    z-index: 10;
+  }
 
-#videoSection {
-  min-height: 100vh;
-  margin-top: 130px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  position: relative;
-  z-index: 10;
-}
+  #videoSection iframe {
+    width: 90vw;
+    max-width: 560px;
+    height: 315px;
+    border: none;
+    border-radius: 8px;
+  }
 
-#videoSection iframe {
-  width: 90vw;
-  max-width: 560px;
-  height: 315px;
-  border: none;
-  border-radius: 8px;
-}
+  #additionalImage {
+    display: none;
+    max-width: 90vw;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+  }
 
-#additionalImage {
-  display: none;
-  max-width: 90vw;
-  margin-top: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.7);
-}
+  #newSection {
+    position: relative;
+    min-height: 200vh;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 40px;
+    padding: 60px 20px;
+    margin-top: 30vh;
+    z-index: 10;
+    color: white;
+    text-shadow: 0 0 8px rgba(0,0,0,0.8);
+    user-select: none;
+  }
 
-#newSection {
-  position: relative;
-  min-height: 200vh; /* dodatno produžen skrol */
-  background: transparent;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 40px;
-  padding: 60px 20px;
-  margin-top: 30vh;
-  z-index: 10;
-  color: white;
-  text-shadow: 0 0 8px rgba(0,0,0,0.8);
-  user-select: none;
-}
+  #menuButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 60px;
+  }
 
-#newsBar {
-  width: 100%;
-  padding: 12px 0;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
-  color: white;
-  font-size: 16px;
-  font-weight: 500;
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-}
+  .menuItem {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: white;
+    font-size: 20px;
+    padding: 12px 24px;
+    cursor: pointer;
+    border-radius: 12px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+  }
 
-.marquee {
-  white-space: nowrap;
-  overflow: hidden;
-}
+  .menuItem:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.05);
+  }
 
-.marquee span {
-  display: inline-block;
-  padding-left: 100%;
-  animation: marquee 12s linear infinite;
-}
+  .band-overlay, .soon-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    z-index: 9999;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 60px 20px;
+    overflow-y: auto;
+  }
 
-@keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-100%); }
-}
+  .band-overlay .bandImages {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 40px;
+  }
 
-#newsSection {
-  display: none;
-  margin-top: 20px;
-  background-color: rgba(255,255,255,0.1);
-  backdrop-filter: blur(12px);
-  padding: 16px;
-  border-radius: 8px;
-  color: white;
-}
+  .band-overlay img {
+    max-width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255,255,255,0.3);
+  }
 
-#newsSection img {
-  max-width: 100%;
-  border-radius: 8px;
-}
+  #newsBar {
+    width: 100%;
+    padding: 12px 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+  }
 
-#newsFallback {
-  margin-top: 10px;
-  display: none;
-}
+  .marquee {
+    white-space: nowrap;
+    overflow: hidden;
+  }
 
-#kontaktText {
-  margin-top: auto;
-  padding-bottom: 100px; /* dodatni prostor za skrol */
-}
+  .marquee span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 12s linear infinite;
+  }
 
-/* NOVA DUGMAD - sve četiri imaju isti izgled */
-.menuItem {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: white;
-  font-size: 20px;
-  padding: 12px 24px;
-  cursor: pointer;
-  border-radius: 12px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: all 0.3s ease;
-}
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-100%); }
+  }
 
-.menuItem:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: scale(1.05);
-}
+  #newsSection {
+    display: none;
+    margin-top: 20px;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px);
+    padding: 16px;
+    border-radius: 8px;
+    color: white;
+  }
 
-/* BEND/DUgme 2/3 interaktivni overlay */
-.band-overlay, .soon-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: black;
-  z-index: 9999;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 60px 20px;
-  overflow-y: auto;
-}
+  #newsSection img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
 
-.band-overlay .bandImages {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  margin-top: 40px;
-}
+  #newsFallback {
+    margin-top: 10px;
+  }
 
-.band-overlay img {
-  max-width: 90%;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(255,255,255,0.3);
-}
+  #kontaktText {
+    margin-top: auto;
+    padding: 120px 20px;
+    text-align: center;
+    color: white;
+    text-shadow: 0 0 8px rgba(0,0,0,0.8);
+  }
 
-.backButton {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 10000;
-  font-size: 32px;
-  background: rgba(255,255,255,0.2);
-  backdrop-filter: blur(8px);
-  border: none;
-  color: white;
-  padding: 10px 16px;
-  cursor: pointer;
-  border-radius: 8px;
-}
-
-.backButton:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-  </style>
+</style>
 </head>
 
 <body>
@@ -490,11 +465,11 @@ body, html {
 
     <div id="newsSection">
       <img src="Vesti.jpg" alt="Vesti" onerror="showFallback()" />
-      <p id="newsFallback">Trenutno nema dodatnih vesti..</p>
+      <p id="newsFallback" style="display:none;"></p>
     </div>
 
-    <!-- Dodatna dugmad sa većim razmakom -->
-    <div id="menuButtons" style="margin-top: 80px; display: flex; gap: 20px;">
+    <!-- Dodatna dugmad -->
+    <div id="menuButtons" style="margin-top: 80px; display: flex; flex-direction: column; gap: 24px; align-items: center;">
       <button class="menuItem" onclick="openBandOverlay()">BEND</button>
       <button class="menuItem" onclick="openSoonOverlay(2)">Dugme 2</button>
       <button class="menuItem" onclick="openSoonOverlay(3)">Dugme 3</button>
@@ -502,53 +477,53 @@ body, html {
     </div>
   </section>
 
-  <!-- Interaktivna BEND sekcija (overlay) -->
-  <section id="bandOverlay" class="band-overlay">
+  <!-- BEND sekcija -->
+  <section id="bandOverlay" class="band-overlay" style="display:none;">
     <button class="backButton" onclick="closeBandOverlay()">←</button>
     <div class="bandImages">
-      <img src="Bas.jpg" alt="Bas gitara" />
-      <img src="Bubanj.jpg" alt="Bubnjevi" />
-      <img src="Gitara.jpg" alt="Gitara" />
+      <img src="Bas.jpg" alt="Bas gitara">
+      <img src="Bubanj.jpg" alt="Bubnjevi">
+      <img src="Gitara.jpg" alt="Gitara">
     </div>
   </section>
 
-  <!-- Placeholder interaktivna sekcija (dugme 2-4) -->
-  <section id="soonOverlay" class="soon-overlay">
+  <!-- Placeholder sekcija -->
+  <section id="soonOverlay" class="soon-overlay" style="display:none;">
     <button class="backButton" onclick="closeSoonOverlay()">←</button>
     <p id="comingSoonText" style="font-size: 24px; color: white; text-align: center;">Uskoro...</p>
   </section>
- 
+
   <!-- Kontakt sekcija -->
   <section id="contactSection">
     <div id="kontaktText">
-      <!-- SR tekst -->
       <div id="kontaktTextSr">
         <h2>// K O N T A K T //</h2>
-        <p>📞 +381 62 1364246</p>
-        <p>📧 magnituda.music@gmail.com</p>
-        <p><strong>📫 Cankareva 25</strong> lokal 1</p>
-        <p><strong>📍 Novi Sad</strong></p>
+        <p>  +381 62 1364246</p>
+        <p>  magnituda.music@gmail.com</p>
+        <p><strong>  Cankareva 25</strong> lokal 1</p>
+        <p><strong>  Novi Sad</strong></p>
       </div>
-
-      <!-- EN tekst -->
       <div id="kontaktTextEn" style="display: none;">
         <h2>// C O N T A C T & booking //</h2>
-        <p>📞 +381 62 1364246</p>
-        <p>📧 magnituda.music@gmail.com</p>
-        <p><strong>📫 Cankareva 25</strong> office 1</p>
-        <p><strong>📍 Novi Sad</strong> Serbia</p>
+        <p>  +381 62 1364246</p>
+        <p>  magnituda.music@gmail.com</p>
+        <p><strong>  Cankareva 25</strong> office 1</p>
+        <p><strong>  Novi Sad</strong> Serbia</p>
       </div>
     </div>
   </section>
 
-  <!-- Info sekcija: prikazuje slike u zavisnosti od jezika -->
+  <!-- Informator sekcija -->
   <section id="infoSection">
     <button id="backBtn">&#8592;</button>
-    <a href="Magnituda - Centar za promociju savremene muzike.pdf" download id="downloadPdfBtn" title="preuzmi.pdf">📎</a>
+    <a href="Magnituda - Centar za promociju savremene muzike.pdf" download id="downloadPdfBtn" title="preuzmi.pdf"> </a>
   </section>
 
+  <!-- SCRIPT -->
   <script>
-    // Elementi
+    let currentLang = 'sr';
+    let lastScrollPos = 0;
+
     const hero = document.getElementById('hero');
     const cmpcBg = document.getElementById('cmpcBg');
     const kontaktBg = document.getElementById('kontaktBg');
@@ -566,17 +541,11 @@ body, html {
     const newsSection = document.getElementById('newsSection');
     const fallback = document.getElementById('newsFallback');
     const langBtn = document.getElementById('langBtn');
-    const menuButtons = document.getElementById('menuButtons');
-    const bandOverlay = document.getElementById('bandOverlay');
-    const soonOverlay = document.getElementById('soonOverlay');
-    const comingSoonText = document.getElementById('comingSoonText');
-    const kontaktTextSr = document.getElementById('kontaktTextSr');
-    const kontaktTextEn = document.getElementById('kontaktTextEn');
-
-    let currentLang = 'sr';
-    let lastScrollPos = 0;
 
     function updateLanguage() {
+      const kontaktTextSr = document.getElementById('kontaktTextSr');
+      const kontaktTextEn = document.getElementById('kontaktTextEn');
+
       if (currentLang === 'sr') {
         langBtn.textContent = 'EN';
         headline.textContent = 'CENTAR ZA PROMOCIJU SAVREMENE MUZIKE';
@@ -584,14 +553,13 @@ body, html {
         loadImageBtn.textContent = 'ekspozicija.čitaj';
         newsBtn.textContent = 'vesti.saznaj';
         downloadBtn.href = 'Magnituda - Centar za promociju savremene muzike.pdf';
-        downloadBtn.title = 'preuzmi.pdf';
         fallback.textContent = 'Trenutno nema dodatnih vesti..';
         kontaktTextSr.style.display = 'block';
         kontaktTextEn.style.display = 'none';
-        menuButtons.children[0].textContent = 'BEND';
-        menuButtons.children[1].textContent = 'Dugme 2';
-        menuButtons.children[2].textContent = 'Dugme 3';
-        menuButtons.children[3].textContent = 'Dugme 4';
+        document.querySelectorAll('.menuItem')[0].textContent = 'BEND';
+        document.querySelectorAll('.menuItem')[1].textContent = 'Dugme 2';
+        document.querySelectorAll('.menuItem')[2].textContent = 'Dugme 3';
+        document.querySelectorAll('.menuItem')[3].textContent = 'Dugme 4';
       } else {
         langBtn.textContent = 'SR';
         headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
@@ -599,14 +567,13 @@ body, html {
         loadImageBtn.textContent = 'exposition.read';
         newsBtn.textContent = 'news.more';
         downloadBtn.href = 'Our_Story.pdf';
-        downloadBtn.title = 'download.pdf';
         fallback.textContent = 'No additional news at the moment..';
         kontaktTextSr.style.display = 'none';
         kontaktTextEn.style.display = 'block';
-        menuButtons.children[0].textContent = 'BAND';
-        menuButtons.children[1].textContent = 'Button 2';
-        menuButtons.children[2].textContent = 'Button 3';
-        menuButtons.children[3].textContent = 'Button 4';
+        document.querySelectorAll('.menuItem')[0].textContent = 'BAND';
+        document.querySelectorAll('.menuItem')[1].textContent = 'Button 2';
+        document.querySelectorAll('.menuItem')[2].textContent = 'Button 3';
+        document.querySelectorAll('.menuItem')[3].textContent = 'Button 4';
       }
     }
 
@@ -617,10 +584,9 @@ body, html {
 
     infoBtn.addEventListener('click', () => {
       lastScrollPos = window.scrollY || window.pageYOffset;
-      infoSection.innerHTML = ''; // resetuj sadržaj
+      infoSection.innerHTML = '';
       infoSection.appendChild(backBtn);
       infoSection.appendChild(downloadBtn);
-
       const prefix = currentLang === 'sr' ? 'Magnituda_informator' : 'Our_Story';
       for (let i = 1; i <= 6; i++) {
         const img = document.createElement('img');
@@ -628,7 +594,6 @@ body, html {
         img.alt = `${prefix} - page ${i}`;
         infoSection.appendChild(img);
       }
-
       infoSection.style.display = 'flex';
       backBtn.style.display = 'flex';
       downloadBtn.style.display = 'flex';
@@ -654,6 +619,14 @@ body, html {
       const isVisible = additionalImage.style.display === 'block';
       additionalImage.style.display = isVisible ? 'none' : 'block';
     });
+
+    newsBtn.addEventListener('click', () => {
+      newsSection.style.display = newsSection.style.display === 'none' ? 'block' : 'none';
+    });
+
+    function showFallback() {
+      fallback.style.display = 'block';
+    }
 
     window.addEventListener('scroll', () => {
       const scrollPos = window.scrollY || window.pageYOffset;
@@ -691,38 +664,34 @@ body, html {
       }
     });
 
-    newsBtn.addEventListener('click', () => {
-      newsSection.style.display = newsSection.style.display === 'none' ? 'block' : 'none';
-    });
-
-    function showFallback() {
-      fallback.style.display = 'block';
-    }
-
-    // Interaktivne sekcije: BEND i Uskoro dugmad
-
+    // Dugmad interakcije
     function openBandOverlay() {
-      bandOverlay.style.display = 'flex';
+      lastScrollPos = window.scrollY || window.pageYOffset;
+      document.getElementById('bandOverlay').style.display = 'flex';
       window.scrollTo(0, 0);
     }
 
     function closeBandOverlay() {
-      bandOverlay.style.display = 'none';
+      document.getElementById('bandOverlay').style.display = 'none';
+      window.scrollTo(0, lastScrollPos);
     }
 
     function openSoonOverlay(n) {
+      lastScrollPos = window.scrollY || window.pageYOffset;
       const msg = currentLang === 'en' ? "Coming soon..." : "Uskoro...";
-      comingSoonText.innerText = msg;
-      soonOverlay.style.display = 'flex';
+      document.getElementById('comingSoonText').innerText = msg;
+      document.getElementById('soonOverlay').style.display = 'flex';
       window.scrollTo(0, 0);
     }
 
     function closeSoonOverlay() {
-      soonOverlay.style.display = 'none';
+      document.getElementById('soonOverlay').style.display = 'none';
+      window.scrollTo(0, lastScrollPos);
     }
 
     updateLanguage();
   </script>
+
 </body>
 
 </html>
