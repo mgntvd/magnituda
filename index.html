@@ -40,483 +40,444 @@
   
   <style>
     @font-face {
-      font-family: 'Geomanist';
-      src: url('Geomanist-Regular.otf') format('opentype');
-    }
+    font-family: 'Geomanist';
+    src: url('Geomanist-Regular.otf') format('opentype');
+  }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-    body, html {
-      height: 100%;
-      font-family: 'Geomanist', sans-serif;
-      scroll-behavior: smooth;
-    }
+  body, html {
+    height: 100%;
+    font-family: 'Geomanist', sans-serif;
+    scroll-behavior: smooth;
+  }
 
-    .hero {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: url("Home - SPLASH FULL.png") no-repeat center center/cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: filter 0.6s ease-in-out, opacity 0.6s ease-in-out;
-      z-index: 1;
-      opacity: 1;
-      pointer-events: auto;
-    }
+  .hero {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: url("Home - SPLASH FULL.png") no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: filter 0.6s ease-in-out, opacity 0.6s ease-in-out;
+    z-index: 1;
+    opacity: 1;
+    pointer-events: auto;
+  }
 
-    .hero.blur {
-      filter: blur(6px) brightness(0.8);
-    }
+  .hero.blur {
+    filter: blur(6px) brightness(0.8);
+  }
 
-    .hero.fade-out {
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.8s ease-in-out;
-    }
+  .hero.fade-out {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease-in-out;
+  }
 
-    .cmpc-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: url("CMPC.jpg") no-repeat center 30%/cover;
-      opacity: 0;
-      z-index: 0;
-      transition: opacity 0.8s ease-in-out;
-      pointer-events: none;
-    }
+  .cmpc-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: url("CMPC.jpg") no-repeat center 30%/cover;
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 0.8s ease-in-out;
+    pointer-events: none;
+  }
 
-    .cmpc-bg.visible {
-      opacity: 1;
-      pointer-events: auto;
-      z-index: 1;
-    }
+  .cmpc-bg.visible {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+  }
 
-    .kontakt-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: url("Studio.jpg") no-repeat center center/cover;
-      opacity: 0;
-      z-index: 0;
-      transition: opacity 0.8s ease-in-out, filter 0.6s ease-in-out;
-      pointer-events: none;
-    }
+  .kontakt-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: url("Studio.jpg") no-repeat center center/cover;
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 0.8s ease-in-out, filter 0.6s ease-in-out;
+    pointer-events: none;
+  }
 
-    .kontakt-bg.visible {
-      opacity: 1;
-      pointer-events: auto;
-      z-index: 1;
-    }
+  .kontakt-bg.visible {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+  }
 
-    .kontakt-bg.blur {
-      filter: blur(4px) brightness(0.8);
-    }
+  .kontakt-bg.blur {
+    filter: blur(4px) brightness(0.8);
+  }
 
-    .language-switcher {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1100;
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-      padding: 8px 16px;
-      display: flex;
-      gap: 12px;
-    }
+  .language-switcher {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1100;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 8px 16px;
+    display: flex;
+    gap: 12px;
+  }
 
-    .language-switcher button {
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-      font-family: inherit;
-      color: black;
-      font-weight: 600;
-      padding: 8px 16px;
-      border-radius: 8px;
-      backdrop-filter: blur(10px);
-      transition: background-color 0.3s ease;
-    }
+  .language-switcher button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: inherit;
+    color: black;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    transition: background-color 0.3s ease;
+  }
 
-    .language-switcher button:hover {
-      background-color: rgba(255, 255, 255, 0.4);
-    }
+  .language-switcher button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
 
-    .scroll-indicator {
-      position: absolute;
-      bottom: 30px;
-      font-size: 2rem;
-      animation: bounce 2s infinite;
-      color: white;
-      z-index: 5;
-    }
+  .scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    font-size: 2rem;
+    animation: bounce 2s infinite;
+    color: white;
+    z-index: 5;
+  }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(10px); }
-    }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+  }
 
-    .content {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 20px;
-      margin-top: 100vh;
-      z-index: 5;
-      gap: 24px;
-    }
+  .content {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 100vh;
+    z-index: 5;
+    gap: 24px;
+  }
 
-    .content h1 {
-      font-size: 2rem;
-      color: white;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-      text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
+  .content h1 {
+    font-size: 2rem;
+    color: white;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
 
-    .content h1.visible {
-      opacity: 1;
-    }
+  .content h1.visible {
+    opacity: 1;
+  }
 
-    #infoBtn, #loadImageBtn, #newsBtn {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      border: none;
-      padding: 8px 16px;
-      border-radius: 0px;
-      cursor: pointer;
-      font-family: inherit;
-      font-weight: 600;
-      color: black;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
+  #infoBtn, #loadImageBtn, #newsBtn {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 0px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+    color: black;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
 
-    #infoBtn:hover, #loadImageBtn:hover, #newsBtn:hover {
-      background-color: rgba(255, 255, 255, 0.4);
-    }
+  #infoBtn:hover, #loadImageBtn:hover, #newsBtn:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
 
-    #infoSection {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #000;
-      overflow-y: auto;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px 0;
-      z-index: 1000;
-    }
+  #infoSection {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    overflow-y: auto;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    z-index: 1000;
+  }
 
-    #infoSection img {
-      max-width: 90vw;
-      margin: 16px 0;
-      box-shadow: 0 0 20px rgba(0,0,0,0.7);
-      border-radius: 8px;
-    }
+  #infoSection img {
+    max-width: 90vw;
+    margin: 16px 0;
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    border-radius: 8px;
+  }
 
-    #backBtn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1100;
-      background: rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(10px);
-      border-radius: 4px;
-      padding: 12px;
-      cursor: pointer;
-      font-size: 24px;
-      color: black;
-      user-select: none;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      text-shadow: 0 0 2px rgba(255,255,255,0.8);
-      transition: background-color 0.3s ease;
-    }
+  #backBtn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1100;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    border-radius: 4px;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 24px;
+    color: black;
+    user-select: none;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 0 0 2px rgba(255,255,255,0.8);
+    transition: background-color 0.3s ease;
+  }
 
-    #backBtn:hover {
-      background: rgba(255, 255, 255, 0.5);
-    }
+  #backBtn:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
 
-    #downloadPdfBtn {
-      position: fixed;
-      top: 20px;
-      left: 90px;
-      z-index: 1100;
-      background: rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(10px);
-      border-radius: 4px;
-      padding: 12px;
-      cursor: pointer;
-      font-size: 20px;
-      color: black;
-      user-select: none;
-      text-decoration: none;
-      font-weight: 600;
-      transition: background-color 0.3s ease;
-    }
+  #downloadPdfBtn {
+    position: fixed;
+    top: 20px;
+    left: 90px;
+    z-index: 1100;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    border-radius: 4px;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 20px;
+    color: black;
+    user-select: none;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
 
-    #downloadPdfBtn:hover {
-      background: rgba(255, 255, 255, 0.5);
-    }
+  #downloadPdfBtn:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
 
-    #videoSection {
-      min-height: 100vh;
-      margin-top: 130px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-      position: relative;
-      z-index: 10;
-    }
+  #videoSection {
+    min-height: 100vh;
+    margin-top: 130px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    z-index: 10;
+  }
 
-    #videoSection iframe {
-      width: 90vw;
-      max-width: 560px;
-      height: 315px;
-      border: none;
-      border-radius: 8px;
-    }
+  #videoSection iframe {
+    width: 90vw;
+    max-width: 560px;
+    height: 315px;
+    border: none;
+    border-radius: 8px;
+  }
 
-    #additionalImage {
-      display: none;
-      max-width: 90vw;
-      margin-top: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.7);
-    }
+  #additionalImage {
+    display: none;
+    max-width: 90vw;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+  }
 
-    #newSection {
-      position: relative;
-      min-height: 100vh;
-      background: transparent;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 24px;
-      padding: 40px 20px;
-      margin-top: 30vh;
-      z-index: 10;
-      color: white;
-      text-shadow: 0 0 8px rgba(0,0,0,0.8);
-      user-select: none;
-    }
+  #newSection {
+    position: relative;
+    min-height: 100vh;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 24px;
+    padding: 40px 20px;
+    margin-top: 30vh;
+    z-index: 10;
+    color: white;
+    text-shadow: 0 0 8px rgba(0,0,0,0.8);
+    user-select: none;
+  }
 
-    #newsBar {
-      width: 100%;
-      padding: 12px 0;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      color: white;
-      font-size: 16px;
-      font-weight: 500;
-      position: relative;
-      overflow: hidden;
-      border-radius: 8px;
-    }
+  #newsBar {
+    width: 100%;
+    padding: 12px 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+  }
 
-    .marquee {
-      white-space: nowrap;
-      overflow: hidden;
-    }
+  .marquee {
+    white-space: nowrap;
+    overflow: hidden;
+  }
 
-    .marquee span {
-      display: inline-block;
-      padding-left: 100%;
-      animation: marquee 12s linear infinite;
-    }
+  .marquee span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 12s linear infinite;
+  }
 
-    @keyframes marquee {
-      0% { transform: translateX(0%); }
-      100% { transform: translateX(-100%); }
-    }
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-100%); }
+  }
 
-    #newsSection {
-      display: none;
-      margin-top: 20px;
-      background-color: rgba(255,255,255,0.1);
-      backdrop-filter: blur(12px);
-      padding: 16px;
-      border-radius: 8px;
-      color: white;
-    }
+  #newsSection {
+    display: none;
+    margin-top: 20px;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px);
+    padding: 16px;
+    border-radius: 8px;
+    color: white;
+  }
 
-    #newsSection img {
-      max-width: 100%;
-      border-radius: 8px;
-    }
+  #newsSection img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
 
-    #newsFallback {
-      margin-top: 10px;
-    }
+  #newsFallback {
+    margin-top: 10px;
+  }
 
-    #contactSection {
-      position: relative;
-      min-height: 100vh;
-      background: transparent;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      padding: 40px 20px;
-      padding-bottom: 60px;
-      z-index: 10;
-      color: white;
-      text-align: center;
-      gap: 20px;
-      text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
-    }
+  #kontaktText {
+    margin-top: auto;
+    padding-bottom: 50px;
+  }
 
-   #kontaktText {
-  margin-top: auto;
-  padding-bottom: 50px; /* razmak od dna stranice */
-}
+  #kontaktTextSr,
+  #kontaktTextEn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-#kontaktTextSr,
-#kontaktTextEn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  #kontaktTextSr h2,
+  #kontaktTextEn h2 {
+    margin: 0 0 20px 0;
+  }
 
-/* Naslov (h2) ima veći razmak ispod */
-#kontaktTextSr h2,
-#kontaktTextEn h2 {
-  margin: 0 0 20px 0;
-}
+  #kontaktTextSr p,
+  #kontaktTextEn p {
+    margin: 0 0 10px 0;
+  }
 
-/* Paragrafi imaju manji razmak ispod */
-#kontaktTextSr p,
-#kontaktTextEn p {
-  margin: 0 0 10px 0;
-}
+  #kontaktTextSr p:last-child,
+  #kontaktTextEn p:last-child {
+    margin-bottom: 0;
+  }
 
-/* Poslednji paragraf nema dodatnog razmaka */
-#kontaktTextSr p:last-child,
-#kontaktTextEn p:last-child {
-  margin-bottom: 0;
-}
+  /* Dugmad u newSection meniju */
+  #menuButtons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+    gap: 10px;
+  }
 
-    /* Nova sekcija: Dugmad u meniju */
-#menuButtons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 40px;
-  gap: 10px;
-}
+  .menuItem {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    position: relative;
+  }
 
-.menuItem {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 20px;
-  padding: 10px 20px;
-  cursor: pointer;
-  position: relative;
-}
+  .menuItem::after {
+    content: "";
+    display: block;
+    margin: 8px auto 0 auto;
+    width: 60%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
 
-/* Crta ispod svakog dugmeta */
-.menuItem::after {
-  content: "";
-  display: block;
-  margin: 8px auto 0 auto;
-  width: 60%;
-  height: 1px;
-  background-color: rgba(255, 255, 255, 0.3);
-}
+  /* BONUS: Novi prikaz za BEND i placeholder sadržaje */
 
-/* Nazad dugme */
-.backButton {
-  background: none;
-  border: 1px solid white;
-  color: white;
-  padding: 8px 20px;
-  font-size: 16px;
-  margin-top: 20px;
-  cursor: pointer;
-  border-radius: 6px;
-}
+  .band-overlay, .soon-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    z-index: 9999;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 60px 20px;
+    overflow-y: auto;
+  }
 
-/* Placeholder sadržaj */
-#comingSoonSection {
-  text-align: center;
-  margin-top: 40px;
-  color: white;
-  font-size: 22px;
-}
+  .band-overlay .bandImages {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 40px;
+  }
 
-.band-overlay, .soon-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: black;
-  z-index: 9999;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 60px 20px;
-  overflow-y: auto;
-}
+  .band-overlay img {
+    max-width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255,255,255,0.3);
+  }
 
-.band-overlay .bandImages {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  margin-top: 40px;
-}
+  .backButton {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 10000;
+    font-size: 32px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+    border: none;
+    color: white;
+    padding: 10px 16px;
+    cursor: pointer;
+    border-radius: 8px;
+  }
 
-.band-overlay img {
-  max-width: 90%;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(255,255,255,0.3);
-}
-
-.backButton {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 10000;
-  font-size: 32px;
-  background: rgba(255,255,255,0.2);
-  backdrop-filter: blur(8px);
-  border: none;
-  color: white;
-  padding: 10px 16px;
-  cursor: pointer;
-  border-radius: 8px;
-}
-    
-  </style>
+      </style>
 </head>
 
 <body>
