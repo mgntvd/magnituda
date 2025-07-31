@@ -493,7 +493,7 @@
 
 <body>
 
-    <!-- Hero sekcija -->
+  <!-- Hero sekcija -->
   <section class="hero" id="hero">
     <div class="language-switcher">
       <button id="langBtn">EN</button>
@@ -517,47 +517,48 @@
     </section>
   </section>
 
-  <!-- Nova sekcija -->
+  <!-- Nova sekcija: NEWSECTION (ažurirana!) -->
   <section id="newSection">
     <div id="newsBar">
       <div class="marquee">
         <span id="marqueeText">Prijava novih članova je u toku // Kontaktirajte nas putem telefona, socijalnih mreža ili e-maila</span>
       </div>
     </div>
+
     <button id="newsBtn">vesti.saznaj</button>
+
     <div id="newsSection">
       <img src="Vesti.jpg" alt="Vesti" onerror="showFallback()" />
       <p id="newsFallback" style="display:none;"></p>
     </div>
+
+    <!-- Dugmad u stilu otvorenog menija (IZ KOD PREMEŠTENO OVDE) -->
+    <div id="menuButtons">
+      <button class="menuItem" onclick="openBandSection()">BEND</button>
+      <button class="menuItem" onclick="showComingSoon(2)">Dugme 2</button>
+      <button class="menuItem" onclick="showComingSoon(3)">Dugme 3</button>
+      <button class="menuItem" onclick="showComingSoon(4)">Dugme 4</button>
+    </div>
+
+    <!-- SEKCIJA ZA BEND dugme -->
+    <div id="bandSection" style="display: none;">
+      <button class="backButton" onclick="goBackFromBand()">← Nazad</button>
+      <div class="bandImages">
+        <img src="Bass.jpg" alt="Bas gitara">
+        <img src="Bubnjevi.jpg" alt="Bubnjevi">
+        <img src="Gitara.jpg" alt="Gitara">
+      </div>
+    </div>
+
+    <!-- Placeholder za ostala dugmad -->
+    <div id="comingSoonSection" style="display: none;">
+      <button class="backButton" onclick="goBackFromSoon()">← Nazad</button>
+      <p id="comingSoonText">Uskoro...</p>
+    </div>
+
+    <!-- Pomeren scroll indikator na dno newSection -->
     <div class="scroll-indicator">↓</div>
   </section>
-
-<!-- NOVA SEKCIJA: Dugmad u stilu otvorenog menija -->
-<section id="additionalMenu">
-  <div id="menuButtons">
-    <!-- DUGMAD (OVDE SE POJAVLJUJU NAZIVI KOJE KASNIJE PREVODIMO U updateContent) -->
-    <button class="menuItem" onclick="openBandSection()">BEND</button> <!-- ← OVDE SE KASNIJE MENJA NAZIV U updateContent -->
-    <button class="menuItem" onclick="showComingSoon(2)">Dugme 2</button> <!-- ← OVDE SE KASNIJE MENJA NAZIV U updateContent -->
-    <button class="menuItem" onclick="showComingSoon(3)">Dugme 3</button> <!-- ← OVDE SE KASNIJE MENJA NAZIV U updateContent -->
-    <button class="menuItem" onclick="showComingSoon(4)">Dugme 4</button> <!-- ← OVDE SE KASNIJE MENJA NAZIV U updateContent -->
-  </div>
-
-  <!-- SEKCIJA ZA BEND dugme -->
-  <div id="bandSection" style="display: none;">
-    <button class="backButton" onclick="goBackFromBand()">← Nazad</button>
-    <div class="bandImages">
-      <img src="Bass.jpg" alt="Bas gitara">
-      <img src="Bubnjevi.jpg" alt="Bubnjevi">
-      <img src="Gitara.jpg" alt="Gitara">
-    </div>
-  </div>
-
-  <!-- SEKCIJA ZA PLACEHOLDER dugmad (2, 3, 4) -->
-  <div id="comingSoonSection" style="display: none;">
-    <button class="backButton" onclick="goBackFromSoon()">← Nazad</button>
-    <p id="comingSoonText">Uskoro...</p>
-  </div>
-</section>
  
   <!-- Kontakt sekcija -->
 <section id="contactSection">
