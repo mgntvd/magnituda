@@ -2,6 +2,7 @@
 <html lang="sr">
 <head>
   <meta charset="UTF-8" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-ZbR8ryaEqmfxKJQkp+N8UJzW+XrQqM3+6gL3iPKWqx+XW9qUoU+Gy9Qx3c/5nN+hx1b3LoqM49j5IuZBfzP1Zg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Faviconi za sve uređaje -->
@@ -461,6 +462,25 @@
   margin-bottom: 0;
 }
 
+  .social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 30px;
+}
+
+.social-icons a {
+  color: white;
+  font-size: 28px;
+  text-decoration: none;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.social-icons a:hover {
+  transform: scale(1.2);
+  color: #ffcc00; /* Možeš promeniti u tvoju primarnu boju */
+}
+
 </style>
 </head>
 
@@ -533,6 +553,19 @@
   <!-- Kontakt sekcija -->
   <section id="contactSection">
     <div id="kontaktText">
+
+<div id="socialIcons" class="social-icons">
+  <a href="https://www.instagram.com/magnituda.music?igsh=MTdhMm5ic3JyejYzOQ==" target="_blank" aria-label="Instagram">
+    <i class="fab fa-instagram"></i>
+  </a>
+  <a href="https://youtube.com/@mgntvd?si=ATdOB72Ym1R6UQGw" target="_blank" aria-label="YouTube">
+    <i class="fab fa-youtube"></i>
+  </a>
+  <a href="https://www.tiktok.com/@magnituda.music?_t=ZM-8yWKhmhefHJ&_r=1" target="_blank" aria-label="TikTok">
+    <i class="fab fa-tiktok"></i>
+  </a>
+</div>
+      
       <div id="kontaktTextSr">
         <h2>// K O N T A K T //</h2>
         <p>📞 +381 62 1364246</p>
