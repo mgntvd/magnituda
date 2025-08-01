@@ -468,7 +468,7 @@
   justify-content: center;
   gap: 24px;
   margin-top: 30px;
-  margin-bottom: 250px;
+  margin-bottom: 50px;
 }
 
 .social-icons a {
@@ -482,6 +482,27 @@
   transform: scale(1.2);
   color: #ffcc00; /* Možeš promeniti u tvoju primarnu boju */
 }
+
+  .music-icons {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 40px; /* razmak od prethodnih ikonica */
+  margin-bottom: 200px; /* razmak od teksta ispod */
+}
+
+.music-icons a {
+  color: white;
+  font-size: 28px;
+  text-decoration: none;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.music-icons a:hover {
+  transform: scale(1.2);
+  color: #ffcc00; /* ili tvoja primarna boja */
+}
+
 
 </style>
 </head>
@@ -565,6 +586,15 @@
   </a>
   <a href="https://www.tiktok.com/@magnituda.music?_t=ZM-8yWKhmhefHJ&_r=1" target="_blank" aria-label="TikTok">
     <i class="fab fa-tiktok"></i>
+  </a>
+</div>
+
+      <div class="music-icons">
+  <a href="#" target="_blank" aria-label="Spotify"> /* u href dodajes link */
+    <i class="fab fa-spotify"></i>
+  </a>
+  <a href="#" target="_blank" aria-label="Apple Music"> /* u href dodajes link */
+    <i class="fab fa-apple"></i>
   </a>
 </div>
       
