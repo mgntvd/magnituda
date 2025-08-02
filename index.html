@@ -590,10 +590,10 @@
 </section>
 
   <!-- Placeholder sekcija -->
-  <section id="soonOverlay" class="soon-overlay" style="display:none;">
-    <button class="backButton" onclick="closeSoonOverlay()">←</button>
-    <p id="comingSoonText" style="font-size: 24px; color: white; text-align: center;">Uskoro...</p>
-  </section>
+  <section id="soonOverlay" class="soon-overlay" style="display:none; flex-direction: column; align-items: center; padding-top: 50px; position: relative;">
+  <button class="backButton" onclick="closeSoonOverlay()" style="position: absolute; top: 10px; left: 10px;">←</button>
+  <div id="contentSoonOverlay" style="text-align: center; color: white; font-size: 24px; max-width: 90%;"></div>
+</section>
 
   <!-- Kontakt sekcija -->
   <section id="contactSection">
@@ -799,22 +799,7 @@
       document.getElementById('bandOverlay').style.display = 'none';
       window.scrollTo(0, lastScrollPos);
     }
-
-    function openSoonOverlay(n) {
-      lastScrollPos = window.scrollY || window.pageYOffset;
-      const msg = currentLang === 'en' ? "Coming soon..." : "Uskoro...";
-      document.getElementById('comingSoonText').innerText = msg;
-      document.getElementById('soonOverlay').style.display = 'flex';
-      window.scrollTo(0, 0);
-    }
-
-    function closeSoonOverlay() {
-      document.getElementById('soonOverlay').style.display = 'none';
-      window.scrollTo(0, lastScrollPos);
-    }
-
-    updateLanguage();
-
+     
     function openLiveOverlay() {
   lastScrollPos = window.scrollY || window.pageYOffset;
   document.getElementById('liveOverlay').style.display = 'flex';
@@ -837,7 +822,76 @@ function closeStudioOverlay() {
   window.scrollTo(0, lastScrollPos);
 }
 
-   
+function openSoonOverlay(n) {
+  lastScrollPos = window.scrollY || window.pageYOffset;
+  const overlay = document.getElementById('soonOverlay');
+  const contentDiv = document.getElementById('contentSoonOverlay');
+
+  contentDiv.innerHTML = '';
+
+  let images = [];
+  let pdfHref = '';
+
+  if (currentLang === 'sr') {
+    images = [
+      'Dugme_4-1.jpg',
+      'Dugme_4-2.jpg',
+      'Dugme_4-3.jpg'
+    ];
+    pdfHref = 'Dugme_4-download.pdf';
+  } else {
+    images = [
+      'Dugme_4-1EN.jpg',
+      'Dugme_4-2EN.jpg',
+      'Dugme_4-3EN.jpg'
+    ];
+    pdfHref = 'Dugme_4-downloadEN.pdf';
+  }
+
+  // Dodavanje slika ako postoje
+  if (images.length > 0) {
+    images.forEach(src => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = currentLang === 'sr' ? 'Dodatni sadržaj' : 'Additional content';
+      img.style.maxWidth = '300px';
+      img.style.margin = '10px';
+      contentDiv.appendChild(img);
+    });
+  }
+
+  // Dodavanje PDF linka ako postoji
+  if (pdfHref) {
+    const pdfLink = document.createElement('a');
+    pdfLink.href = pdfHref;
+    pdfLink.download = '';
+    pdfLink.style.color = 'white';
+    pdfLink.style.fontSize = '20px';
+    pdfLink.style.marginTop = '20px';
+    pdfLink.style.display = 'inline-block';
+    pdfLink.innerHTML = currentLang === 'sr' ? 'Preuzmi PDF 📎' : 'Download PDF 📎';
+    contentDiv.appendChild(pdfLink);
+  }
+
+  // Ako nema ni slika ni PDF linka, prikazujemo fallback tekst
+  if (images.length === 0 && !pdfHref) {
+    const fallbackText = document.createElement('p');
+    fallbackText.textContent = currentLang === 'sr' ? 'Trenutno nema dodatnog sadržaja' : 'No additional content at the moment';
+    fallbackText.style.marginTop = '30px';
+    contentDiv.appendChild(fallbackText);
+  }
+
+  overlay.style.display = 'flex';
+  window.scrollTo(0, 0);
+}
+
+function closeSoonOverlay() {
+  document.getElementById('soonOverlay').style.display = 'none';
+  window.scrollTo(0, lastScrollPos);
+}
+
+    
+ updateLanguage();  
   </script>
 
 </body>
