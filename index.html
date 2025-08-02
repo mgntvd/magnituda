@@ -551,8 +551,8 @@
     <!-- Dodatna dugmad -->
     <div id="menuButtons" style="margin-top: 100px; display: flex; flex-direction: column; gap: 40px; align-items: center;">
       <button class="menuItem" onclick="openBandOverlay()">BEND</button>
-      <button class="menuItem" onclick="openSoonOverlay(2)">Dugme 2</button>
-      <button class="menuItem" onclick="openSoonOverlay(3)">Dugme 3</button>
+      <button class="menuItem" onclick="openLiveOverlay()">Live</button>
+      <button class="menuItem" onclick="openStudioOverlay()">Studio</button>
       <button class="menuItem" onclick="openSoonOverlay(4)">Dugme 4</button>
     </div>
   </section>
@@ -566,6 +566,28 @@
       <img src="Gitara.jpg" alt="Gitara">
     </div>
   </section>
+
+<!-- LIVE sekcija -->
+<section id="liveOverlay" class="band-overlay" style="display:none;">
+  <button class="backButton" onclick="closeLiveOverlay()">←</button>
+  <div class="bandImages">
+    <img src="Dugme_2-1.jpg" alt="Live slika 1" />
+    <img src="Dugme_2-2.jpg" alt="Live slika 2" />
+    <img src="Dugme_2-3.jpg" alt="Live slika 3" />
+    <!-- Dodaj još po potrebi -->
+  </div>
+</section>
+
+<!-- STUDIO sekcija -->
+<section id="studioOverlay" class="band-overlay" style="display:none;">
+  <button class="backButton" onclick="closeStudioOverlay()">←</button>
+  <div class="bandImages">
+    <img src="Dugme_3-1.jpg" alt="Studio slika 1" />
+    <img src="Dugme_3-2.jpg" alt="Studio slika 2" />
+    <img src="Dugme_3-3.jpg" alt="Studio slika 3" />
+    <!-- Dodaj još po potrebi -->
+  </div>
+</section>
 
   <!-- Placeholder sekcija -->
   <section id="soonOverlay" class="soon-overlay" style="display:none;">
@@ -792,6 +814,29 @@
     }
 
     updateLanguage();
+
+    function openLiveOverlay() {
+  lastScrollPos = window.scrollY || window.pageYOffset;
+  document.getElementById('liveOverlay').style.display = 'flex';
+  window.scrollTo(0, 0);
+}
+
+function closeLiveOverlay() {
+  document.getElementById('liveOverlay').style.display = 'none';
+  window.scrollTo(0, lastScrollPos);
+}
+
+function openStudioOverlay() {
+  lastScrollPos = window.scrollY || window.pageYOffset;
+  document.getElementById('studioOverlay').style.display = 'flex';
+  window.scrollTo(0, 0);
+}
+
+function closeStudioOverlay() {
+  document.getElementById('studioOverlay').style.display = 'none';
+  window.scrollTo(0, lastScrollPos);
+}
+
   </script>
 
 </body>
