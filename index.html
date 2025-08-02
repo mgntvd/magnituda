@@ -553,7 +553,7 @@
       <button type="button" class="menuItem" onclick="openBandOverlay()">BEND</button>
       <button type="button" class="menuItem" onclick="openLiveOverlay()">Live</button>
       <button type="button" class="menuItem" onclick="openStudioOverlay()">Studio</button>
-      <button type="button" class="menuItem" onclick="openSoonOverlay(4)">Dugme 4</button>
+      <button type="button" class="menuItem" onclick="openSoonOverlay()">Dugme 4</button>
     </div>
   </section>
 
@@ -848,7 +848,6 @@ function openSoonOverlay() {
     pdfHref = 'Dugme_4-downloadEN.pdf';
   }
 
-  // Dodavanje slika ako postoje
   if (images.length > 0) {
     images.forEach(src => {
       const img = document.createElement('img');
@@ -860,7 +859,6 @@ function openSoonOverlay() {
     });
   }
 
-  // Dodavanje PDF linka ako postoji
   if (pdfHref) {
     const pdfLink = document.createElement('a');
     pdfLink.href = pdfHref;
@@ -873,7 +871,6 @@ function openSoonOverlay() {
     contentDiv.appendChild(pdfLink);
   }
 
-  // Ako nema ni slika ni PDF linka, prikazujemo fallback tekst
   if (images.length === 0 && !pdfHref) {
     const fallbackText = document.createElement('p');
     fallbackText.textContent = currentLang === 'sr' ? 'Trenutno nema dodatnog sadržaja' : 'No additional content at the moment';
