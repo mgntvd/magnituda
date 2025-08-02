@@ -833,33 +833,31 @@ function openSoonOverlay() {
   let pdfHref = '';
 
   if (currentLang === 'sr') {
-    images = [
-      'Dugme_4-1.jpg',
-      'Dugme_4-2.jpg',
-      'Dugme_4-3.jpg'
-    ];
+    images = ['Dugme_4-1.jpg', 'Dugme_4-2.jpg', 'Dugme_4-3.jpg'];
     pdfHref = 'Dugme_4-download.pdf';
   } else {
-    images = [
-      'Dugme_4-1EN.jpg',
-      'Dugme_4-2EN.jpg',
-      'Dugme_4-3EN.jpg'
-    ];
+    images = ['Dugme_4-1EN.jpg', 'Dugme_4-2EN.jpg', 'Dugme_4-3EN.jpg'];
     pdfHref = 'Dugme_4-downloadEN.pdf';
   }
 
+  let hasContent = false;
+
   if (images.length > 0) {
     images.forEach(src => {
-      const img = document.createElement('img');
-      img.src = src;
-      img.alt = currentLang === 'sr' ? 'Dodatni sadržaj' : 'Additional content';
-      img.style.maxWidth = '300px';
-      img.style.margin = '10px';
-      contentDiv.appendChild(img);
+      if (src && src.trim() !== '') {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = currentLang === 'sr' ? 'Dodatni sadržaj' : 'Additional content';
+        img.style.maxWidth = '300px';
+        img.style.margin = '10px auto';
+        img.style.display = 'block';
+        contentDiv.appendChild(img);
+        hasContent = true;
+      }
     });
   }
 
-  if (pdfHref) {
+  if (pdfHref && pdfHref.trim() !== '') {
     const pdfLink = document.createElement('a');
     pdfLink.href = pdfHref;
     pdfLink.download = '';
@@ -867,14 +865,16 @@ function openSoonOverlay() {
     pdfLink.style.fontSize = '20px';
     pdfLink.style.marginTop = '20px';
     pdfLink.style.display = 'inline-block';
-    pdfLink.innerHTML = currentLang === 'sr' ? 'Preuzmi PDF 📎' : 'Download PDF 📎';
+    pdfLink.textContent = currentLang === 'sr' ? 'Preuzmi PDF 📎' : 'Download PDF 📎';
     contentDiv.appendChild(pdfLink);
+    hasContent = true;
   }
 
-  if (images.length === 0 && !pdfHref) {
+  if (!hasContent) {
     const fallbackText = document.createElement('p');
     fallbackText.textContent = currentLang === 'sr' ? 'Trenutno nema dodatnog sadržaja' : 'No additional content at the moment';
     fallbackText.style.marginTop = '30px';
+    fallbackText.style.fontSize = '22px';
     contentDiv.appendChild(fallbackText);
   }
 
