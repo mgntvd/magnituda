@@ -591,13 +591,9 @@
 
   <!-- Placeholder sekcija -->
   <section id="soonOverlay" class="soon-overlay" style="display:none;">
-  <button class="backButton" onclick="closeSoonOverlay()">←</button>
-  <div id="soonContent" style="text-align: center;">
-    <p id="comingSoonText" style="font-size: 24px; color: white;"></p>
-    <div id="extraImages" class="bandImages"></div>
-    <div id="pdfDownload" style="margin-top: 20px;"></div>
-  </div>
-</section>
+    <button class="backButton" onclick="closeSoonOverlay()">←</button>
+    <p id="comingSoonText" style="font-size: 24px; color: white; text-align: center;">Uskoro...</p>
+  </section>
 
   <!-- Kontakt sekcija -->
   <section id="contactSection">
@@ -841,76 +837,7 @@ function closeStudioOverlay() {
   window.scrollTo(0, lastScrollPos);
 }
 
-    function openSoonOverlay(buttonId) {
-  const lang = document.documentElement.lang || "sr";
-  const overlay = document.getElementById("soonOverlay");
-  const text = document.getElementById("comingSoonText");
-  const imagesDiv = document.getElementById("extraImages");
-  const pdfDiv = document.getElementById("pdfDownload");
-
-  // Reset
-  imagesDiv.innerHTML = "";
-  pdfDiv.innerHTML = "";
-  text.textContent = "";
-
-  const baseName = buttonId === 4 ? `Dugme_4` : `Dugme_${buttonId}`;
-  const langSuffix = lang === "en" ? "EN" : "";
-
-  // Prikaz slika ako ih ima
-  let hasContent = false;
-  for (let i = 1; i <= 10; i++) {
-    const img = new Image();
-    img.src = `${baseName}-${i}${langSuffix}.jpg`;
-    img.alt = `Slika ${i}`;
-    img.onload = function () {
-      imagesDiv.appendChild(img);
-    };
-    img.onerror = function () {
-      // Slika ne postoji, ništa se ne radi
-    };
-    hasContent = true;
-  }
-
-  // Proveri PDF
-  const pdfPath = `${baseName}-download${langSuffix}.pdf`;
-  fetch(pdfPath, { method: "HEAD" })
-    .then((res) => {
-      if (res.ok) {
-        const pdfLink = document.createElement("a");
-        pdfLink.href = pdfPath;
-        pdfLink.target = "_blank";
-        pdfLink.style.color = "white";
-        pdfLink.innerHTML = "📎 " + (lang === "en" ? "Download PDF" : "Preuzmi PDF");
-        pdfDiv.appendChild(pdfLink);
-        hasContent = true;
-      }
-
-      // Ako nije bilo ni slika ni PDF-a
-      setTimeout(() => {
-        if (imagesDiv.children.length === 0 && pdfDiv.children.length === 0) {
-          text.textContent =
-            lang === "en"
-              ? "No additional content at the moment"
-              : "Trenutno nema dodatnog sadržaja";
-        }
-      }, 300);
-    })
-    .catch(() => {
-      // Ako fetch ne uspe
-      setTimeout(() => {
-        if (imagesDiv.children.length === 0 && pdfDiv.children.length === 0) {
-          text.textContent =
-            lang === "en"
-              ? "No additional content at the moment"
-              : "Trenutno nema dodatnog sadržaja";
-        }
-      }, 300);
-    });
-
-  overlay.style.display = "block";
-}
-
-
+   
   </script>
 
 </body>
