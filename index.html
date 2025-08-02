@@ -829,16 +829,16 @@ function openSoonOverlay() {
 
   contentDiv.innerHTML = '';
 
-  let images = [];
-  let pdfHref = '';
+  // Ovde ručno unosiš slike i PDF za srpski
+  const imagesSr = []; // npr. ['Dugme_4-1.jpg', 'Dugme_4-2.jpg']
+  const pdfHrefSr = ''; // npr. 'Dugme_4-download.pdf'
 
-  if (currentLang === 'sr') {
-    images = ['Dugme_4-1.jpg', 'Dugme_4-2.jpg', 'Dugme_4-3.jpg'];
-    pdfHref = 'Dugme_4-download.pdf';
-  } else {
-    images = ['Dugme_4-1EN.jpg', 'Dugme_4-2EN.jpg', 'Dugme_4-3EN.jpg'];
-    pdfHref = 'Dugme_4-downloadEN.pdf';
-  }
+  // Ovde ručno unosiš slike i PDF za engleski
+  const imagesEn = []; // npr. ['Dugme_4-1EN.jpg', 'Dugme_4-2EN.jpg']
+  const pdfHrefEn = ''; // npr. 'Dugme_4-downloadEN.pdf'
+
+  let images = currentLang === 'sr' ? imagesSr : imagesEn;
+  let pdfHref = currentLang === 'sr' ? pdfHrefSr : pdfHrefEn;
 
   let hasContent = false;
 
