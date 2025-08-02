@@ -550,10 +550,10 @@
 
     <!-- Dodatna dugmad -->
     <div id="menuButtons" style="margin-top: 100px; display: flex; flex-direction: column; gap: 40px; align-items: center;">
-      <button class="menuItem" onclick="openBandOverlay()">BEND</button>
-      <button class="menuItem" onclick="openLiveOverlay()">Live</button>
-      <button class="menuItem" onclick="openStudioOverlay()">Studio</button>
-      <button class="menuItem" onclick="openSoonOverlay(4)">Dugme 4</button>
+      <button type="button" class="menuItem" onclick="openBandOverlay()">BEND</button>
+      <button type="button" class="menuItem" onclick="openLiveOverlay()">Live</button>
+      <button type="button" class="menuItem" onclick="openStudioOverlay()">Studio</button>
+      <button type="button" class="menuItem" onclick="openSoonOverlay(4)">Dugme 4</button>
     </div>
   </section>
 
@@ -822,7 +822,7 @@ function closeStudioOverlay() {
   window.scrollTo(0, lastScrollPos);
 }
 
-function openSoonOverlay(n) {
+function openSoonOverlay() {
   lastScrollPos = window.scrollY || window.pageYOffset;
   const overlay = document.getElementById('soonOverlay');
   const contentDiv = document.getElementById('contentSoonOverlay');
