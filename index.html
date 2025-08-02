@@ -872,7 +872,7 @@ function openSoonOverlay() {
 
   if (!hasContent) {
     const fallbackText = document.createElement('p');
-    fallbackText.textContent = currentLang === 'sr' ? 'Trenutno nema dodatnog sadržaja' : 'No additional content at the moment';
+    fallbackText.textContent = currentLang === 'sr' ? 'Trenutno nema dodatnog sadržaja..' : 'No additional content at the moment..';
     fallbackText.style.marginTop = '30px';
     fallbackText.style.fontSize = '22px';
     contentDiv.appendChild(fallbackText);
