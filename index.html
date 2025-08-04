@@ -505,13 +505,38 @@
 
 .learning-section {
   text-align: center;
-  margin: 80px auto;
+  margin: 0 auto;
   max-width: 800px;
   padding: 0 20px;
   position: relative;
   z-index: 15;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* Kontrola razmaka */
+.spacing-before-title-1 {
+  margin-top: 80px;
+}
+
+.spacing-title1-to-iframe {
+  margin-top: 32px;
+}
+
+.spacing-iframe-to-title2 {
+  margin-top: 64px;
+}
+
+.spacing-title2-to-logo {
+  margin-top: 32px;
+}
+
+.spacing-after-logo {
+  margin-bottom: 100px;
+}
+
+/* Stilovi koji ostaju isti */
 .learning-title {
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -555,26 +580,9 @@
   height: 500px;
   border: none;
   border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
 }
-
-/* Razmaci — fleksibilno upravljanje odvojenim margina */
-.spacing-above-selfpaced {
-  margin-top: 20px;
-}
-
-.spacing-below-selfpaced {
-  margin-bottom: 80px;
-}
-
-.spacing-above-online {
-  margin-top: 100px;
-}
-
-.spacing-below-online {
-  margin-bottom: 200px;
-}
-  
+ 
 
 </style>
 </head>
@@ -668,31 +676,43 @@
 </section>
 
   <div class="learning-section">
-  
-  <!-- Self-paced section -->
-  <div class="spacing-above-selfpaced"></div>
 
+  <!-- Razmak pre prvog naslova -->
+  <div class="spacing-before-title-1"></div>
+
+  <!-- Naslov 1 -->
   <div class="learning-subsection">
     <h2 class="learning-title" data-en="Self-paced courses" data-sr="Kursevi za samostalno savladavanje">Self-paced courses</h2>
   </div>
 
-  <div class="payhip-iframe-wrapper spacing-below-selfpaced">
+  <!-- Razmak između naslova i iframe-a -->
+  <div class="spacing-title1-to-iframe"></div>
+
+  <!-- Iframe -->
+  <div class="payhip-iframe-wrapper">
     <iframe class="payhip-iframe" src="https://payhip.com/magnituda/embed" loading="lazy"></iframe>
   </div>
 
-  <!-- Online lessons section -->
-  <div class="spacing-above-online"></div>
+  <!-- Razmak između iframe-a i drugog naslova -->
+  <div class="spacing-iframe-to-title2"></div>
 
+  <!-- Naslov 2 -->
   <div class="learning-subsection">
     <h2 class="learning-title" data-en="Online lessons" data-sr="Online kursevi">Online lessons</h2>
   </div>
 
-  <div class="spacing-below-online">
-    <a class="lessonface-link" href="https://www.lessonface.com/instructor/danilo-sajnovic" target="_blank" rel="noopener">
-      <img src="lessonface_logo.jpg" alt="Lessonface Logo" class="lessonface-logo" />
-      lessonface.com
-    </a>
-  </div>
+  <!-- Razmak između naslova 2 i logo linka -->
+  <div class="spacing-title2-to-logo"></div>
+
+  <!-- Lessonface link -->
+  <a class="lessonface-link" href="https://www.lessonface.com/instructor/danilo-sajnovic" target="_blank" rel="noopener">
+    <img src="lessonface_logo.jpg" alt="Lessonface Logo" class="lessonface-logo" />
+    lessonface.com
+  </a>
+
+  <!-- Razmak ispod loga (do sledećeg sadržaja na stranici) -->
+  <div class="spacing-after-logo"></div>
+
 </div>
 
   <!-- Kontakt sekcija -->
