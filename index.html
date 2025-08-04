@@ -582,38 +582,7 @@
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
 }
-
-  .band-dropdown {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
-  margin-top: 40px;
-}
-
-.band-member {
-  text-align: center;
-  cursor: pointer;
-  max-width: 220px;
-}
-
-.band-member img {
-  width: 100%;
-  border-radius: 10px;
-  transition: transform 0.3s;
-}
-
-.band-member:hover img {
-  transform: scale(1.05);
-}
-
-.band-member p {
-  margin-top: 12px;
-  color: white;
-  font-size: 18px;
-  text-shadow: 2px 2px 4px #000;
-}
-
+ 
 
 </style>
 </head>
@@ -661,34 +630,22 @@
 
     <!-- Dodatna dugmad -->
     <div id="menuButtons" style="margin-top: 100px; display: flex; flex-direction: column; gap: 40px; align-items: center;">
-      <button type="button" class="menuItem" onclick="openBandOverlay(event)">BEND</button>
+      <button type="button" class="menuItem" onclick="openBandOverlay()">BEND</button>
       <button type="button" class="menuItem" onclick="openLiveOverlay()">Live</button>
       <button type="button" class="menuItem" onclick="openStudioOverlay()">Studio</button>
       <button type="button" class="menuItem" onclick="openSoonOverlay()">Dugme 4</button>
     </div>
   </section>
 
-  <!-- Novi BEND dropdown meni -->
-<section id="bandDropdown" class="band-dropdown" style="display: none;">
-  <div class="band-member" onclick="openBandMemberOverlay('bass')">
-    <img src="Bas.jpg" alt="Basista" />
-    <p data-sr="Biografija za basistu" data-en="Biography for bassist">Biografija za basistu</p>
-  </div>
-  <div class="band-member" onclick="openBandMemberOverlay('drums')">
-    <img src="Bubanj.jpg" alt="Bubnjar" />
-    <p data-sr="Biografija za bubnjara" data-en="Biography for drummer">Biografija za bubnjara</p>
-  </div>
-  <div class="band-member" onclick="openBandMemberOverlay('guitar')">
-    <img src="Gitara.jpg" alt="Gitarista" />
-    <p data-sr="Biografija za gitaristu" data-en="Biography for guitarist">Biografija za gitaristu</p>
-  </div>
-</section>
-
-<!-- OVERLAY za svakog člana benda -->
-<section id="bandMemberOverlay" class="band-overlay" style="display: none;">
-  <button class="backButton" onclick="closeBandMemberOverlay()">←</button>
-  <div id="bandMemberContent" class="bandImages"></div>
-</section>
+  <!-- BEND sekcija -->
+  <section id="bandOverlay" class="band-overlay" style="display:none;">
+    <button class="backButton" onclick="closeBandOverlay()">←</button>
+    <div class="bandImages">
+      <img src="Bas.jpg" alt="Bas gitara">
+      <img src="Bubanj.jpg" alt="Bubnjevi">
+      <img src="Gitara.jpg" alt="Gitara">
+    </div>
+  </section>
 
 <!-- LIVE sekcija -->
 <section id="liveOverlay" class="band-overlay" style="display:none;">
@@ -958,7 +915,17 @@
     });
 
     // Dugmad interakcije
-         
+    function openBandOverlay() {
+      lastScrollPos = window.scrollY || window.pageYOffset;
+      document.getElementById('bandOverlay').style.display = 'flex';
+      window.scrollTo(0, 0);
+    }
+
+    function closeBandOverlay() {
+      document.getElementById('bandOverlay').style.display = 'none';
+      window.scrollTo(0, lastScrollPos);
+    }
+     
     function openLiveOverlay() {
   lastScrollPos = window.scrollY || window.pageYOffset;
   document.getElementById('liveOverlay').style.display = 'flex';
@@ -1044,76 +1011,6 @@ function openSoonOverlay() {
 function closeSoonOverlay() {
   document.getElementById('soonOverlay').style.display = 'none';
   window.scrollTo(0, lastScrollPos);
-}
-
-let lastScrollPos = null;
-    
-// Otvori dropdown sa članovima benda
-function openBandOverlay(event) {
-  if (event) event.preventDefault ();
-  lastScrollPos = window.scrollY || window.pageYOffset;
-  document.getElementById('bandDropdown').style.display = 'flex';
-  window.scrollTo(0, 0);
-}
-
-// Otvori overlay za konkretnog člana
-function openBandMemberOverlay(member) {
-  const content = document.getElementById('bandMemberContent');
-  content.innerHTML = '';
-
-  const lang = currentLang;
-  const memberMap = {
-    bass: {
-      images: ['Bas1.jpg', 'Bas2.jpg', 'Bas3.jpg', 'Bas4.jpg'],
-      texts: {
-        sr: 'Biografija za basistu.',
-        en: 'Biography for the bassist.'
-      }
-    },
-    drums: {
-      images: ['Bubanj1.jpg', 'Bubanj2.jpg', 'Bubanj3.jpg', 'Bubanj4.jpg'],
-      texts: {
-        sr: 'Biografija za bubnjara.',
-        en: 'Biography for the drummer.'
-      }
-    },
-    guitar: {
-      images: ['Gitara1.jpg', 'Gitara2.jpg', 'Gitara3.jpg', 'Gitara4.jpg'],
-      texts: {
-        sr: 'Biografija za gitaristu.',
-        en: 'Biography for the guitarist.'
-      }
-    }
-  };
-
-  const memberData = memberMap[member];
-  memberData.images.forEach(src => {
-    const img = document.createElement('img');
-    img.src = src;
-    img.alt = src;
-    content.appendChild(img);
-  });
-
-  const text = document.createElement('p');
-  text.textContent = memberData.texts[lang];
-  text.style.color = 'white';
-  text.style.fontSize = '20px';
-  text.style.textShadow = '2px 2px 4px black';
-  text.style.marginTop = '20px';
-  text.style.textAlign = 'center';
-  text.style.padding = '0 20px';
-  content.appendChild(text);
-
-  document.getElementById('bandDropdown').style.display = 'none';
-  document.getElementById('bandMemberOverlay').style.display = 'flex';
-  window.scrollTo(0, 0);
-}
-
-// Zatvori overlay i vrati na dropdown
-function closeBandMemberOverlay() {
-  document.getElementById('bandMemberOverlay').style.display = 'none';
-  document.getElementById('bandDropdown').style.display = 'flex';
-  window.scrollTo(0, 0);
 }
 
     
