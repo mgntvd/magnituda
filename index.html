@@ -958,74 +958,7 @@
       }
     });
 
-    // BEND DUGME nova funkcija //
-// Otvori dropdown sa članovima benda
-function openBandOverlay() {
-  lastScrollPos = window.scrollY || window.pageYOffset;
-  document.getElementById('bandDropdown').style.display = 'flex';
-  window.scrollTo(0, 0);
-}
-
-// Otvori overlay za konkretnog člana
-function openBandMemberOverlay(member) {
-  const content = document.getElementById('bandMemberContent');
-  content.innerHTML = '';
-
-  const lang = currentLang;
-  const memberMap = {
-    bass: {
-      images: ['Bas1.jpg', 'Bas2.jpg', 'Bas3.jpg', 'Bas4.jpg'],
-      texts: {
-        sr: 'Biografija za basistu.',
-        en: 'Biography for the bassist.'
-      }
-    },
-    drums: {
-      images: ['Bubanj1.jpg', 'Bubanj2.jpg', 'Bubanj3.jpg', 'Bubanj4.jpg'],
-      texts: {
-        sr: 'Biografija za bubnjara.',
-        en: 'Biography for the drummer.'
-      }
-    },
-    guitar: {
-      images: ['Gitara1.jpg', 'Gitara2.jpg', 'Gitara3.jpg', 'Gitara4.jpg'],
-      texts: {
-        sr: 'Biografija za gitaristu.',
-        en: 'Biography for the guitarist.'
-      }
-    }
-  };
-
-  const memberData = memberMap[member];
-  memberData.images.forEach(src => {
-    const img = document.createElement('img');
-    img.src = src;
-    img.alt = src;
-    content.appendChild(img);
-  });
-
-  const text = document.createElement('p');
-  text.textContent = memberData.texts[lang];
-  text.style.color = 'white';
-  text.style.fontSize = '20px';
-  text.style.textShadow = '2px 2px 4px black';
-  text.style.marginTop = '20px';
-  text.style.textAlign = 'center';
-  text.style.padding = '0 20px';
-  content.appendChild(text);
-
-  document.getElementById('bandDropdown').style.display = 'none';
-  document.getElementById('bandMemberOverlay').style.display = 'flex';
-  window.scrollTo(0, 0);
-}
-
-// Zatvori overlay i vrati na dropdown
-function closeBandMemberOverlay() {
-  document.getElementById('bandMemberOverlay').style.display = 'none';
-  document.getElementById('bandDropdown').style.display = 'flex';
-  window.scrollTo(0, 0);
-}
-    
+        
     // Dugmad interakcije
     function openBandOverlay() {
       lastScrollPos = window.scrollY || window.pageYOffset;
@@ -1125,6 +1058,73 @@ function closeSoonOverlay() {
   window.scrollTo(0, lastScrollPos);
 }
 
+    // BEND DUGME nova funkcija //
+// Otvori dropdown sa članovima benda
+function openBandOverlay() {
+  lastScrollPos = window.scrollY || window.pageYOffset;
+  document.getElementById('bandDropdown').style.display = 'flex';
+  window.scrollTo(0, 0);
+}
+
+// Otvori overlay za konkretnog člana
+function openBandMemberOverlay(member) {
+  const content = document.getElementById('bandMemberContent');
+  content.innerHTML = '';
+
+  const lang = currentLang;
+  const memberMap = {
+    bass: {
+      images: ['Bas1.jpg', 'Bas2.jpg', 'Bas3.jpg', 'Bas4.jpg'],
+      texts: {
+        sr: 'Biografija za basistu.',
+        en: 'Biography for the bassist.'
+      }
+    },
+    drums: {
+      images: ['Bubanj1.jpg', 'Bubanj2.jpg', 'Bubanj3.jpg', 'Bubanj4.jpg'],
+      texts: {
+        sr: 'Biografija za bubnjara.',
+        en: 'Biography for the drummer.'
+      }
+    },
+    guitar: {
+      images: ['Gitara1.jpg', 'Gitara2.jpg', 'Gitara3.jpg', 'Gitara4.jpg'],
+      texts: {
+        sr: 'Biografija za gitaristu.',
+        en: 'Biography for the guitarist.'
+      }
+    }
+  };
+
+  const memberData = memberMap[member];
+  memberData.images.forEach(src => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = src;
+    content.appendChild(img);
+  });
+
+  const text = document.createElement('p');
+  text.textContent = memberData.texts[lang];
+  text.style.color = 'white';
+  text.style.fontSize = '20px';
+  text.style.textShadow = '2px 2px 4px black';
+  text.style.marginTop = '20px';
+  text.style.textAlign = 'center';
+  text.style.padding = '0 20px';
+  content.appendChild(text);
+
+  document.getElementById('bandDropdown').style.display = 'none';
+  document.getElementById('bandMemberOverlay').style.display = 'flex';
+  window.scrollTo(0, 0);
+}
+
+// Zatvori overlay i vrati na dropdown
+function closeBandMemberOverlay() {
+  document.getElementById('bandMemberOverlay').style.display = 'none';
+  document.getElementById('bandDropdown').style.display = 'flex';
+  window.scrollTo(0, 0);
+}
     
  updateLanguage();  
   </script>
