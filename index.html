@@ -503,7 +503,7 @@
   color: #ffcc00; /* ili tvoja primarna boja */
 }
 
-  .learning-section {
+.learning-section {
   text-align: center;
   margin: 80px auto;
   max-width: 800px;
@@ -519,12 +519,11 @@
   font-weight: 600;
   color: #fff;
   text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.6);
-  margin-bottom: 100px;
-  margin-top: 0px;
+  margin: 0;
 }
 
 .learning-subsection {
-  margin-bottom: 100px;
+  margin: 0;
 }
 
 .lessonface-link {
@@ -559,6 +558,23 @@
   box-shadow: 0 2px 12px rgba(0,0,0,0.4);
 }
 
+/* Razmaci — fleksibilno upravljanje odvojenim margina */
+.spacing-above-selfpaced {
+  margin-top: 100px;
+}
+
+.spacing-below-selfpaced {
+  margin-bottom: 80px;
+}
+
+.spacing-above-online {
+  margin-top: 100px;
+}
+
+.spacing-below-online {
+  margin-bottom: 100px;
+}
+  
 
 </style>
 </head>
@@ -652,15 +668,26 @@
 </section>
 
   <div class="learning-section">
+  
   <!-- Self-paced section -->
+  <div class="spacing-above-selfpaced"></div>
+
   <div class="learning-subsection">
-    <h2 class="learning-title" data-en="Self-paced courses" data-sr="Kursevi za samostalno savladavanje">Self-paced courses</h2>
+    <h2 class="learning-title" data-en="Self-paced courses" data-sr="Kursevi za samostalno učenje">Self-paced courses</h2>
+  </div>
+
+  <div class="payhip-iframe-wrapper spacing-below-selfpaced">
     <iframe class="payhip-iframe" src="https://payhip.com/magnituda/embed" loading="lazy"></iframe>
   </div>
 
   <!-- Online lessons section -->
+  <div class="spacing-above-online"></div>
+
   <div class="learning-subsection">
-    <h2 class="learning-title" data-en="Online lessons" data-sr="Online kursevi">Online lessons</h2>
+    <h2 class="learning-title" data-en="Online lessons" data-sr="Online časovi">Online lessons</h2>
+  </div>
+
+  <div class="spacing-below-online">
     <a class="lessonface-link" href="https://www.lessonface.com/instructor/danilo-sajnovic" target="_blank" rel="noopener">
       <img src="lessonface_logo.jpg" alt="Lessonface Logo" class="lessonface-logo" />
       lessonface.com
