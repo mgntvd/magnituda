@@ -503,6 +503,58 @@
   color: #ffcc00; /* ili tvoja primarna boja */
 }
 
+  .learning-section {
+  text-align: center;
+  margin: 80px auto;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.learning-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.6);
+  margin-bottom: 24px;
+  margin-top: 60px;
+}
+
+.learning-subsection {
+  margin-bottom: 60px;
+}
+
+.lessonface-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.1rem;
+  text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s ease;
+}
+
+.lessonface-link:hover {
+  transform: scale(1.05);
+}
+
+.lessonface-logo {
+  height: 32px;
+  width: auto;
+  display: inline-block;
+}
+
+.payhip-iframe {
+  width: 100%;
+  max-width: 800px;
+  height: 500px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+}
+
 
 </style>
 </head>
@@ -595,6 +647,23 @@
   <div id="contentSoonOverlay" class="bandImages" style="text-align: center; color: white; font-size: 24px; max-width: 90%;"></div>
 </section>
 
+  <div class="learning-section">
+  <!-- Self-paced section -->
+  <div class="learning-subsection">
+    <h2 class="learning-title" data-en="Self-paced courses" data-sr="Kursevi za samostalno učenje">Self-paced courses</h2>
+    <iframe class="payhip-iframe" src="https://payhip.com/magnituda/embed" loading="lazy"></iframe>
+  </div>
+
+  <!-- Online lessons section -->
+  <div class="learning-subsection">
+    <h2 class="learning-title" data-en="Online lessons" data-sr="Online časovi">Online lessons</h2>
+    <a class="lessonface-link" href="https://www.lessonface.com/instructor/danilo-sajnovic" target="_blank" rel="noopener">
+      <img src="https://www.lessonface.com/sites/all/themes/lessonface/logo.png" alt="Lessonface Logo" class="lessonface-logo" />
+      lessonface.com
+    </a>
+  </div>
+</div>
+
   <!-- Kontakt sekcija -->
   <section id="contactSection">
     <div id="kontaktText">
@@ -684,6 +753,9 @@
         document.querySelectorAll('.menuItem')[1].textContent = 'Live';
         document.querySelectorAll('.menuItem')[2].textContent = 'Studio';
         document.querySelectorAll('.menuItem')[3].textContent = 'Dugme 4';
+        document.querySelectorAll('[data-sr]').forEach(el => {
+      el.textContent = el.getAttribute('data-sr');
+    });
       } else {
         langBtn.textContent = 'SR';
         headline.textContent = 'CONTEMPORARY MUSIC PROMOTION CENTRE';
@@ -698,6 +770,9 @@
         document.querySelectorAll('.menuItem')[1].textContent = 'Live';
         document.querySelectorAll('.menuItem')[2].textContent = 'Studio';
         document.querySelectorAll('.menuItem')[3].textContent = 'Button 4';
+        document.querySelectorAll('[data-en]').forEach(el => {
+      el.textContent = el.getAttribute('data-en');
+    });
       }
     }
 
