@@ -958,18 +958,7 @@
     });
 
     // Dugmad interakcije
-    function openBandOverlay(event) {
-      if (event) event.preventDefault();
-      lastScrollPos = window.scrollY || window.pageYOffset;
-      document.getElementById('bandOverlay').style.display = 'flex';
-      window.scrollTo(0, 0);
-    }
-
-    function closeBandOverlay() {
-      document.getElementById('bandOverlay').style.display = 'none';
-      window.scrollTo(0, lastScrollPos);
-    }
-     
+         
     function openLiveOverlay() {
   lastScrollPos = window.scrollY || window.pageYOffset;
   document.getElementById('liveOverlay').style.display = 'flex';
@@ -1057,6 +1046,8 @@ function closeSoonOverlay() {
   window.scrollTo(0, lastScrollPos);
 }
 
+let lastScrollPos = null;
+    
 // Otvori dropdown sa članovima benda
 function openBandOverlay(event) {
   if (event) event.preventDefault ();
