@@ -661,7 +661,7 @@
 
     <!-- Dodatna dugmad -->
     <div id="menuButtons" style="margin-top: 100px; display: flex; flex-direction: column; gap: 40px; align-items: center;">
-      <button type="button" class="menuItem" onclick="openBandOverlay()">BEND</button>
+      <button type="button" class="menuItem" onclick="openBandOverlay(event)">BEND</button>
       <button type="button" class="menuItem" onclick="openLiveOverlay()">Live</button>
       <button type="button" class="menuItem" onclick="openStudioOverlay()">Studio</button>
       <button type="button" class="menuItem" onclick="openSoonOverlay()">Dugme 4</button>
@@ -958,7 +958,8 @@
     });
 
     // Dugmad interakcije
-    function openBandOverlay() {
+    function openBandOverlay(event) {
+      if (event) event.preventDefault();
       lastScrollPos = window.scrollY || window.pageYOffset;
       document.getElementById('bandOverlay').style.display = 'flex';
       window.scrollTo(0, 0);
@@ -1057,7 +1058,8 @@ function closeSoonOverlay() {
 }
 
 // Otvori dropdown sa članovima benda
-function openBandOverlay() {
+function openBandOverlay(event) {
+  if (event) event.preventDefault ();
   lastScrollPos = window.scrollY || window.pageYOffset;
   document.getElementById('bandDropdown').style.display = 'flex';
   window.scrollTo(0, 0);
