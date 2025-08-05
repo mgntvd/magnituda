@@ -1066,6 +1066,7 @@ function openBandOverlay(event) {
 
 // Otvori overlay za konkretnog člana
 function openBandMemberOverlay(member) {
+  previousScrollPos = window.scrollY || window.pageYOffset;
   const content = document.getElementById('bandMemberContent');
   content.innerHTML = '';
 
@@ -1121,7 +1122,7 @@ function openBandMemberOverlay(member) {
 function closeBandMemberOverlay() {
   document.getElementById('bandMemberOverlay').style.display = 'none';
   document.getElementById('bandDropdown').style.display = 'flex';
-  window.scrollTo(0, lastScrollPos);
+  window.scrollTo(0, previousScrollPos);
 }
 
 function closeBandOverlay() {
