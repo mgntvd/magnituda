@@ -960,12 +960,8 @@
 
         
     // Dugmad interakcije
-        function closeBandOverlay() {
-      document.getElementById('bandOverlay').style.display = 'none';
-      window.scrollTo(0, lastScrollPos);
-    }
-     
-    function openLiveOverlay() {
+             
+function openLiveOverlay() {
   lastScrollPos = window.scrollY || window.pageYOffset;
   document.getElementById('liveOverlay').style.display = 'flex';
   window.scrollTo(0, 0);
@@ -1119,6 +1115,15 @@ function closeBandMemberOverlay() {
   document.getElementById('bandDropdown').style.display = 'flex';
   window.scrollTo(0, 0);
 }
+
+function closeBandOverlay() {
+  document.getElementById('bandDropdown').style.display = 'none';
+  if (lastScrollPos !== null) {
+    window.scrollTo(0, lastScrollPos);
+    lastScrollPos = null;
+  }
+}
+
     
  updateLanguage();  
   </script>
