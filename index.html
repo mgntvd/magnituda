@@ -1121,7 +1121,7 @@ function openBandMemberOverlay(member) {
 function closeBandMemberOverlay() {
   document.getElementById('bandMemberOverlay').style.display = 'none';
   document.getElementById('bandDropdown').style.display = 'flex';
-  window.scrollTo(0, 0);
+  window.scrollTo(0, lastScrollPos);
 }
 
 function closeBandOverlay() {
