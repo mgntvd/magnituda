@@ -317,7 +317,7 @@
 
   #newSection {
     position: relative;
-    min-height: 100vh;
+    min-height: 150vh;
     background: transparent;
     display: flex;
     flex-direction: column;
@@ -939,14 +939,14 @@
         headline.classList.add('visible');
         cmpcBg.classList.remove('visible');
         kontaktBg.classList.remove('visible', 'blur');
-      } else if (scrollPos >= windowHeight * 2.2 && scrollPos < windowHeight * 3.2) {
+      } else if (scrollPos >= windowHeight * 2.2 && scrollPos < windowHeight * 3.7) {
         hero.classList.add('fade-out');
         hero.classList.remove('blur');
         hero.style.display = 'flex';
         headline.classList.remove('visible');
         cmpcBg.classList.add('visible');
         kontaktBg.classList.remove('visible', 'blur');
-      } else if (scrollPos >= windowHeight * 3.2 && scrollPos < windowHeight * 4.7) {
+      } else if (scrollPos >= windowHeight * 3.7 && scrollPos < windowHeight * 4.7) {
         hero.style.display = 'none';
         cmpcBg.classList.remove('visible');
         kontaktBg.classList.add('visible');
