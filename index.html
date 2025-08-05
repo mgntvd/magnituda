@@ -660,28 +660,34 @@
     </div>
 
     <!-- Dodatna dugmad -->
-    <div id="menuButtons" style="margin-top: 100px; display: flex; flex-direction: column; gap: 40px; align-items: center;">
-      <button type="button" class="menuItem" onclick="openBandOverlay(event)">BEND</button>
-      <button type="button" class="menuItem" onclick="openLiveOverlay()">Live</button>
-      <button type="button" class="menuItem" onclick="openStudioOverlay()">Studio</button>
-      <button type="button" class="menuItem" onclick="openSoonOverlay()">Dugme 4</button>
+<div id="menuButtons" style="margin-top: 100px; display: flex; flex-direction: column; gap: 40px; align-items: center;">
+  
+  <!-- BEND dugme i njegov dropdown grupisani zajedno -->
+  <div id="bandContainer" style="display: flex; flex-direction: column; align-items: center;">
+    <button type="button" class="menuItem" onclick="openBandOverlay(event)">BEND</button>
+    
+    <!-- Dropdown koji se pojavljuje ispod BEND dugmeta -->
+    <div id="bandDropdown" class="band-dropdown" style="display: none; margin-top: 20px;">
+      <div class="band-member" onclick="openBandMemberOverlay('bass')">
+        <img src="Bas.jpg" alt="Basista" />
+        <p data-sr="Biografija za basistu" data-en="Biography for bassist">Biografija za basistu</p>
+      </div>
+      <div class="band-member" onclick="openBandMemberOverlay('drums')">
+        <img src="Bubanj.jpg" alt="Bubnjar" />
+        <p data-sr="Biografija za bubnjara" data-en="Biography for drummer">Biografija za bubnjara</p>
+      </div>
+      <div class="band-member" onclick="openBandMemberOverlay('guitar')">
+        <img src="Gitara.jpg" alt="Gitarista" />
+        <p data-sr="Biografija za gitaristu" data-en="Biography for guitarist">Biografija za gitaristu</p>
+      </div>
     </div>
-  </section>
+  </div>
 
-  <!-- Novi BEND dropdown meni -->
-<section id="bandDropdown" class="band-dropdown" style="display: none;">
-  <div class="band-member" onclick="openBandMemberOverlay('bass')">
-    <img src="Bas.jpg" alt="Basista" />
-    <p data-sr="Biografija za basistu" data-en="Biography for bassist">Biografija za basistu</p>
-  </div>
-  <div class="band-member" onclick="openBandMemberOverlay('drums')">
-    <img src="Bubanj.jpg" alt="Bubnjar" />
-    <p data-sr="Biografija za bubnjara" data-en="Biography for drummer">Biografija za bubnjara</p>
-  </div>
-  <div class="band-member" onclick="openBandMemberOverlay('guitar')">
-    <img src="Gitara.jpg" alt="Gitarista" />
-    <p data-sr="Biografija za gitaristu" data-en="Biography for guitarist">Biografija za gitaristu</p>
-  </div>
+  <!-- Ostala dugmad -->
+  <button type="button" class="menuItem" onclick="openLiveOverlay()">Live</button>
+  <button type="button" class="menuItem" onclick="openStudioOverlay()">Studio</button>
+  <button type="button" class="menuItem" onclick="openSoonOverlay()">Dugme 4</button>
+</div>
 </section>
 
 <!-- OVERLAY za svakog člana benda -->
@@ -1053,9 +1059,9 @@ function closeSoonOverlay() {
 // Otvori dropdown sa članovima benda
 function openBandOverlay(event) {
   if (event) event.preventDefault();
-  lastScrollPos = window.scrollY || window.pageYOffset;
-  document.getElementById('bandDropdown').style.display = 'flex';
-  window.scrollTo(0, 0);
+  const dropdown = document.getElementById('bandDropdown');
+  const isVisible = dropdown.style.display === 'flex';
+  dropdown.style.display = isVisible ? 'none' : 'flex';
 }
 
 // Otvori overlay za konkretnog člana
