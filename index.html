@@ -332,15 +332,17 @@
     user-select: none;
   }
 
-/* Hamburger dugme - 3 linije */
+/* Hamburger button pozicija */
 #hamburgerBtn {
-  position: relative;
+  position: fixed;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
   width: 40px;
   height: 32px;
   background: transparent;
   border: none;
   cursor: pointer;
-  margin: 0 auto 30px;
   z-index: 9999;
   display: flex;
   flex-direction: column;
@@ -349,103 +351,44 @@
   transition: transform 0.3s ease;
 }
 
-#hamburgerBtn .hamburger-bar {
+#hamburgerBtn .bar {
   display: block;
   width: 100%;
   height: 4px;
   background-color: white;
   border-radius: 2px;
   transition: all 0.3s ease;
-  transform-origin: 4px 2px;
 }
 
-/* Hamburger u X stanje */
-#hamburgerBtn.open .hamburger-bar:nth-child(1) {
+#hamburgerBtn.open .bar:nth-child(1) {
   transform: rotate(45deg) translate(6px, 6px);
 }
-#hamburgerBtn.open .hamburger-bar:nth-child(2) {
+
+#hamburgerBtn.open .bar:nth-child(2) {
   opacity: 0;
 }
-#hamburgerBtn.open .hamburger-bar:nth-child(3) {
-  transform: rotate(-45deg) translate(6px, -6px);
+
+#hamburgerBtn.open .bar:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
 }
 
-/* Glavni kontejner menija - hamburger + dugmad */
+/* Glavni kontejner za meni - koristi CSS varijable za pozicije */
 #menuButtons {
-  position: relative;
-  width: 240px;
-  height: 240px;
-  margin: 0 auto;
-  pointer-events: none; /* Onemogući klikove dok je zatvoreno */
-}
-
-/* Kad je otvoreno - dozvoli klikove */
-#menuButtons.open {
-  pointer-events: auto;
-}
-
-/* Centriramo sva dugmad relativno na container */
-#menuButtons > * {
-  position: absolute;
+  position: fixed;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) translate(var(--tx, 0), var(--ty, 0));
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
-  opacity: 0;
-  z-index: 1;
-  width: 120px;
-  text-align: center;
-}
-
-/* Dugmad vidljiva samo kada je meni otvoren */
-#menuButtons.open > * {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Posebno dugme BEND - veće i sa posebnim stilom */
-#bandContainer {
-  z-index: 2;
-}
-
-/* Dropdown za članove benda */
-.band-dropdown {
-  position: absolute;
-  top: 110%; /* ispod BEND dugmeta */
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 12px;
-  padding: 15px;
-  width: 200px;
+  left: 70px; /* malo desno od hamburgera */
+  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  z-index: 10;
-}
-
-/* Član benda */
-.band-member {
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
+  gap: 24px;
   align-items: center;
-  color: white;
-  font-size: 16px;
-  transition: background 0.3s ease;
-  border-radius: 8px;
-  padding: 8px;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  z-index: 9998;
 }
 
-.band-member:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-/* Stil za dugmad */
+/* Dugmad u meniju */
 .menuItem {
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.25);
@@ -457,20 +400,87 @@
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  transition: all 0.3s ease;
-  width: 120px;
-  text-align: center;
-  white-space: nowrap;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+  transform: translate(var(--tx, 0), var(--ty, 0));
+  opacity: 0; /* skriveno po defaultu */
+  pointer-events: none;
 }
 
 .menuItem:hover {
   background: rgba(255, 255, 255, 0.25);
-  transform: scale(1.05);
+  transform: scale(1.05) translate(var(--tx, 0), var(--ty, 0));
 }
 
-/* Sakrivanje dropdowna */
-#bandDropdown.closed {
-  display: none !important;
+/* Kada je meni otvoren, dugmad postaju vidljiva i aktivna */
+#menuButtons.open .menuItem {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Band container specijalno */
+#bandContainer {
+  position: relative;
+  transform: translate(var(--tx, 0), var(--ty, 0));
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  pointer-events: none;
+}
+
+#menuButtons.open #bandContainer {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Dropdown bend dugmadi */
+#bandDropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.85);
+  border-radius: 12px;
+  padding: 10px 20px;
+  margin-top: 12px;
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 9999;
+  width: max-content;
+  min-width: 200px;
+}
+
+#bandDropdown.open {
+  display: flex;
+}
+
+#bandDropdown .band-member {
+  cursor: pointer;
+  color: white;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  transition: background-color 0.3s ease;
+}
+
+#bandDropdown .band-member:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* Button za nazad u dropdownu */
+#bandDropdown button {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  font-size: 18px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#bandDropdown button:hover {
+  background: rgba(255,255,255,0.4);
 }
 
   .band-overlay, .soon-overlay {
@@ -1285,24 +1295,105 @@ function closeBandOverlay() {
   }
 }
 
-(() => {
+// START - Ferris wheel / Arc Slide small JS helper za meni i hamburger
+
+(function() {
   const hamburgerBtn = document.getElementById('hamburgerBtn');
   const menuButtons = document.getElementById('menuButtons');
-  const bandContainer = document.getElementById('bandContainer');
+  const bandBtn = document.getElementById('bandBtn');
   const bandDropdown = document.getElementById('bandDropdown');
-  const menuItems = Array.from(menuButtons.querySelectorAll('.menuItem'));
-  const bandBtn = bandContainer.querySelector('.menuItem');
 
-  // Statusi
-  let menuOpen = false;
+  // Sva dugmad osim Bend dugmeta
+  const menuItems = Array.from(menuButtons.querySelectorAll('.menuItem')).filter(btn => btn !== bandBtn);
+
+  // Inicijalno zatvoreno
   let bandDropdownOpen = false;
+  let menuOpen = false;
 
-  // --- Funkcija za raspored dugmadi u polukrug ---
+  // Hamburger toggle
+  hamburgerBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    menuOpen = !menuOpen;
+
+    if (menuOpen) {
+      menuButtons.classList.add('open');
+      hamburgerBtn.classList.add('open');
+      positionArc();
+    } else {
+      menuButtons.classList.remove('open');
+      hamburgerBtn.classList.remove('open');
+      collapseMenu();
+      closeBandDropdown();
+    }
+  });
+
+  // Klik van menija zatvara samo band dropdown ako je otvoren, ali ne zatvara hamburger meni
+  document.addEventListener('click', (ev) => {
+    if (bandDropdownOpen) {
+      const insideBandDropdown = ev.composedPath().includes(bandDropdown);
+      const clickedBandBtn = ev.composedPath().includes(bandBtn);
+      if (!insideBandDropdown && !clickedBandBtn) {
+        closeBandDropdown();
+      }
+    }
+  });
+
+  // ESC zatvara band dropdown, ali ne hamburger
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape' && bandDropdownOpen) {
+      closeBandDropdown();
+    }
+  });
+
+  // Band dugme toggle dropdown odmah na klik
+  bandBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+
+    if (!bandDropdownOpen) {
+      openBandDropdown();
+    } else {
+      closeBandDropdown();
+    }
+  });
+
+  function openBandDropdown() {
+    bandDropdown.classList.add('open');
+    bandDropdown.classList.remove('closed');
+    bandDropdownOpen = true;
+
+    // Sakrij ostala dugmad osim Bend dugmeta
+    menuItems.forEach(btn => {
+      btn.style.opacity = '0';
+      btn.style.pointerEvents = 'none';
+    });
+
+    // Band container na centar
+    const bandContainer = document.getElementById('bandContainer');
+    bandContainer.style.setProperty('--tx', '0px');
+    bandContainer.style.setProperty('--ty', '0px');
+  }
+
+  function closeBandDropdown() {
+    bandDropdown.classList.remove('open');
+    bandDropdown.classList.add('closed');
+    bandDropdownOpen = false;
+
+    // Vrati ostala dugmad
+    menuItems.forEach(btn => {
+      btn.style.opacity = '1';
+      btn.style.pointerEvents = 'auto';
+    });
+
+    // Pozicioniraj ponovo polukrug
+    positionArc();
+  }
+
+  // Pozicioniranje dugmadi u polukrug oko hamburgera
   function positionArc() {
-    const arcDeg = 90;
-    // Radius dinamičan po visini ekrana, od 100 do 160px
-    const radius = Math.min(160, Math.max(100, Math.round(window.innerHeight * 0.14)));
-    const targets = [bandContainer, ...menuItems.filter(btn => btn !== bandBtn)];
+    const arcDeg = 100; // Širi luk
+    const radius = Math.min(240, Math.max(140, Math.round(window.innerHeight * 0.20)));
+
+    const targets = [document.getElementById('bandContainer'), ...menuItems];
     const N = targets.length;
     const step = N === 1 ? 0 : arcDeg / (N - 1);
 
@@ -1319,9 +1410,9 @@ function closeBandOverlay() {
     });
   }
 
-  // --- Sakrij dugmad (polukrug zatvoren) ---
+  // Skrivanje dugmadi u zatvorenom stanju
   function collapseMenu() {
-    const targets = [bandContainer, ...menuItems.filter(btn => btn !== bandBtn)];
+    const targets = [document.getElementById('bandContainer'), ...menuItems];
     targets.forEach(el => {
       el.style.setProperty('--tx', `0px`);
       el.style.setProperty('--ty', `0px`);
@@ -1330,127 +1421,8 @@ function closeBandOverlay() {
     });
   }
 
-  // --- Otvori meni ---
-  function openMenu() {
-    menuOpen = true;
-    hamburgerBtn.classList.add('open');
-    hamburgerBtn.setAttribute('aria-expanded', 'true');
-    menuButtons.classList.add('open');
-    positionArc();
-  }
-
-  // --- Zatvori meni ---
-  function closeMenu() {
-    menuOpen = false;
-    hamburgerBtn.classList.remove('open');
-    hamburgerBtn.setAttribute('aria-expanded', 'false');
-    menuButtons.classList.remove('open');
-    bandDropdown.classList.add('closed');
-    bandDropdownOpen = false;
-    collapseMenu();
-  }
-
-  // --- Toggle meni ---
-  function toggleMenu() {
-    if (menuOpen) closeMenu();
-    else openMenu();
-  }
-
-  // --- Otvori dropdown za BEND ---
-  function openBandDropdown() {
-    bandDropdown.classList.remove('closed');
-    bandDropdownOpen = true;
-
-    // Sakrij ostala dugmad osim BEND
-    menuItems.forEach(btn => {
-      if (btn !== bandBtn) {
-        btn.style.opacity = '0';
-        btn.style.pointerEvents = 'none';
-      }
-    });
-    // Postavi BEND na centar polukruga
-    bandContainer.style.setProperty('--tx', '0px');
-    bandContainer.style.setProperty('--ty', '0px');
-  }
-
-  // --- Zatvori dropdown za BEND ---
-  function closeBandDropdown() {
-    bandDropdown.classList.add('closed');
-    bandDropdownOpen = false;
-
-    // Vrati ostala dugmad u polukrug
-    positionArc();
-  }
-
-  // --- Toggle dropdown za BEND ---
-  function toggleBandDropdown() {
-    if (bandDropdownOpen) closeBandDropdown();
-    else openBandDropdown();
-  }
-
-  // --- Event listener za hamburger ---
-  hamburgerBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    toggleMenu();
-  });
-
-  // --- Event listener za klik van menija - zatvori meni ---
-  document.addEventListener('click', (e) => {
-    if (!menuOpen) return;
-    if (menuButtons.contains(e.target) || hamburgerBtn.contains(e.target)) return;
-    closeMenu();
-  });
-
-  // --- ESC za zatvaranje menija ---
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && menuOpen) {
-      closeMenu();
-    }
-  });
-
-  // --- Event listener za BEND dugme ---
-  bandBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    // Toggle dropdown
-    toggleBandDropdown();
-  });
-
-  // --- Funkcije koje pozivaju postojeće overlay funkcije na klik dugmadi ---
-  const liveBtn = menuButtons.querySelector('.menuItem[onclick*="openLiveOverlay"]');
-  const studioBtn = menuButtons.querySelector('.menuItem[onclick*="openStudioOverlay"]');
-  const dugme4Btn = menuButtons.querySelector('.menuItem[onclick*="openSoonOverlay"]');
-
-  liveBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    openLiveOverlay();
-  });
-  studioBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    openStudioOverlay();
-  });
-  dugme4Btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    openSoonOverlay();
-  });
-
-  // --- Resize event - kad je meni otvoren i nije dropdown - pomeri dugmad ---
-  window.addEventListener('resize', () => {
-    if (menuOpen && !bandDropdownOpen) {
-      positionArc();
-    }
-  });
-
-  // --- Početno stanje - sakrij dugmad ---
+  // Na početku zatvoreno
   collapseMenu();
-
-  // --- Poveži postojeće openBandOverlay i closeBandOverlay sa novim funkcijama ---
-  window.openBandOverlay = (ev) => {
-    ev.preventDefault();
-    openBandDropdown();
-  };
-  window.closeBandOverlay = () => {
-    closeBandDropdown();
-  };
 })();
 
     
