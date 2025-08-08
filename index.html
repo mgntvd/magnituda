@@ -333,101 +333,113 @@
   }
 
   /* ------------------------
-   ARC SLIDE meni (verzija za tvoju strukturu)
-   Koristi iste klase/ID-e koje već imaš: #menuButtons i .menuItem
+   ARC SLIDE meni — kompletna deonica
+   (Zameni tačno STARI CSS blok iznad ovim)
    ------------------------ */
 
-/* Kontejner polukružnog menija */
+/* Kontejner polukružnog menija - fiksiran uz levu ivicu, centriran po visini */
 #menuButtons {
   position: fixed;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 260px; /* područje u kome se računa arc */
-  height: 260px;
+  width: 320px; /* područje u kome se računa arc */
+  height: 320px;
   z-index: 1800;
   pointer-events: none; /* ne klikljivo dok nije otvoreno */
+  --fw-left-offset: 18px; /* pomeraj od leve ivice */
 }
 
-/* Dozvoli interakciju kad je otvoren */
+/* Kada je otvoren — dozvoli interakciju */
 #menuButtons.open {
   pointer-events: auto;
 }
 
-/* Ciljani elementi u meniju:
-   - prvi element u #menuButtons je #bandContainer (tamo je BEND dugme + dropdown)
-   - ostali su direktna deca .menuItem (Live, Studio, Dugme 4)
-   Stil se primenjuje i na #bandContainer i na .menuItem */
-#menuButtons .menuItem,
+/* --- BAND container (BEND) — posebno ga pozicionujemo kao apsolutni blok
+       da bi unutar njega mogao ostati dropdown koji već imaš --- */
 #menuButtons > #bandContainer {
   position: absolute;
-  left: 18px; /* pomak od leve ivice */
+  left: var(--fw-left-offset);
   top: 50%;
-  transform: translateY(-50%) translateX(-40px); /* zatvoreno: sakriven blago levo */
+  transform: translateX(-48px) translateY(-50%); /* zatvoreno */
   opacity: 0;
-  transition: transform 0.45s cubic-bezier(.2,.9,.2,1), opacity 0.35s ease;
-  z-index: 1;
+  transition: transform 0.42s cubic-bezier(.2,.9,.2,1), opacity 0.32s ease;
+  pointer-events: none;
+  z-index: 2;
 }
 
-/* Izgled samih dugmadi (očuvane neke tvoje vrednosti, ali "pill" stil i finija animacija) */
-#menuButtons .menuItem {
+/* Unutrašnji BEND taster u okviru bandContainer — ostaje normalan element */
+#menuButtons > #bandContainer .menuItem {
+  position: relative;
+  display: inline-block;
+  margin: 0;
   background: rgba(255,255,255,0.10);
   border: 1px solid rgba(255,255,255,0.18);
   color: white;
   font-size: 18px;
   padding: 10px 20px;
-  cursor: pointer;
   border-radius: 32px;
   box-shadow: 0 6px 28px rgba(0,0,0,0.35);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   white-space: nowrap;
+  cursor: pointer;
+  pointer-events: auto; /* klikabilno kada je container pozicioniran */
 }
 
-/* Ako želiš jače vizuelno odvajanje za prvi "BEND" kontejnter, možeš podesiti pozadinu: */
-#menuButtons > #bandContainer .menuItem {
-  /* BEND dugme (u okviru bandContainer) */
+/* Dropdown članova benda (ostavljamo ponašanje JS-a koji menja display) */
+#menuButtons > #bandContainer .band-dropdown {
+  display: none;
+  margin-top: 10px;
+  z-index: 50;
 }
 
-/* Otvoreno stanje: koristimo varijable (--tx, --ty) koje postavlja JS */
-#menuButtons.open .menuItem,
+/* --- Ostala glavna dugmad (direktna deca .menuItem) --- */
+#menuButtons > .menuItem {
+  position: absolute;
+  left: var(--fw-left-offset);
+  top: 50%;
+  transform: translateX(-48px) translateY(-50%); /* zatvoreno (sklonjeno ulevo) */
+  opacity: 0;
+  transition: transform 0.42s cubic-bezier(.2,.9,.2,1), opacity 0.32s ease;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 1;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: white;
+  font-size: 18px;
+  padding: 10px 20px;
+  border-radius: 32px;
+  box-shadow: 0 6px 28px rgba(0,0,0,0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+/* Kada je meni otvoren — koristimo CSS varijable koje postavlja JS: --tx i --ty */
+#menuButtons.open > .menuItem {
+  opacity: 1;
+  transform: translateX(var(--tx, -48px)) translateY(calc(var(--ty, 0px) - 50%));
+  pointer-events: auto;
+}
+
+/* Otvoreno za bandContainer (BEND) */
 #menuButtons.open > #bandContainer {
   opacity: 1;
-  transform: translateY(-50%) translate(var(--tx, 0px), var(--ty, 0px));
+  transform: translateX(var(--tx, -48px)) translateY(calc(var(--ty, 0px) - 50%));
+  pointer-events: auto;
 }
 
-/* Hover efekti */
-#menuButtons .menuItem:hover {
-  transform: translateY(-50%) translate(var(--tx, 0px), var(--ty, 0px)) scale(1.04);
+/* Hover efekti — zadržavamo vizuelnu konzistentnost */
+#menuButtons > .menuItem:hover,
+#menuButtons > #bandContainer .menuItem:hover {
+  transform: translateX(var(--tx, -48px)) translateY(calc(var(--ty, 0px) - 50%)) scale(1.04);
   background: rgba(255,255,255,0.95);
   color: #111;
 }
 
-/* Stil dropdowna članova benda — pozicioniramo ga relativno unutar bandContainer.
-   Ovo sprečava "propadanje" kada bandContainer bude apsolutno pozicionovan. */
-#bandContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-/* Band dropdown treba da ostane vertikalno ispod BEND dugmeta.
-   Kada ga otvoriš, on će se pojaviti unutar #bandContainer (koji je apsolutno pozicionovan). */
-.band-dropdown {
-  display: none; /* JS će koristiti postojeću logiku da menja display */
-  margin-top: 10px;
-  z-index: 50;
-  /* zadržavamo postojeće izgledne postavke iz tvog CSS-a */
-}
-
-/* Kada je meni otvoren, držimo pointer-events na kontejneru da bi dugmad bila klikabilna */
-#menuButtons.open .menuItem,
-#menuButtons.open > #bandContainer {
-  pointer-events: auto;
-}
-
-/* ---- Hamburger stil (dodatak) ---- */
+/* Stil hamburgera / toggle (dodato) */
 .fw-toggle {
   position: fixed;
   left: 12px;
@@ -456,6 +468,7 @@
   background: #fff;
   border-radius: 2px;
   transition: transform 0.28s ease, opacity 0.18s ease;
+  display: block;
 }
 .fw-toggle .bar::before,
 .fw-toggle .bar::after {
@@ -474,15 +487,14 @@
 /* "X" stanje */
 .fw-toggle.open {
   background: rgba(255,255,255,0.12);
-  transform: translateY(-50%) rotate(0.001deg); /* tiny nudge for GPU */
 }
 .fw-toggle.open .bar { background: transparent; }
 .fw-toggle.open .bar::before { transform: translateY(0px) rotate(45deg); }
 .fw-toggle.open .bar::after { transform: translateY(0px) rotate(-45deg); }
 
-/* Mala pomoć za responsive: smanji radius na manjim ekranima */
+/* Responsive tweak */
 @media (max-width: 600px) {
-  #menuButtons { width: 200px; height: 200px; }
+  #menuButtons { width: 260px; height: 260px; --fw-left-offset: 12px; }
   .fw-toggle { left: 10px; width:48px; height:48px; }
 }
 
@@ -1292,78 +1304,43 @@ function closeBandOverlay() {
   }
 }
 
-    /* --- Ferris wheel / Arc Slide small JS helper (dodati pre updateLanguage poziva) --- */
+/* --- Ferris wheel / Arc Slide helper — poboljšana verzija
+       (zameni PRETHODNU helper deonicu sa ovim; na kraju se i dalje poziva updateLanguage()) --- */
 
 (function() {
   const container = document.getElementById('menuButtons');
+  if (!container) {
+    // nema kontejnerega - ništa ne radimo
+    return;
+  }
 
   // Create and insert hamburger toggle ako ga nema
-  if (!document.querySelector('.fw-toggle')) {
-    const toggle = document.createElement('button');
+  let toggle = document.querySelector('.fw-toggle');
+  if (!toggle) {
+    toggle = document.createElement('button');
     toggle.className = 'fw-toggle';
     toggle.setAttribute('aria-label', 'Otvori meni');
     toggle.innerHTML = '<span class="bar"></span>';
     document.body.appendChild(toggle);
-
-    // klik na hamburger toggluje klasu open na #menuButtons
-    toggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = container.classList.toggle('open');
-      toggle.classList.toggle('open', isOpen);
-      if (isOpen) {
-        positionArc(); // izračunaj pozicije i postavi varijable
-      } else {
-        collapseMenu();
-      }
-    });
-
-    // klik van menija zatvara ga
-    document.addEventListener('click', (ev) => {
-      if (!container.classList.contains('open')) return;
-      const insideMenu = ev.composedPath().includes(container);
-      const clickedToggle = ev.composedPath().includes(toggle);
-      if (!insideMenu && !clickedToggle) {
-        container.classList.remove('open');
-        toggle.classList.remove('open');
-        collapseMenu();
-      }
-    });
-
-    // close on ESC
-    document.addEventListener('keydown', (ev) => {
-      if (ev.key === 'Escape' && container.classList.contains('open')) {
-        container.classList.remove('open');
-        toggle.classList.remove('open');
-        collapseMenu();
-      }
-    });
-
-    // recompute on resize
-    window.addEventListener('resize', () => {
-      if (container.classList.contains('open')) positionArc();
-    });
   }
 
-  // Funkcija koja bira elemente koje želimo rasporediti po luku
+  // Funkcija koja bira elemente koje želimo rasporediti po luku (redom kako stoje u DOM-u)
   function getTargets() {
-    // direktna deca #menuButtons:
-    const direct = Array.from(container.children);
-    // Želimo red: bandContainer (ceo blok) pa ostala direct .menuItem dugmad
-    const targets = [];
-    direct.forEach(child => {
-      if (child.id === 'bandContainer') targets.push(child);
-      else if (child.classList && child.classList.contains('menuItem')) targets.push(child);
+    return Array.from(container.children).filter(child => {
+      return child.id === 'bandContainer' || (child.classList && child.classList.contains('menuItem'));
     });
-    return targets;
   }
 
-  // Postavi "zatvoreni" default (malo ulevo)
+  // Postavi "zatvoreni" default (malo ulevo) i sakrij dropdown ako postoji
   function collapseMenu() {
     const targets = getTargets();
     targets.forEach(el => {
-      el.style.setProperty('--tx', `-40px`);
+      el.style.setProperty('--tx', `-48px`);
       el.style.setProperty('--ty', `0px`);
     });
+    // Sakrij band dropdown kad zatvaramo ceo meni
+    const bandDD = document.getElementById('bandDropdown');
+    if (bandDD) bandDD.style.display = 'none';
   }
 
   // Izračunavamo pozicije po luku i postavimo CSS varijable --tx i --ty
@@ -1371,23 +1348,96 @@ function closeBandOverlay() {
     const targets = getTargets();
     if (!targets.length) return;
 
-    const arcDeg = 90; // ukupni ugao polukruga (možeš menjati: 90, 100, 80...)
-    const radius = Math.min(160, Math.max(100, Math.round(Math.min(window.innerWidth, window.innerHeight) * 0.14))); // dinamičan radius
+    const arcDeg = 90; // ukupni ugao polukruga (možeš promeniti)
+    // dinamičan radius zavisno od ekrana, ograničen
+    const radius = Math.min(220, Math.max(110, Math.round(Math.min(window.innerWidth, window.innerHeight) * 0.14)));
     const N = targets.length;
     const step = N === 1 ? 0 : arcDeg / (N - 1);
 
     targets.forEach((el, i) => {
-      const angleDeg = -arcDeg/2 + i * step;
+      const angleDeg = -arcDeg / 2 + i * step; // raspoređeno od -arc/2 do +arc/2
       const rad = angleDeg * Math.PI / 180;
-      const tx = Math.cos(rad) * radius; // seebe horizontalno desno (px)
-      const ty = Math.sin(rad) * radius; // vertikalno (px), pozitivno je dole
+      const tx = Math.round(Math.cos(rad) * radius); // horizontalno desno +
+      const ty = Math.round(Math.sin(rad) * radius); // vertikalno (dole +)
       el.style.setProperty('--tx', `${tx}px`);
       el.style.setProperty('--ty', `${ty}px`);
     });
   }
 
-  // inicijalno stanje: collapse
+  // Close meni i kolapsuj varijable
+  function doClose() {
+    container.classList.remove('open');
+    toggle.classList.remove('open');
+    collapseMenu();
+  }
+
+  // Toggle behavior
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = container.classList.toggle('open');
+    toggle.classList.toggle('open', isOpen);
+    if (isOpen) {
+      positionArc();
+    } else {
+      collapseMenu();
+    }
+  });
+
+  // Klik van menija zatvara ga
+  document.addEventListener('click', (ev) => {
+    if (!container.classList.contains('open')) return;
+    const path = ev.composedPath ? ev.composedPath() : (ev.path || []);
+    const insideMenu = path.includes(container);
+    const clickedToggle = path.includes(toggle);
+    if (!insideMenu && !clickedToggle) {
+      doClose();
+    }
+  });
+
+  // ESC zatvara
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape' && container.classList.contains('open')) {
+      doClose();
+    }
+  });
+
+  // Recompute on resize
+  window.addEventListener('resize', () => {
+    if (container.classList.contains('open')) positionArc();
+  });
+
+  // Zatvori meni pri skrolovanju — da ne ostane preko svih sekcija
+  let scrolldeb = null;
+  window.addEventListener('scroll', () => {
+    if (container.classList.contains('open')) {
+      // debounced – da sprečimo previše poziva
+      if (scrolldeb) clearTimeout(scrolldeb);
+      scrolldeb = setTimeout(() => {
+        doClose();
+      }, 120);
+    }
+  });
+
+  // Kada klikneš na bilo koje direktno .menuItem (osim BEND koji je u bandContainer),
+  // zatvorimo meni tako da overlayi mogu normalno da se otvore i da menija ne ostane otvoren
+  function attachItemCloseHandlers() {
+    const directItems = Array.from(container.querySelectorAll(':scope > .menuItem'));
+    directItems.forEach(btn => {
+      btn.addEventListener('click', (ev) => {
+        // malu delay da tvoj onclick (npr. openLiveOverlay) ima vremena da startuje
+        setTimeout(() => {
+          doClose();
+        }, 160);
+      });
+    });
+
+    // BEND dugme je unutar #bandContainer; ostavimo ga da radi kako pre (toggle dropdown)
+    // ali pazimo da klik nad samim dropdown-om ne zatvori ceo meni.
+  }
+
+  // inicijalno collapse
   collapseMenu();
+  attachItemCloseHandlers();
 
 })();
 
