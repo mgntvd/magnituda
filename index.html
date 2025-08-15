@@ -1192,32 +1192,43 @@ function closeBandOverlay() {
 }
 
     // Fade in dugmad
-document.addEventListener('DOMContentLoaded', function() {
-  const menu = document.getElementById('menuButtons');
-  const triggerRatio = 0.5; // tweakuj ovo od 0 (vrh ekrana) do 1 (donji deo viewporta)
+document.addEventListener("DOMContentLoaded", () => {
+  const target = document.getElementById("menuButtons");
 
-  // inicijalno sakrijemo dugmad
-  menu.style.opacity = 0;
-  menu.style.transition = 'opacity 1s ease-out';
+  if (!target) return;
 
-  function checkFadeIn() {
-    const menuTop = menu.getBoundingClientRect().top;
+  // Parametri koje možeš menjati
+  const fadeInOffset = 200;  // px od vrha prozora kada dugme fade-inuje
+  const fadeOutOffset = 50;  // px nagore da dugme fade-outuje
+
+  let lastScrollY = window.scrollY;
+  let isVisible = false;
+
+  const checkFade = () => {
     const windowHeight = window.innerHeight;
+    const elementTop = target.getBoundingClientRect().top + window.scrollY;
 
-    if (menuTop < windowHeight * triggerRatio) {
-      if (!menu.classList.contains('fade-in')) {
-        menu.classList.add('fade-in');
-        menu.style.opacity = 1;
-        console.log('Dodajem fade-in klasu!');
-      }
+    // Fade-in logika
+    if (!isVisible && elementTop < lastScrollY + windowHeight - fadeInOffset) {
+      target.classList.add("fade-in");
+      isVisible = true;
+      // console.log("Dodajem fade-in klasu!");
     }
-  }
 
-  // proveravaj pri scroll-u i pri load-u
-  window.addEventListener('scroll', checkFadeIn);
-  window.addEventListener('resize', checkFadeIn);
-  checkFadeIn(); // provera odmah pri load-u
+    // Fade-out logika
+    if (isVisible && lastScrollY + fadeOutOffset < elementTop - (windowHeight - fadeInOffset)) {
+      target.classList.remove("fade-in");
+      isVisible = false;
+      // console.log("Fade-out aktiviran");
+    }
+
+    lastScrollY = window.scrollY;
+  };
+
+  window.addEventListener("scroll", checkFade);
+  checkFade(); // provera pri učitavanju stranice
 });
+
 
     
  updateLanguage();  
