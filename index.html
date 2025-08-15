@@ -1191,30 +1191,35 @@ function closeBandOverlay() {
   }
 }
 
-    
+    // Fade in dugmad
+document.addEventListener('DOMContentLoaded', function() {
+  const menu = document.getElementById('menuButtons');
+  const triggerRatio = 0.9; // tweakuj ovo od 0 (vrh ekrana) do 1 (donji deo viewporta)
 
-    const menuButtons = document.getElementById('menuButtons');
-const newsBar = document.getElementById('newsBar');
+  // inicijalno sakrijemo dugmad
+  menu.style.opacity = 0;
+  menu.style.transition = 'opacity 1s ease-out';
 
-function checkMenuFade() {
-  const newsBarTop = newsBar.getBoundingClientRect().top;
-  const windowHeight = window.innerHeight;
+  function checkFadeIn() {
+    const menuTop = menu.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
 
-  console.log('newsBarTop:', newsBarTop, 'windowHeight*0.9:', windowHeight*0.9);
-
-  if (newsBarTop < windowHeight * 0.9) {
-    if (!menuButtons.classList.contains('fade-in')) {
-      console.log('Dodajem fade-in klasu!');
-      menuButtons.classList.add('fade-in');
+    if (menuTop < windowHeight * triggerRatio) {
+      if (!menu.classList.contains('fade-in')) {
+        menu.classList.add('fade-in');
+        menu.style.opacity = 1;
+        console.log('Dodajem fade-in klasu!');
+      }
     }
-  } else {
-    console.log('Fade-in uslov nije ispunjen.');
   }
-}
 
-window.addEventListener('scroll', checkMenuFade);
-window.addEventListener('load', checkMenuFade);
+  // proveravaj pri scroll-u i pri load-u
+  window.addEventListener('scroll', checkFadeIn);
+  window.addEventListener('resize', checkFadeIn);
+  checkFadeIn(); // provera odmah pri load-u
+});
 
+    
  updateLanguage();  
   </script>
 
