@@ -1193,49 +1193,53 @@ function closeBandOverlay() {
 
     // Fade in dugmad
 // --- PARAMETRI ZA TWEAK ---
-const fadeInPoint = 200;        // px od vrha ekrana kada se fade-in aktivira
-const fadeOutBuffer = 50;       // px skrol unazad da se fade-out aktivira
-const blurAmount = 4;           // px za blur efekat na CMPC
-const bgBrightness = 0.8;       // 0.8 = tamnija pozadina
+const fadeInPoint = 200;       // px od vrha ekrana kada dugmad i blur startuju
+const fadeOutPoint = 100;      // px od vrha kada dugmad i blur prestaju
+const blurAmount = 4;          // px blur za CMPC
+const bgBrightness = 0.8;      // brightness CMPC
+const transitionTime = 0.3;    // sekunde za sve tranzicije
 
 // --- ELEMENTI ---
-const fadeElement = document.getElementById('menuButtons');
-const cmpcElement = document.getElementById('CMPC');
+const fadeElement = document.getElementById('menuButtons'); // tvoja dugmad
+const cmpcElement = document.getElementById('CMPC');        // CMPC element
+
+// --- PROVERA POSTOJANJA ---
+if (!fadeElement || !cmpcElement) {
+  console.error('Ne mogu da nađem fadeElement ili cmpcElement. Proveri ID-eve!');
+}
+
+// --- INICIJALNI STILOVI ---
+fadeElement.style.opacity = 0;
+fadeElement.style.transition = `opacity ${transitionTime}s ease`;
+cmpcElement.style.transition = `filter ${transitionTime}s ease`;
 
 // --- PRAĆENJE STANJA ---
 let fadedIn = false;
-let lastScrollY = window.scrollY;
-
-// --- INICIJALNI STILOVI ZA TRANSITION ---
-cmpcElement.style.transition = 'filter 0.3s ease'; // glatki prelaz
-fadeElement.style.transition = 'opacity 0.3s ease';
 
 // --- FUNKCIJA ZA UPDATE ---
 function handleScroll() {
   const scrollY = window.scrollY;
 
-  // FADE-IN uslov
+  // Fade-in + blur start
   if (!fadedIn && scrollY >= fadeInPoint) {
-    fadeElement.classList.add('fade-in');
+    fadeElement.style.opacity = 1;
     cmpcElement.style.filter = `blur(${blurAmount}px) brightness(${bgBrightness})`;
     fadedIn = true;
   }
 
-  // FADE-OUT uslov
-  if (fadedIn && scrollY < fadeInPoint - fadeOutBuffer) {
-    fadeElement.classList.remove('fade-in');
+  // Fade-out + blur remove
+  if (fadedIn && scrollY < fadeOutPoint) {
+    fadeElement.style.opacity = 0;
     cmpcElement.style.filter = 'none';
     fadedIn = false;
   }
-
-  lastScrollY = scrollY;
 }
 
 // --- EVENT LISTENER ---
 window.addEventListener('scroll', handleScroll);
 
 // --- OPCIONALNO: inicijalno stanje ---
-fadeElement.classList.remove('fade-in');
+fadeElement.style.opacity = 0;
 cmpcElement.style.filter = 'none';
 
     
