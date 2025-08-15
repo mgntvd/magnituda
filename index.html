@@ -332,33 +332,47 @@
     user-select: none;
   }
 
-  #menuButtons {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    align-items: center;
-    justify-content: center;
-    margin-top: 60px;
-  }
+  /* ===== Podnaslovi dugmad (BEND, Live, Studio, Dugme 4) ===== */
+#menuButtons {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  opacity: 0; /* Početno nevidljivo za fade-in */
+  transition: opacity 1s ease-out;
+}
 
-  .menuItem {
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    color: white;
-    font-size: 20px;
-    padding: 12px 24px;
-    cursor: pointer;
-    border-radius: 12px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    transition: all 0.3s ease;
-  }
+#menuButtons.fade-in {
+  opacity: 1; /* Fade-in efekat */
+}
 
-  .menuItem:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: scale(1.05);
-  }
+/* Stil za svako “dugme” da izgleda kao podnaslov */
+.menuItem {
+  background: none;
+  border: none;
+  font-size: 28px;
+  font-weight: 600;
+  color: white;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+  cursor: pointer;
+  padding: 5px 0;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+/* Glassmorphism linija između dugmadi */
+.menuItem:not(:last-child)::after {
+  content: "";
+  display: block;
+  height: 1px;
+  width: 60%;
+  margin: 10px auto 0 auto;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 1px;
+}
 
   .band-overlay, .soon-overlay {
     position: fixed;
@@ -1165,6 +1179,22 @@ function closeBandOverlay() {
     lastScrollPos = null;
   }
 }
+
+    // ===== Fade-in efekat za podnaslove BEND, Live, Studio, Dugme 4 =====
+const menuButtons = document.getElementById('menuButtons');
+const newsBar = document.getElementById('newsBar'); // scroll trigger
+
+function checkMenuFade() {
+  const newsBarTop = newsBar.getBoundingClientRect().top;
+  const windowHeight = window.innerHeight;
+
+  if (newsBarTop < windowHeight * 0.9) { // kad newsBar skoro uđe u viewport
+    menuButtons.classList.add('fade-in');
+  }
+}
+
+window.addEventListener('scroll', checkMenuFade);
+window.addEventListener('load', checkMenuFade); // za slučaj da je već skrolovano
 
     
  updateLanguage();  
