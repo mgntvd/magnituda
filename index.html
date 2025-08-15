@@ -666,6 +666,12 @@
   opacity: 0.7;
 }
 
+  /* Blur efekat za pozadinsku sliku kada je BEND dugme otvoreno */
+.blurred {
+    filter: blur(4px) brightness(0.8);
+    transition: filter 0.3s ease;
+}
+
 
 </style>
 </head>
@@ -1228,7 +1234,27 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", checkFade);
   checkFade(); // provera pri učitavanju stranice
 });
-    
+
+    // Selektujemo BEND dugme i pozadinsku sliku
+const bendButton = document.querySelector('#bandContainer button.menuItem');
+const cmpc = document.getElementById('cmpcBg');
+const bandDropdown = document.getElementById('bandDropdown');
+
+// Funkcija za toggle blura
+function updateBlur() {
+    if (bandDropdown.style.display !== 'none') {
+        cmpc.classList.add('blurred'); // dodaj blur kada je dropdown otvoren
+    } else {
+        cmpc.classList.remove('blurred'); // ukloni blur kada je dropdown zatvoren
+    }
+}
+
+// Pravimo event listener na BEND dugme
+bendButton.addEventListener('click', () => {
+    // Malo čekamo da se dropdown stvarno prikaže ili sakrije
+    setTimeout(updateBlur, 50);
+});
+
     
  updateLanguage();  
   </script>
