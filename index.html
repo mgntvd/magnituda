@@ -1192,43 +1192,51 @@ function closeBandOverlay() {
 }
 
     // Fade in dugmad
-document.addEventListener("DOMContentLoaded", () => {
-  const target = document.getElementById("menuButtons");
+// --- PARAMETRI ZA TWEAK ---
+const fadeInPoint = 200;        // px od vrha ekrana kada se fade-in aktivira
+const fadeOutBuffer = 50;       // px skrol unazad da se fade-out aktivira
+const blurAmount = 4;           // px za blur efekat na CMPC
+const bgBrightness = 0.8;       // 0.8 = tamnija pozadina
 
-  if (!target) return;
+// --- ELEMENTI ---
+const fadeElement = document.getElementById('menuButtons');
+const cmpcElement = document.getElementById('CMPC');
 
-  // Parametri koje možeš menjati
-  const fadeInOffset = 200;  // px od vrha prozora kada dugme fade-inuje
-  const fadeOutOffset = 50;  // px nagore da dugme fade-outuje
+// --- PRAĆENJE STANJA ---
+let fadedIn = false;
+let lastScrollY = window.scrollY;
 
-  let lastScrollY = window.scrollY;
-  let isVisible = false;
+// --- INICIJALNI STILOVI ZA TRANSITION ---
+cmpcElement.style.transition = 'filter 0.3s ease'; // glatki prelaz
+fadeElement.style.transition = 'opacity 0.3s ease';
 
-  const checkFade = () => {
-    const windowHeight = window.innerHeight;
-    const elementTop = target.getBoundingClientRect().top + window.scrollY;
+// --- FUNKCIJA ZA UPDATE ---
+function handleScroll() {
+  const scrollY = window.scrollY;
 
-    // Fade-in logika
-    if (!isVisible && elementTop < lastScrollY + windowHeight - fadeInOffset) {
-      target.classList.add("fade-in");
-      isVisible = true;
-      // console.log("Dodajem fade-in klasu!");
-    }
+  // FADE-IN uslov
+  if (!fadedIn && scrollY >= fadeInPoint) {
+    fadeElement.classList.add('fade-in');
+    cmpcElement.style.filter = `blur(${blurAmount}px) brightness(${bgBrightness})`;
+    fadedIn = true;
+  }
 
-    // Fade-out logika
-    if (isVisible && lastScrollY + fadeOutOffset < elementTop - (windowHeight - fadeInOffset)) {
-      target.classList.remove("fade-in");
-      isVisible = false;
-      // console.log("Fade-out aktiviran");
-    }
+  // FADE-OUT uslov
+  if (fadedIn && scrollY < fadeInPoint - fadeOutBuffer) {
+    fadeElement.classList.remove('fade-in');
+    cmpcElement.style.filter = 'none';
+    fadedIn = false;
+  }
 
-    lastScrollY = window.scrollY;
-  };
+  lastScrollY = scrollY;
+}
 
-  window.addEventListener("scroll", checkFade);
-  checkFade(); // provera pri učitavanju stranice
-});
+// --- EVENT LISTENER ---
+window.addEventListener('scroll', handleScroll);
 
+// --- OPCIONALNO: inicijalno stanje ---
+fadeElement.classList.remove('fade-in');
+cmpcElement.style.filter = 'none';
 
     
  updateLanguage();  
