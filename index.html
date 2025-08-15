@@ -1235,8 +1235,9 @@ const blurValue = 4;       // px
 const brightnessValue = 0.8; // 0-1
 // ==================================
 
-// Elementi
-const cMPC = document.getElementById('CMPC'); // Element koji se bluruje
+// Element pozadinske slike
+const CMPC = document.getElementById('cmpcBG'); // koristimo ID
+
 const bandButton = document.querySelector('#bandContainer > button');
 const bandDropdown = document.getElementById('bandDropdown');
 
@@ -1244,12 +1245,12 @@ let isBendOpen = false;
 
 // Funkcija za aktivaciju blur-a
 function applyBlur() {
-  cMPC.style.filter = `blur(${blurValue}px) brightness(${brightnessValue})`;
+  CMPC.style.filter = `blur(${blurValue}px) brightness(${brightnessValue})`;
 }
 
 // Funkcija za uklanjanje blur-a
 function removeBlur() {
-  cMPC.style.filter = '';
+  CMPC.style.filter = '';
 }
 
 // Otvaranje / zatvaranje BEND dropdowna
