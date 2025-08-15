@@ -1191,23 +1191,30 @@ function closeBandOverlay() {
   }
 }
 
-    // ===== Fade-in efekat za podnaslove BEND, Live, Studio, Dugme 4 =====
-const menuButtons = document.getElementById('menuButtons');
+    
+
+    const menuButtons = document.getElementById('menuButtons');
 const newsBar = document.getElementById('newsBar');
 
 function checkMenuFade() {
   const newsBarTop = newsBar.getBoundingClientRect().top;
   const windowHeight = window.innerHeight;
 
-  if (newsBarTop < windowHeight * 0.9) { // kad newsBar skoro uđe u viewport
-    menuButtons.classList.add('fade-in');
+  console.log('newsBarTop:', newsBarTop, 'windowHeight*0.9:', windowHeight*0.9);
+
+  if (newsBarTop < windowHeight * 0.9) {
+    if (!menuButtons.classList.contains('fade-in')) {
+      console.log('Dodajem fade-in klasu!');
+      menuButtons.classList.add('fade-in');
+    }
+  } else {
+    console.log('Fade-in uslov nije ispunjen.');
   }
 }
 
 window.addEventListener('scroll', checkMenuFade);
-window.addEventListener('load', checkMenuFade); // za slučaj da je već skrolovano
+window.addEventListener('load', checkMenuFade);
 
-    
  updateLanguage();  
   </script>
 
