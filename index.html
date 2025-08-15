@@ -1195,7 +1195,7 @@ function checkMenuFade() {
   const newsBarTop = newsBar.getBoundingClientRect().top;
   const windowHeight = window.innerHeight;
 
-  if (newsBarTop < windowHeight * 0.9) { // kad newsBar skoro uđe u viewport
+  if (newsBarTop < windowHeight * 1.5) { // kad newsBar skoro uđe u viewport
     menuButtons.classList.add('fade-in');
   }
 }
