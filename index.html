@@ -1229,6 +1229,60 @@ document.addEventListener("DOMContentLoaded", () => {
   checkFade(); // provera pri učitavanju stranice
 });
 
+    // Bend dugme i blur
+    // ======== PARAMETRI ZA BLUR ========
+const blurValue = 4;       // px
+const brightnessValue = 0.8; // 0-1
+// ==================================
+
+// Elementi
+const cMPC = document.getElementById('CMPC'); // Element koji se bluruje
+const bandButton = document.querySelector('#bandContainer > button');
+const bandDropdown = document.getElementById('bandDropdown');
+
+let isBendOpen = false;
+
+// Funkcija za aktivaciju blur-a
+function applyBlur() {
+  cMPC.style.filter = `blur(${blurValue}px) brightness(${brightnessValue})`;
+}
+
+// Funkcija za uklanjanje blur-a
+function removeBlur() {
+  cMPC.style.filter = '';
+}
+
+// Otvaranje / zatvaranje BEND dropdowna
+function toggleBandDropdown() {
+  isBendOpen = !isBendOpen;
+  bandDropdown.style.display = isBendOpen ? 'flex' : 'none';
+  updateBlurState();
+}
+
+// Funkcija koja proverava da li treba blur
+function updateBlurState() {
+  if (isBendOpen) {
+    applyBlur();
+  } else {
+    removeBlur();
+  }
+}
+
+// Povezivanje BEND dugmeta sa funkcijom
+bandButton.addEventListener('click', (e) => {
+  e.stopPropagation();
+  toggleBandDropdown();
+});
+
+// Klik van BEND dropdowna zatvara dropdown i uklanja blur
+document.addEventListener('click', (e) => {
+  if (!bandDropdown.contains(e.target) && e.target !== bandButton && isBendOpen) {
+    isBendOpen = false;
+    bandDropdown.style.display = 'none';
+    updateBlurState();
+  }
+});
+
     
  updateLanguage();  
   </script>
