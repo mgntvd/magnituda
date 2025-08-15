@@ -1192,55 +1192,42 @@ function closeBandOverlay() {
 }
 
     // Fade in dugmad
-// --- PARAMETRI ZA TWEAK ---
-const fadeInPoint = 200;       // px od vrha ekrana kada dugmad i blur startuju
-const fadeOutPoint = 100;      // px od vrha kada dugmad i blur prestaju
-const blurAmount = 4;          // px blur za CMPC
-const bgBrightness = 0.8;      // brightness CMPC
-const transitionTime = 0.3;    // sekunde za sve tranzicije
+document.addEventListener("DOMContentLoaded", () => {
+  const target = document.getElementById("menuButtons");
 
-// --- ELEMENTI ---
-const fadeElement = document.getElementById('menuButtons'); // tvoja dugmad
-const cmpcElement = document.getElementById('CMPC');        // CMPC element
+  if (!target) return;
 
-// --- PROVERA POSTOJANJA ---
-if (!fadeElement || !cmpcElement) {
-  console.error('Ne mogu da nađem fadeElement ili cmpcElement. Proveri ID-eve!');
-}
+  // Parametri koje možeš menjati
+  const fadeInOffset = 200;  // px od vrha prozora kada dugme fade-inuje
+  const fadeOutOffset = 50;  // px nagore da dugme fade-outuje
 
-// --- INICIJALNI STILOVI ---
-fadeElement.style.opacity = 0;
-fadeElement.style.transition = `opacity ${transitionTime}s ease`;
-cmpcElement.style.transition = `filter ${transitionTime}s ease`;
+  let lastScrollY = window.scrollY;
+  let isVisible = false;
 
-// --- PRAĆENJE STANJA ---
-let fadedIn = false;
+  const checkFade = () => {
+    const windowHeight = window.innerHeight;
+    const elementTop = target.getBoundingClientRect().top + window.scrollY;
 
-// --- FUNKCIJA ZA UPDATE ---
-function handleScroll() {
-  const scrollY = window.scrollY;
+    // Fade-in logika
+    if (!isVisible && elementTop < lastScrollY + windowHeight - fadeInOffset) {
+      target.classList.add("fade-in");
+      isVisible = true;
+      // console.log("Dodajem fade-in klasu!");
+    }
 
-  // Fade-in + blur start
-  if (!fadedIn && scrollY >= fadeInPoint) {
-    fadeElement.style.opacity = 1;
-    cmpcElement.style.filter = `blur(${blurAmount}px) brightness(${bgBrightness})`;
-    fadedIn = true;
-  }
+    // Fade-out logika
+    if (isVisible && lastScrollY + fadeOutOffset < elementTop - (windowHeight - fadeInOffset)) {
+      target.classList.remove("fade-in");
+      isVisible = false;
+      // console.log("Fade-out aktiviran");
+    }
 
-  // Fade-out + blur remove
-  if (fadedIn && scrollY < fadeOutPoint) {
-    fadeElement.style.opacity = 0;
-    cmpcElement.style.filter = 'none';
-    fadedIn = false;
-  }
-}
+    lastScrollY = window.scrollY;
+  };
 
-// --- EVENT LISTENER ---
-window.addEventListener('scroll', handleScroll);
-
-// --- OPCIONALNO: inicijalno stanje ---
-fadeElement.style.opacity = 0;
-cmpcElement.style.filter = 'none';
+  window.addEventListener("scroll", checkFade);
+  checkFade(); // provera pri učitavanju stranice
+});
 
     
  updateLanguage();  
