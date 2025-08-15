@@ -372,9 +372,9 @@
   position: relative;
   left: 50%;
   transform: translateX(-50%);
-  height: 4px;           /* debljina linije */
-  width: 120%;           /* duzina linije, tweakuj po želji */
-  margin-top: 10px;      /* razmak iznad linije */
+  height: 4px;
+  width: 120%;
+  margin-top: 10px;
   background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(6px);
   border-radius: 1px;
@@ -382,7 +382,7 @@
 
 /* Dodaj liniju i ispod poslednjeg dugmeta */
 #menuButtons .menuItem:last-child::after {
-  margin-bottom: 10px;   /* malo prostora ispod linije poslednjeg dugmeta */
+  margin-bottom: 10px;
 }
 
   .band-overlay, .soon-overlay {
@@ -1193,7 +1193,7 @@ function closeBandOverlay() {
 
     // ===== Fade-in efekat za podnaslove BEND, Live, Studio, Dugme 4 =====
 const menuButtons = document.getElementById('menuButtons');
-const newsBar = document.getElementById('newsBar'); // scroll trigger
+const newsBar = document.getElementById('newsBar');
 
 function checkMenuFade() {
   const newsBarTop = newsBar.getBoundingClientRect().top;
