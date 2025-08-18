@@ -1242,17 +1242,12 @@ document.addEventListener("DOMContentLoaded", () => {
   checkFade(); // provera pri učitavanju stranice
 });
 
-    // BLUR i fejdovanja
-    // ======================= Selektori =======================
+    // Selektujemo CMPС i BEND dugme
 const bendButton = document.querySelector('#bandContainer button.menuItem');
 const cmpc = document.getElementById('cmpcBg');
 const bandDropdown = document.getElementById('bandDropdown');
-const heroSection = document.getElementById('hero');      // primer, prilagodi stvarnom ID-u
-const contactSection = document.getElementById('contact'); // primer, prilagodi stvarnom ID-u
 
-// ======================= FUNKCIJE =======================
-
-// Toggle blur (BEND dugme)
+// Toggle blur preko BEND dugmeta
 function updateBlur() {
     if (bandDropdown.style.display !== 'none') {
         cmpc.classList.add('blurred');
@@ -1263,51 +1258,22 @@ function updateBlur() {
     }
 }
 
-// Reset filter CMPС-a u početno stanje
-function resetCmpcFilter() {
+// Reset CMPС stanja posle upotrebe BEND dugmeta
+function resetCmpcAfterBlur() {
     cmpc.classList.remove('blurred', 'unblurred');
     cmpc.style.filter = 'blur(0px) brightness(1)';
 }
 
-// Fade-out CMPС pre prelaza na hero/contact
-function fadeOutCmpcBeforeTransition() {
-    resetCmpcFilter();          // prvo očisti blur
-    setTimeout(() => {
-        cmpc.classList.remove('visible'); // fade-out preko opacity
-    }, 50); // mali delay da browser registruje filter
-}
-
-// Fade-in CMPС (ako je potrebno)
-function fadeInCmpc() {
-    cmpc.classList.add('visible');
-}
-
-// ======================= SCROLL / TRANSITION LOGIKA =======================
-
-// Primer: scroll listener ili IntersectionObserver
-// kada CMPС izlazi iz viewport-a i prelaziš na hero/contact
-function setupSectionTransitions() {
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) {
-                // CMPС više nije u view → fade-out i reset filtera
-                fadeOutCmpcBeforeTransition();
-            }
-        });
-    }, { threshold: 0.1 }); // prilagodi prag
-
-    observer.observe(cmpc); // posmatramo CMPС
-}
-
-// ======================= EVENT LISTENERS =======================
-
-// BEND dugme
+// Event listener na BEND dugme
 bendButton.addEventListener('click', () => {
     setTimeout(updateBlur, 50);
 });
 
-// Pokretanje scroll-based transitions
-setupSectionTransitions();
+// Kada ideš na hero ili kontakt (pre fade), pozovi ovo
+function prepareCmpcForTransition() {
+    resetCmpcAfterBlur();          // vraća CMPС u početno stanje
+    cmpc.classList.remove('visible'); // pokreće fade-out
+}
 
     
  updateLanguage();  
