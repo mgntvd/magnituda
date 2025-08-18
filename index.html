@@ -95,6 +95,7 @@
       z-index: 0;
       transition: opacity 0.8s ease-in-out;
       pointer-events: none;
+      filter: blur(0px) brightness(1);
      }
 
     .cmpc-bg.visible {
@@ -669,10 +670,16 @@
   /* Blur efekat za pozadinsku sliku kada je BEND dugme otvoreno */
 .blurred {
     filter: blur(4px) brightness(0.8);
-    transition: filter 0.8s ease;
+    transition: filter 0.8s ease-in;
 }
 
+  /* Izlazak iz blura */
+.unblurred {
+  filter: blur(0px) brightness(1);
+  transition: filter 0.8s ease-out; /* ovde podesi izlazak */
+}
 
+  
 </style>
 </head>
 
@@ -1243,9 +1250,11 @@ const bandDropdown = document.getElementById('bandDropdown');
 // Funkcija za toggle blura
 function updateBlur() {
     if (bandDropdown.style.display !== 'none') {
-        cmpc.classList.add('blurred'); // dodaj blur kada je dropdown otvoren
+        cmpc.classList.add('blurred');
+        cmpc.classList.remove('unblurred'); // skini izlazak ako postoji
     } else {
-        cmpc.classList.remove('blurred'); // ukloni blur kada je dropdown zatvoren
+        cmpc.classList.remove('blurred');
+        cmpc.classList.add('unblurred'); // dodaj izlazak
     }
 }
 
