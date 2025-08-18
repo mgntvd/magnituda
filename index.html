@@ -104,10 +104,6 @@
       z-index: 1;
     }
 
-  .cmpc-bg:not(.visible) {
-  filter: blur(0px) brightness(1);
-}
-
     .kontakt-bg {
       position: fixed;
       top: 0;
@@ -1262,6 +1258,18 @@ function updateBlur() {
     }
 }
 
+// Funkcija za fade-out CMPС sekcije sa glatkim uklanjanjem blura
+function fadeOutCmpc() {
+    // Prvo uklonimo blur, ali preko transition
+    cmpc.classList.remove('blurred');
+    cmpc.classList.add('unblurred');
+
+    // Malo delay da browser registruje promenu filtera pre fade-out
+    setTimeout(() => {
+        cmpc.classList.remove('visible'); // pokreće opacity fade-out
+    }, 50); // 50ms je dovoljno za glatki start fade-out
+}
+    
 // Pravimo event listener na BEND dugme
 bendButton.addEventListener('click', () => {
     // Malo čekamo da se dropdown stvarno prikaže ili sakrije
