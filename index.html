@@ -1242,27 +1242,72 @@ document.addEventListener("DOMContentLoaded", () => {
   checkFade(); // provera pri učitavanju stranice
 });
 
-    // Selektujemo BEND dugme i pozadinsku sliku
+    // BLUR i fejdovanja
+    // ======================= Selektori =======================
 const bendButton = document.querySelector('#bandContainer button.menuItem');
 const cmpc = document.getElementById('cmpcBg');
 const bandDropdown = document.getElementById('bandDropdown');
+const heroSection = document.getElementById('hero');      // primer, prilagodi stvarnom ID-u
+const contactSection = document.getElementById('contact'); // primer, prilagodi stvarnom ID-u
 
-// Funkcija za toggle blura
+// ======================= FUNKCIJE =======================
+
+// Toggle blur (BEND dugme)
 function updateBlur() {
     if (bandDropdown.style.display !== 'none') {
         cmpc.classList.add('blurred');
-        cmpc.classList.remove('unblurred'); // skini izlazak ako postoji
+        cmpc.classList.remove('unblurred');
     } else {
         cmpc.classList.remove('blurred');
-        cmpc.classList.add('unblurred'); // dodaj izlazak
+        cmpc.classList.add('unblurred');
     }
 }
-   
-// Pravimo event listener na BEND dugme
+
+// Reset filter CMPС-a u početno stanje
+function resetCmpcFilter() {
+    cmpc.classList.remove('blurred', 'unblurred');
+    cmpc.style.filter = 'blur(0px) brightness(1)';
+}
+
+// Fade-out CMPС pre prelaza na hero/contact
+function fadeOutCmpcBeforeTransition() {
+    resetCmpcFilter();          // prvo očisti blur
+    setTimeout(() => {
+        cmpc.classList.remove('visible'); // fade-out preko opacity
+    }, 50); // mali delay da browser registruje filter
+}
+
+// Fade-in CMPС (ako je potrebno)
+function fadeInCmpc() {
+    cmpc.classList.add('visible');
+}
+
+// ======================= SCROLL / TRANSITION LOGIKA =======================
+
+// Primer: scroll listener ili IntersectionObserver
+// kada CMPС izlazi iz viewport-a i prelaziš na hero/contact
+function setupSectionTransitions() {
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) {
+                // CMPС više nije u view → fade-out i reset filtera
+                fadeOutCmpcBeforeTransition();
+            }
+        });
+    }, { threshold: 0.1 }); // prilagodi prag
+
+    observer.observe(cmpc); // posmatramo CMPС
+}
+
+// ======================= EVENT LISTENERS =======================
+
+// BEND dugme
 bendButton.addEventListener('click', () => {
-    // Malo čekamo da se dropdown stvarno prikaže ili sakrije
     setTimeout(updateBlur, 50);
 });
+
+// Pokretanje scroll-based transitions
+setupSectionTransitions();
 
     
  updateLanguage();  
