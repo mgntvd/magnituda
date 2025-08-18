@@ -84,25 +84,37 @@
     transition: opacity 0.8s ease-in-out;
   }
 
-  .cmpc-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: url("CMPC.jpg") no-repeat center 30%/cover;
-      opacity: 0;
-      z-index: 0;
-      transition: opacity 0.8s ease-in-out, filter 0.8s ease;
-      pointer-events: none;
-      filter: blur(0px) brightness(1);
-     }
+  /* CMPС - samo fade opacity */
+.cmpc-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: url("CMPC.jpg") no-repeat center 30%/cover;
+  opacity: 1;
+  transition: opacity 0.8s ease-in-out;
+}
 
-    .cmpc-bg.visible {
-      opacity: 1;
-      pointer-events: auto;
-      z-index: 1;
-    }
+.cmpc-bg.visible {
+  opacity: 1;
+}
+
+/* Overlay za blur (BEND dugme) */
+.cmpc-blur-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  filter: blur(0px) brightness(1);
+  transition: filter 0.8s ease;
+}
+
+.cmpc-blur-overlay.blurred {
+  filter: blur(4px) brightness(0.8);
+}
 
     .kontakt-bg {
       position: fixed;
@@ -694,8 +706,9 @@
   </section>
 
   <!-- CMPC i Kontakt pozadine -->
-  <div class="cmpc-bg" id="cmpcBg"></div>
-  <div class="kontakt-bg" id="kontaktBg"></div>
+  <div id="cmpcBg" class="cmpc-bg visible">
+    <div class="cmpc-blur-overlay"></div>
+</div>
 
   <!-- Glavni sadržaj -->
   <section class="content" id="content">
@@ -1242,37 +1255,24 @@ document.addEventListener("DOMContentLoaded", () => {
   checkFade(); // provera pri učitavanju stranice
 });
 
-    // Selektujemo CMPС i BEND dugme
+    // Selektujemo BEND dugme i blur overlay
 const bendButton = document.querySelector('#bandContainer button.menuItem');
+const blurOverlay = document.querySelector('.cmpc-blur-overlay');
 const cmpc = document.getElementById('cmpcBg');
-const bandDropdown = document.getElementById('bandDropdown');
 
-// Toggle blur preko BEND dugmeta
-function updateBlur() {
-    if (bandDropdown.style.display !== 'none') {
-        cmpc.classList.add('blurred');
-        cmpc.classList.remove('unblurred');
-    } else {
-        cmpc.classList.remove('blurred');
-        cmpc.classList.add('unblurred');
-    }
-}
-
-// Reset CMPС stanja posle upotrebe BEND dugmeta
-function resetCmpcAfterBlur() {
-    cmpc.classList.remove('blurred', 'unblurred');
-    cmpc.style.filter = 'blur(0px) brightness(1)';
-}
-
-// Event listener na BEND dugme
+// Toggle blur kada se pritisne BEND dugme
 bendButton.addEventListener('click', () => {
-    setTimeout(updateBlur, 50);
+    blurOverlay.classList.toggle('blurred');
 });
 
-// Kada ideš na hero ili kontakt (pre fade), pozovi ovo
-function prepareCmpcForTransition() {
-    resetCmpcAfterBlur();          // vraća CMPС u početno stanje
-    cmpc.classList.remove('visible'); // pokreće fade-out
+// Fade CMPС (opacity) - nezavisno od blura
+function fadeOutCmpc() {
+    cmpc.classList.remove('visible');
+}
+
+// Fade-in CMPС (ako je potrebno)
+function fadeInCmpc() {
+    cmpc.classList.add('visible');
 }
 
     
