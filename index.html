@@ -84,37 +84,25 @@
     transition: opacity 0.8s ease-in-out;
   }
 
-  /* CMPС - samo fade opacity */
-.cmpc-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: url("CMPC.jpg") no-repeat center 30%/cover;
-  opacity: 1;
-  transition: opacity 0.8s ease-in-out;
-}
+  .cmpc-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: url("CMPC.jpg") no-repeat center 30%/cover;
+      opacity: 0;
+      z-index: 0;
+      transition: opacity 0.8s ease-in-out, filter 0.8s ease;
+      pointer-events: none;
+      filter: blur(0px) brightness(1);
+     }
 
-.cmpc-bg.visible {
-  opacity: 1;
-}
-
-/* Overlay za blur (BEND dugme) */
-.cmpc-blur-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  filter: blur(0px) brightness(1);
-  transition: filter 0.8s ease;
-}
-
-.cmpc-blur-overlay.blurred {
-  filter: blur(4px) brightness(0.8);
-}
+    .cmpc-bg.visible {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 1;
+    }
 
     .kontakt-bg {
       position: fixed;
@@ -708,10 +696,7 @@
   <!-- CMPC i Kontakt pozadine -->
   <div class="cmpc-bg" id="cmpcBg"></div>
   <div class="kontakt-bg" id="kontaktBg"></div>
-<div id="cmpcBg" class="cmpc-bg visible">
-    <div class="cmpc-blur-overlay"></div>
-</div>
-  
+
   <!-- Glavni sadržaj -->
   <section class="content" id="content">
     <h1 id="headline">Centar za promociju savremene muzike</h1>
@@ -1257,25 +1242,27 @@ document.addEventListener("DOMContentLoaded", () => {
   checkFade(); // provera pri učitavanju stranice
 });
 
-    // Selektujemo BEND dugme i blur overlay
+    // Selektujemo BEND dugme i pozadinsku sliku
 const bendButton = document.querySelector('#bandContainer button.menuItem');
-const blurOverlay = document.querySelector('.cmpc-blur-overlay');
 const cmpc = document.getElementById('cmpcBg');
+const bandDropdown = document.getElementById('bandDropdown');
 
-// Toggle blur kada se pritisne BEND dugme
+// Funkcija za toggle blura
+function updateBlur() {
+    if (bandDropdown.style.display !== 'none') {
+        cmpc.classList.add('blurred');
+        cmpc.classList.remove('unblurred'); // skini izlazak ako postoji
+    } else {
+        cmpc.classList.remove('blurred');
+        cmpc.classList.add('unblurred'); // dodaj izlazak
+    }
+}
+   
+// Pravimo event listener na BEND dugme
 bendButton.addEventListener('click', () => {
-    blurOverlay.classList.toggle('blurred');
+    // Malo čekamo da se dropdown stvarno prikaže ili sakrije
+    setTimeout(updateBlur, 50);
 });
-
-// Fade CMPС (opacity) - nezavisno od blura
-function fadeOutCmpc() {
-    cmpc.classList.remove('visible');
-}
-
-// Fade-in CMPС (ako je potrebno)
-function fadeInCmpc() {
-    cmpc.classList.add('visible');
-}
 
     
  updateLanguage();  
