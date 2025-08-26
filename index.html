@@ -888,6 +888,7 @@
   <script>
     let currentLang = 'sr';
     let lastScrollPos = 0;
+    let isNewsOpen = false;
 
     const hero = document.getElementById('hero');
     const cmpcBg = document.getElementById('cmpcBg');
@@ -991,9 +992,10 @@
       additionalImage.style.display = isVisible ? 'none' : 'block';
     });
 
-    newsBtn.addEventListener('click', () => {
-      newsSection.style.display = newsSection.style.display === 'none' ? 'block' : 'none';
-    });
+  newsBtn.addEventListener('click', () => {
+  isNewsOpen = !isNewsOpen;              // ovo čuva stanje dugmeta
+  newsSection.style.display = isNewsOpen ? 'block' : 'none';  // prikaz/skrivanje
+});
 
     function showFallback() {
       fallback.style.display = 'block';
