@@ -993,8 +993,9 @@
     });
 
   newsBtn.addEventListener('click', () => {
-  isNewsOpen = !isNewsOpen;              // ovo čuva stanje dugmeta
-  newsSection.style.display = isNewsOpen ? 'block' : 'none';  // prikaz/skrivanje
+    const isVisible = newsSection.style.display === 'block';
+    newsSection.style.display = isVisible ? 'none' : 'block';
+    isNewsOpen = !isVisible;
 });
 
     function showFallback() {
