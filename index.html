@@ -993,9 +993,9 @@
     });
 
   newsBtn.addEventListener('click', () => {
-    const isVisible = newsSection.style.display === 'block';
-    newsSection.style.display = isVisible ? 'none' : 'block';
-    isNewsOpen = !isVisible;
+  const isVisible = newsSection.style.display === 'block';
+  newsSection.style.display = isVisible ? 'none' : 'block';
+  isNewsOpen = !isVisible;
 });
 
     function showFallback() {
@@ -1003,42 +1003,44 @@
     }
 
     window.addEventListener('scroll', () => {
-      const scrollPos = window.scrollY || window.pageYOffset;
-      const windowHeight = window.innerHeight;
+  const scrollPos = window.scrollY || window.pageYOffset;
+  const windowHeight = window.innerHeight;
 
-      if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 2) {
-        hero.classList.add('blur');
-        hero.classList.remove('fade-out');
-        hero.style.display = 'flex';
-        headline.classList.add('visible');
-        cmpcBg.classList.remove('visible');
-        kontaktBg.classList.remove('visible', 'blur');
-      } else if (scrollPos >= windowHeight * 2.2 && scrollPos < windowHeight * 4) {
-        hero.classList.add('fade-out');
-        hero.classList.remove('blur');
-        hero.style.display = 'flex';
-        headline.classList.remove('visible');
-        cmpcBg.classList.add('visible');
-        kontaktBg.classList.remove('visible', 'blur');
-      } else if (scrollPos >= windowHeight * 4 && scrollPos < windowHeight * 5.2) {
-        hero.style.display = 'none';
-        cmpcBg.classList.remove('visible');
-        kontaktBg.classList.add('visible');
-        kontaktBg.classList.remove('blur');
-      } else if (scrollPos >= windowHeight * 5.2) {
-        hero.style.display = 'none';
-        kontaktBg.classList.add('visible', 'blur');
-      } else {
-        hero.classList.remove('blur', 'fade-out');
-        hero.style.display = 'flex';
-        headline.classList.remove('visible');
-        cmpcBg.classList.remove('visible');
-        kontaktBg.classList.remove('visible', 'blur');
-        if (!isNewsOpen) {
-        newsSection.style.display = 'none';
-      }
+  if (scrollPos > windowHeight / 2 && scrollPos < windowHeight * 2) {
+    hero.classList.add('blur');
+    hero.classList.remove('fade-out');
+    hero.style.display = 'flex';
+    headline.classList.add('visible');
+    cmpcBg.classList.remove('visible');
+    kontaktBg.classList.remove('visible', 'blur');
+  } else if (scrollPos >= windowHeight * 2.2 && scrollPos < windowHeight * 4) {
+    hero.classList.add('fade-out');
+    hero.classList.remove('blur');
+    hero.style.display = 'flex';
+    headline.classList.remove('visible');
+    cmpcBg.classList.add('visible');
+    kontaktBg.classList.remove('visible', 'blur');
+  } else if (scrollPos >= windowHeight * 4 && scrollPos < windowHeight * 5.2) {
+    hero.style.display = 'none';
+    cmpcBg.classList.remove('visible');
+    kontaktBg.classList.add('visible');
+    kontaktBg.classList.remove('blur');
+  } else if (scrollPos >= windowHeight * 5.2) {
+    hero.style.display = 'none';
+    kontaktBg.classList.add('visible', 'blur');
+  } else {
+    hero.classList.remove('blur', 'fade-out');
+    hero.style.display = 'flex';
+    headline.classList.remove('visible');
+    cmpcBg.classList.remove('visible');
+    kontaktBg.classList.remove('visible', 'blur');
+
+    // OVDE SAMO ZATVORIMO newsSection ako NIJE otvoren
+    if (!isNewsOpen) {
+      newsSection.style.display = 'none';
     }
-    });
+  }
+});
 
         
     // Dugmad interakcije
